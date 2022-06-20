@@ -18,6 +18,10 @@
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
+    "types": [
+      "jest",
+      "node"
+    ],
     "lib": [
       "es2020",
       "dom"
@@ -28,5 +32,8 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

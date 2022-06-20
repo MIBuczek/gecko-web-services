@@ -1,0 +1,37 @@
+@import "../../../styles/variables.scss";
+
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  background-color: $main_secondary_color;
+
+  .footer-content {
+    border-top: 1px solid $secondary_border;
+    z-index: 2;
+    padding: 40px 20px;
+    font-size: 14px;
+    color: $grey_color;
+
+    .copyright {
+      strong {
+        color: $dark_grey_color;
+      }
+    }
+
+    .credits {
+      a {
+        color: $green_color;
+        text-decoration: none;
+        transition: 0.4s;
+
+        &:hover {
+          color: $hover_text_color;;
+        }
+      }
+    }
+  }
+
+}
