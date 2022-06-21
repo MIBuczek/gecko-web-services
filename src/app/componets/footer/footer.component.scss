@@ -6,7 +6,109 @@ footer {
   left: 0;
   width: 100%;
   height: auto;
-  background-color: $main_secondary_color;
+  background-color: $primary_bg;
+
+  .contact {
+    padding: 80px 0;
+
+    &-header {
+      margin-bottom: 30px;
+
+      span {
+        position: absolute;
+        top: 80px;
+        color: $bg_text_color;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        font-weight: 700;
+        font-size: 52px;
+        text-transform: uppercase;
+        line-height: 0;
+      }
+
+      h3 {
+        font-size: 32px;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+        padding-bottom: 0;
+        color: $grey_color;
+        position: relative;
+        z-index: 2;
+      }
+    }
+
+    &-form {
+      padding: 6px 10px;
+      position: relative;
+      border-radius: 4px;
+      text-align: left;
+      font-size: 15px;
+
+      input[type='email'],
+      textarea {
+        background: $secondary-bg;
+        padding: 4px 8px;
+        width: calc(100% - 100px);
+        border: 1px solid $tertiary_border;
+      }
+
+      textarea {
+        margin-top: 10px;
+        resize: none;
+        height: 100px;
+      }
+
+      input[type='submit'] {
+        position: absolute;
+        top: 5px;
+        right: -1px;
+        bottom: -1px;
+        border: 0;
+        background: none;
+        font-size: 16px;
+        padding: 0 20px;
+        background: $green_color;
+        color: $white_color;
+        transition: 0.3s;
+        border-radius: 0 4px 4px 0;
+        height: 142px;
+
+        &:hover {
+          box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+        }
+      }
+    }
+
+    &-links {
+      p {
+        margin-right: 20px;
+
+        a {
+          margin-top: 30px;
+          font-size: 18px;
+          display: inline-block;
+          background: $main_secondary_color;
+          color: $grey_color;
+          line-height: 1;
+          padding: 8px 0;
+          margin-right: 4px;
+          border-radius: 15px;
+          text-align: center;
+          width: 36px;
+          height: 36px;
+          transition: 0.3s;
+
+          &:hover {
+            background: $main_primary_color;
+            color: $white_color;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
 
   .footer-content {
     border-top: 1px solid $secondary_border;

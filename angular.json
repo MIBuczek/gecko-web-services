@@ -112,43 +112,13 @@
               "src/**/*.html"
             ]
           }
-        },
-        "cypress-run": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "gecko-web-services:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "gecko-web-services:serve:production"
-            }
-          }
-        },
-        "cypress-open": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "watch": true,
-            "headless": false
-          }
-        },
-        "e2e": {
-          "builder": "@cypress/schematic:cypress",
-          "options": {
-            "devServerTarget": "gecko-web-services:serve",
-            "watch": true,
-            "headless": false
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "gecko-web-services:serve:production"
-            }
-          }
         }
       }
     }
   },
   "defaultProject": "gecko-web-services",
   "cli": {
+    "analytics": false,
     "defaultCollection": "@angular-eslint/schematics"
   }
 }
