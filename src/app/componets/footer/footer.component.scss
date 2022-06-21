@@ -9,17 +9,18 @@ footer {
   background-color: $primary_bg;
 
   .contact {
-    padding: 80px 0;
+    padding: 80px 0 40px;
 
     &-header {
       margin-bottom: 30px;
+      position: relative;
 
       span {
         position: absolute;
-        top: 80px;
+        top: 0;
         color: $bg_text_color;
-        left: 0;
         right: 0;
+        transform: translate(-70%);
         z-index: 1;
         font-weight: 700;
         font-size: 52px;
@@ -85,7 +86,7 @@ footer {
       p {
         margin-right: 20px;
 
-        a {
+        span {
           margin-top: 30px;
           font-size: 18px;
           display: inline-block;
