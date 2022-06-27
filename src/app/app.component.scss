@@ -1,7 +1,14 @@
 @import '../styles/variables';
 
 main {
-  width :100vw;
-  min-height: 86vh;
-  background-color : $secondary-bg;
+  width: 100vw;
+  min-height: 56vh;
+  background-color: $secondary-bg;
 }
+
+@media (max-width: 990px) {
+  main {
+    min-height: 46vh;
+  }
+}
+
