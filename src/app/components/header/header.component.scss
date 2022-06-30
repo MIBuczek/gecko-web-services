@@ -1,0 +1,131 @@
+@import "../../../styles/variables.scss";
+
+
+header {
+
+  .h-title-shadow {
+    span {
+      position: relative;
+      top: 50px;
+      color: $bg_text_color;
+      opacity: 0.25;
+      left: 0;
+      z-index: 0;
+      font-weight: 700;
+      font-size: 110px;
+      text-transform: uppercase;
+      line-height: 0;
+    }
+  }
+
+  .h-title {
+    z-index: 10;
+    border-bottom: 5px solid $green_color;
+    background: transparent;
+
+    h1 {
+      font-size: 88px;
+      font-weight: 700;
+      line-height: 56px;
+      color: $dark_grey_color;
+      display: inline-block;
+    }
+
+    h3 {
+      display: inline-block;
+      color: $grey_color;
+      margin: 10px 0 30px 15px;
+      font-size: 88px;
+    }
+
+  }
+
+
+  .h-logo {
+    margin-top: 30px;
+
+    img {
+      position: relative;
+      top: -10px;
+      width: 150px;
+      height: auto;
+      margin-right: 40px;
+      z-index: 10;
+    }
+  }
+
+}
+
+@media (max-width: 1400px) {
+  header {
+    .h-title-shadow {
+      span {
+        font-size: 80px;
+      }
+    }
+
+    .h-title {
+      h1, h3 {
+        font-size: 66px;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 990px) {
+  header {
+    .h-title-shadow {
+      span {
+        font-size: 55px;
+        top : 40px;
+      }
+    }
+
+    .h-title {
+      h1, h3 {
+        font-size: 46px;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 778px) {
+  header {
+    .h-title-shadow {
+      span {
+        font-size: 45px;
+        top : 30px;
+      }
+    }
+
+    .h-title {
+      h1, h3 {
+        font-size: 36px;
+      }
+    }
+    .h-logo {
+      img{
+        width: 100px;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 510px) {
+  header {
+    .h-title-shadow {
+      span {
+        font-size: 32px;
+      }
+    }
+
+    .h-title {
+      h1, h3 {
+        font-size: 26px;
+      }
+    }
+  }
+}

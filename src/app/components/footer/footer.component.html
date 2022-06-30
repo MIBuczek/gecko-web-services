@@ -2,14 +2,13 @@
   <div class="container contact">
     <div class="row justify-content-center">
       <div class="col-lg-6 contact-header text-center">
-        <span>Contact</span>
-        <h3>Contact</h3>
+        <span>{{ textContent[currentLang]['title'] }}</span>
+        <h3>{{ textContent[currentLang]['title'] }}</h3>
       </div>
     </div>
     <div class="row justify-content-center">
       <div class="col-lg-6">
-        <p class="fs-m-6">Et aut eum quis fuga eos sunt ipsa nihil. Labore corporis magni eligendi fuga maxime saepe commodi
-          placeat.</p>
+        <p class="fs-m-6">{{textContent[currentLang]['description']}}</p>
         <div class="contact-links ">
           <p class="d-inline mr-3">
             <span>
@@ -34,9 +33,11 @@
       </div>
     </div>
   </div>
-  <div class="container d-flex justify-content-between flex-sm-column footer-content">
-    <div class="copyright"> © {{currentYear}} copyright <strong><span>Gecko WS</span></strong>. All Rights Reserved
+  <div class="container d-flex justify-content-between flex-md-row flex-sm-column footer-content">
+    <div class="copyright"> © {{currentYear}} {{textContent[currentLang]['copyright']}}
+      <strong><span>Gecko WS</span></strong>.
+      {{textContent[currentLang]['rightReserved']}}
     </div>
-    <div class="credits"> Designed by <a href="https://bootstrapmade.com/">Gecko Web Services</a></div>
+    <div class="credits"> {{textContent[currentLang]['credits']}} <a href="https://bootstrapmade.com/">Gecko Web Services</a></div>
   </div>
 </footer>

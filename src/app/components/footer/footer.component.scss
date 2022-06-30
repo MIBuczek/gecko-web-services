@@ -2,11 +2,12 @@
 
 footer {
   width: 100%;
+  min-height: 46vh;
   height: auto;
   background-color: $primary_bg;
 
   .contact {
-    padding: 80px 0 40px;
+    padding: 60px 0 40px;
 
     &-header {
       margin-bottom: 30px;
@@ -14,7 +15,7 @@ footer {
 
       span {
         position: relative;
-        top: 25px;
+        top: 20px;
         color: $bg_text_color;
         right: 0;
         z-index: 1;

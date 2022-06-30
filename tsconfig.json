@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -25,7 +25,27 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "paths": {
+      "components/*": [
+        "app/components/*"
+      ],
+      "services/*": [
+        "app/services/*"
+      ],
+      "models/*": [
+        "app/models/*"
+      ],
+      "pipes/*": [
+        "app/pipes/*"
+      ],
+      "text-content/*": [
+        "app/text-content/*"
+      ],
+      "assets/*": [
+        "assets/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

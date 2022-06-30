@@ -1,0 +1,11 @@
+<nav class="container-fluid">
+  <div class="container d-flex justify-content-end ">
+    <button class="lang-switcher" (click)="ls.langToggle()">
+      <img
+        [src]="'../../../assets/flags/' + (currentLang$ | async) + '.png'"
+        alt="flag"
+        class="img-fluid"
+      />
+    </button>
+  </div>
+</nav>
