@@ -5,6 +5,7 @@ import {HeaderComponent} from "./header/header.component";
 import {NavigationComponent} from "./navigation/navigation.component";
 import {LoaderComponent} from "./loader/loader.component";
 import {PipeModule} from "pipes/pipe.module";
+import { CookieComponent } from './cookie/cookie.component';
 
 
 
@@ -14,12 +15,14 @@ import {PipeModule} from "pipes/pipe.module";
     HeaderComponent,
     NavigationComponent,
     LoaderComponent,
+    CookieComponent,
   ],
   exports: [
     FooterComponent,
     HeaderComponent,
     NavigationComponent,
     LoaderComponent,
+    CookieComponent
   ],
   imports: [
     CommonModule,

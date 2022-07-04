@@ -2,12 +2,12 @@
 
 footer {
   width: 100%;
-  min-height: 46vh;
+  min-height: 40vh;
   height: auto;
   background-color: $primary_bg;
 
   .contact {
-    padding: 60px 0 40px;
+    padding: 50px 0 30px;
 
     &-header {
       margin-bottom: 30px;
@@ -29,7 +29,7 @@ footer {
         font-size: 32px;
         font-weight: 700;
         text-transform: uppercase;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
         padding-bottom: 0;
         color: $grey_color;
         position: relative;
@@ -75,6 +75,7 @@ footer {
 
         &:hover {
           box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+          opacity: 0.7;
         }
       }
     }
@@ -113,7 +114,7 @@ footer {
   .footer-content {
     border-top: 1px solid $secondary_border;
     z-index: 2;
-    padding: 40px 20px;
+    padding: 30px 20px;
     font-size: 14px;
     color: $grey_color;
 

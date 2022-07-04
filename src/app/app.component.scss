@@ -2,8 +2,9 @@
 
 main {
   width: 100%;
-  min-height: 50vh;
+  min-height: 55vh;
   background-color: $secondary-bg;
+  margin: 3px 0;
 }
 
 @media (max-width: 990px) {
