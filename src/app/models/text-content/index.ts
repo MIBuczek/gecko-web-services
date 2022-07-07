@@ -1,6 +1,9 @@
 export interface IFooterTexts {
   title: string,
   description: string,
+  formEmail: string,
+  formMessage: string,
+  formBtn: string,
   copyright: string,
   rightReserved: string,
   credits: string,
@@ -12,11 +15,22 @@ export interface IFooterTextContent {
 }
 
 
-type ICookiesText = Omit<IFooterTexts, 'copyright' | 'rightReserved' | 'credits'> & {
+type ICookiesText = Pick<IFooterTexts, 'title' | 'description'> & {
   btn: string
 };
 
 export interface ICookiesTextContent {
   PL: ICookiesText,
   EN: ICookiesText
+}
+
+export interface IErrorContent {
+  required: string,
+  email: string,
+  minlength: string,
+}
+
+export interface IErrorTextContent {
+  PL: IErrorContent,
+  EN: IErrorContent
 }

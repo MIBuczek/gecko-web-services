@@ -1,0 +1,19 @@
+<div class="container-fluid cookies-wrapper " *ngIf="!isCookiesAccepted">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7 offset-md-2 offset-sm-0 p-3">
+        <h1>{{textContent[currentLang].title}}
+          <span>
+          <i class="bi bi-patch-question"></i>
+        </span>
+        </h1>
+        <p>{{textContent[currentLang].description}}</p>
+      </div>
+      <div class="col-lg-1 col-md-2 col-sm-12 p-3  d-flex justify-content-center align-items-center">
+        <button type="button" class="cookie-btn" (click)="acceptCookies()">
+          {{textContent[currentLang].btn}}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

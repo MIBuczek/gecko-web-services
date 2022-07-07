@@ -6,6 +6,8 @@ import {NavigationComponent} from "./navigation/navigation.component";
 import {LoaderComponent} from "./loader/loader.component";
 import {PipeModule} from "pipes/pipe.module";
 import { CookieComponent } from './cookie/cookie.component';
+import { ErrorMessageComponent } from './error-message/error-message.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -16,6 +18,7 @@ import { CookieComponent } from './cookie/cookie.component';
     NavigationComponent,
     LoaderComponent,
     CookieComponent,
+    ErrorMessageComponent,
   ],
   exports: [
     FooterComponent,
@@ -24,10 +27,11 @@ import { CookieComponent } from './cookie/cookie.component';
     LoaderComponent,
     CookieComponent
   ],
-  imports: [
-    CommonModule,
-    PipeModule
-  ]
+    imports: [
+        CommonModule,
+        PipeModule,
+        ReactiveFormsModule
+    ]
 })
 export class ComponentsModule {
 }
