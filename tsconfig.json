@@ -36,6 +36,9 @@
       "models/*": [
         "app/models/*"
       ],
+      "classes/*": [
+        "app/classes/*"
+      ],
       "pipes/*": [
         "app/pipes/*"
       ],

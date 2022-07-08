@@ -72,6 +72,17 @@
           <div class="col-md-2 col-12">
             <input type="submit" [value]="textContent[currentLang].formBtn" [disabled]="!formUserMessage.touched">
           </div>
+          <ng-container *ngIf="!!submitStatus$ && (submitClearStatus | async)">
+            <p class="p-3 m-0 message-success text-success"
+               *ngIf="( submitStatus$ | async) === dbMessageActions.SUCCESS">
+              {{ textContent[currentLang][dbMessageActions.SUCCESS]}}
+              <span class="mx-1"><i class="bi bi-check-square"></i></span>
+            </p>
+            <p class="p-3 m-0 message-error text-danger" *ngIf="( submitStatus$ | async) === dbMessageActions.ERROR">
+              {{ textContent[currentLang][dbMessageActions.ERROR]}}
+              <span class="mx-1"><i class="bi bi-exclamation-square"></i></span>
+            </p>
+          </ng-container>
         </form>
       </div>
     </div>

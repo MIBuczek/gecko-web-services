@@ -4,6 +4,8 @@ export interface IFooterTexts {
   formEmail: string,
   formMessage: string,
   formBtn: string,
+  formSuccessSubmit : string;
+  formErrorSubmit : string;
   copyright: string,
   rightReserved: string,
   credits: string,
