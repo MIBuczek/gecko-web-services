@@ -8,6 +8,7 @@ import {PipeModule} from "pipes/pipe.module";
 import {CookieComponent} from './cookie/cookie.component';
 import {ErrorMessageComponent} from './error-message/error-message.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { CopyRightsComponent } from './copy-rights/copy-rights.component';
 
 
 @NgModule({
@@ -18,13 +19,15 @@ import {ReactiveFormsModule} from "@angular/forms";
     LoaderComponent,
     CookieComponent,
     ErrorMessageComponent,
+    CopyRightsComponent,
   ],
   exports: [
     FooterComponent,
     HeaderComponent,
     NavigationComponent,
     LoaderComponent,
-    CookieComponent
+    CookieComponent,
+    CopyRightsComponent
   ],
   imports: [
     CommonModule,

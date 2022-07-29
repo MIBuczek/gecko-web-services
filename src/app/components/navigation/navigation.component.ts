@@ -8,15 +8,9 @@ import {Observable} from "rxjs";
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent {
-  public isActive = false;
-  public currentLang$ : Observable<'PL' | 'EN'>;
+  public currentLang$: Observable<'PL' | 'EN'>;
 
   constructor(public ls: LandSwitcherService) {
     this.currentLang$ = this.ls.getCurrentLang;
   }
-
-  toggle(): void {
-    this.isActive = !this.isActive;
-  }
-
 }

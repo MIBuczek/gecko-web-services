@@ -1,6 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ErrorMessageComponent } from './error-message.component';
+import {ErrorMessageComponent} from './error-message.component';
+import {By} from "@angular/platform-browser";
+import {errorMessageTextContent} from "text-content/error-message";
 
 describe('ErrorMessageComponent', () => {
   let component: ErrorMessageComponent;
@@ -8,9 +10,9 @@ describe('ErrorMessageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ErrorMessageComponent ]
+      declarations: [ErrorMessageComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -22,4 +24,13 @@ describe('ErrorMessageComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('is @Input message is display on UI', () => {
+    /* Create test case action */
+    component.message = errorMessageTextContent['PL'].required
+    const html_tag = fixture.debugElement.query(By.css('.text-danger'))
+    fixture.detectChanges()
+    /* Check if message is display correctly */
+    expect(html_tag.nativeElement['innerText'].trim()).toEqual(errorMessageTextContent['PL'].required.trim())
+  })
 });

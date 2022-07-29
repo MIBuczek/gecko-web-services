@@ -2,14 +2,13 @@
 
 main {
   width: 100%;
-  min-height: 55vh;
+  min-height: 88vh;
   background-color: $secondary-bg;
-  margin: 3px 0;
 }
 
 @media (max-width: 990px) {
   main {
-    min-height: 46vh;
+    min-height: 88vh;
   }
 }
 

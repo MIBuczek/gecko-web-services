@@ -1,7 +1,7 @@
 @import "../../../styles/variables.scss";
 
 nav {
-  height: 4vh;
+  min-height: 4vh;
   background: $primary_bg;
 
   button.lang-switcher {

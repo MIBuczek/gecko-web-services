@@ -1,0 +1,12 @@
+import {ICopyRightsTextContent} from "models/text-content";
+
+export const copyRightsTextContent: ICopyRightsTextContent = {
+  PL: {
+    copyright: "Prawa autorskie",
+    rightReserved: 'Wszystkie prawa do kopiowania zastrzeżone.',
+  },
+  EN: {
+    copyright: "copyright",
+    rightReserved: 'All copy rights reserved.',
+  }
+}

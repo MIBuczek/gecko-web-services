@@ -104,33 +104,6 @@ footer {
       }
     }
   }
-
-  .footer-content {
-    border-top: 1px solid $secondary_border;
-    z-index: 2;
-    padding: 30px 20px;
-    font-size: 14px;
-    color: $grey_color;
-
-    .copyright {
-      strong {
-        color: $dark_grey_color;
-      }
-    }
-
-    .credits {
-      a {
-        color: $green_color;
-        text-decoration: none;
-        transition: 0.4s;
-
-        &:hover {
-          color: $hover_text_color;;
-        }
-      }
-    }
-  }
-
 }
 
 
@@ -208,15 +181,6 @@ footer {
       }
 
     }
-
-    .footer-content {
-      padding: 20px 10px;
-      text-align: center;
-
-      .copyright {
-        margin-bottom: 10px;
-      }
-    }
   }
 }
 
@@ -225,6 +189,7 @@ footer {
   footer {
     .contact {
       flex-direction: column;
+      overflow: hidden;
 
       &-form {
 
@@ -240,10 +205,6 @@ footer {
           margin-top: 10px;
         }
       }
-    }
-
-    .footer-content {
-      flex-direction: column;
     }
   }
 }

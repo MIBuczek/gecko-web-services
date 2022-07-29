@@ -27,6 +27,9 @@
       "dom"
     ],
     "paths": {
+      "views/*": [
+        "app/views/*"
+      ],
       "components/*": [
         "app/components/*"
       ],

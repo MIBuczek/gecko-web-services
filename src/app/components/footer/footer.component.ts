@@ -13,7 +13,6 @@ import {BehaviorSubject, bufferTime, filter, from, Observable, ReplaySubject, ta
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnDestroy {
-  public currentYear = new Date().getFullYear()
   public currentLang: 'PL' | 'EN' = "PL"
   public textContent = footerTextContent;
   public errorMessages = errorMessageTextContent;

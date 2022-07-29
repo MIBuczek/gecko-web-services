@@ -4,11 +4,8 @@ export interface IFooterTexts {
   formEmail: string,
   formMessage: string,
   formBtn: string,
-  formSuccessSubmit : string;
-  formErrorSubmit : string;
-  copyright: string,
-  rightReserved: string,
-  credits: string,
+  formSuccessSubmit: string;
+  formErrorSubmit: string;
 }
 
 export interface IFooterTextContent {
@@ -16,6 +13,26 @@ export interface IFooterTextContent {
   EN: IFooterTexts
 }
 
+export interface ICopyRightsText {
+  copyright: string,
+  rightReserved: string,
+}
+
+export interface ICopyRightsTextContent {
+  PL: ICopyRightsText;
+  EN: ICopyRightsText
+}
+
+export interface INotFoundText {
+  header: string;
+  description: string;
+  redirect : string;
+}
+
+export interface INotFoundTextContent {
+  PL: INotFoundText;
+  EN: INotFoundText
+}
 
 type ICookiesText = Pick<IFooterTexts, 'title' | 'description'> & {
   btn: string

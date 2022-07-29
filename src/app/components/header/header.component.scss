@@ -2,13 +2,16 @@
 
 
 header {
+  display: block;
+  min-width: 400px;
+  margin: 45px 0;
 
   .h-title-shadow {
     span {
       position: relative;
       top: 50px;
       color: $bg_text_color;
-      opacity: 0.25;
+      opacity: 0.35;
       left: 0;
       z-index: 0;
       font-weight: 700;
@@ -58,6 +61,8 @@ header {
 
 @media (max-width: 1400px) {
   header {
+    margin: 60px 0 70px;
+
     .h-title-shadow {
       span {
         font-size: 80px;
@@ -78,7 +83,7 @@ header {
     .h-title-shadow {
       span {
         font-size: 55px;
-        top : 40px;
+        top: 40px;
       }
     }
 
@@ -96,7 +101,7 @@ header {
     .h-title-shadow {
       span {
         font-size: 45px;
-        top : 30px;
+        top: 30px;
       }
     }
 
@@ -105,8 +110,9 @@ header {
         font-size: 36px;
       }
     }
+
     .h-logo {
-      img{
+      img {
         width: 100px;
       }
     }

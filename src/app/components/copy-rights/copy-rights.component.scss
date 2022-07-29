@@ -1,0 +1,29 @@
+@import "../../../styles/variables.scss";
+
+.copy-rights {
+  border-top: 1px solid $secondary_border;
+  background-color: $primary_bg;
+  padding: 20px;
+  font-size: 14px;
+  color: $grey_color;
+  min-height: 6vh;
+
+  .copyright {
+    strong {
+      color: $dark_grey_color;
+    }
+  }
+
+  .credits {
+    a {
+      color: $green_color;
+      text-decoration: none;
+      transition: 0.4s;
+
+      &:hover {
+        color: $hover_text_color;;
+      }
+    }
+  }
+
+}

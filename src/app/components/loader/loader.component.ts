@@ -7,11 +7,10 @@ import {LandSwitcherService} from "services/lang-switcher/land-switcher.service"
   styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent {
-
   public isLoading: null | boolean = null;
 
-  constructor(public langSwitcherService: LandSwitcherService) {
-    this.langSwitcherService.isToggling.subscribe((status) => {
+  constructor(public ls: LandSwitcherService) {
+    this.ls.isToggling.subscribe((status) => {
       this.isLoading = status;
     });
   }
