@@ -7,7 +7,12 @@
           <i class="bi bi-patch-question"></i>
         </span>
         </h1>
-        <p>{{textContent[currentLang].description}}</p>
+        <p>
+          {{textContent[currentLang].description}}
+          <a routerLink="/privacy-policy">
+            {{textContent[currentLang].redirect}}
+          </a>
+        </p>
       </div>
       <div class="col-lg-1 col-md-2 col-sm-12 p-3  d-flex justify-content-center align-items-center">
         <button type="button" class="cookie-btn" (click)="acceptCookies()">

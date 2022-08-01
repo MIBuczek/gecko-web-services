@@ -1,1 +1,16 @@
-<p>privacy-policy-page works!</p>
+<section class="container d-flex flex-column align-items-center justify-content-center">
+  <span id="header-shadow">{{ textContent[currentLang].main_header }}</span>
+  <h1 class="pb-5 mb-5">{{textContent[currentLang].main_header}}</h1>
+  <p>{{textContent[currentLang].main_description}}</p>
+  <div class="row">
+    <div class="col-lg-12 py-4" *ngFor="let part of textContent[currentLang].parts">
+      <h2>{{part.inner_header}}</h2>
+      <p>{{part.inner_description}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <a routerLink="/main-page">
+      {{textContent[currentLang].redirect}}
+    </a>
+  </div>
+</section>

@@ -16,6 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'privacy-policy',
+    pathMatch : 'full',
     component: PrivacyPolicyPageComponent
   },
   {

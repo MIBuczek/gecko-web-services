@@ -1,0 +1,40 @@
+@import '../styles/variables';
+
+@mixin header-shadow {
+  position: relative;
+  top: -10px;
+  color: $bg_text_color;
+  opacity: 0.35;
+  left: 0;
+  z-index: 0;
+  font-weight: 700;
+  font-size: 90px;
+  text-transform: uppercase;
+  line-height: 0;
+}
+
+@mixin page-header {
+  font-size: 58px;
+  font-weight: 700;
+  line-height: 56px;
+  color: $dark_grey_color;
+  text-transform: uppercase;
+  display: inline-block;
+  z-index: 10;
+}
+
+@mixin paragraph-content {
+  display: inline-block;
+  color: $grey_color;
+  margin: 10px 0 20px 15px;
+  font-size: 16px;
+}
+
+@mixin redirect{
+  color: $green_color;
+  transition: 0.4s;
+
+  &:hover {
+    color: $hover_text_color;
+  }
+}

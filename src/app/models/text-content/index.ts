@@ -26,7 +26,7 @@ export interface ICopyRightsTextContent {
 export interface INotFoundText {
   header: string;
   description: string;
-  redirect : string;
+  redirect: string;
 }
 
 export interface INotFoundTextContent {
@@ -35,6 +35,7 @@ export interface INotFoundTextContent {
 }
 
 type ICookiesText = Pick<IFooterTexts, 'title' | 'description'> & {
+  redirect: string,
   btn: string
 };
 
@@ -52,4 +53,20 @@ export interface IErrorContent {
 export interface IErrorTextContent {
   PL: IErrorContent,
   EN: IErrorContent
+}
+
+
+export interface IPrivacyPolicy {
+  main_header: string;
+  main_description: string[];
+  parts: Array<{
+    inner_header: string;
+    inner_description: string
+  }>;
+  redirect: string;
+}
+
+export interface IPrivacyPolicyTextContent {
+  PL: IPrivacyPolicy;
+  EN: IPrivacyPolicy
 }

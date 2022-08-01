@@ -1,6 +1,7 @@
 @import "../../../styles/variables.scss";
+@import "../../../styles/general-styles.scss";
 
-.cookies-wrapper{
+.cookies-wrapper {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -14,7 +15,15 @@
   align-items: center;
   border-top: 3px solid $green_color;
 
-  .cookie-btn{
+  a {
+    @include redirect;
+
+    &:hover {
+      color: $white_color;
+    }
+  }
+
+  .cookie-btn {
     background: $green_color;
     color: $white_color;
     transition: 0.3s;
@@ -22,6 +31,7 @@
     border-radius: 4px;
     padding: 8px 15px;
     height: 45px;
+
     &:hover {
       box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
       opacity: 0.7;

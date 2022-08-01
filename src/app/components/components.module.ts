@@ -9,6 +9,7 @@ import {CookieComponent} from './cookie/cookie.component';
 import {ErrorMessageComponent} from './error-message/error-message.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { CopyRightsComponent } from './copy-rights/copy-rights.component';
+import {AppRoutingModule} from "../app-routing.module";
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { CopyRightsComponent } from './copy-rights/copy-rights.component';
   imports: [
     CommonModule,
     PipeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule
   ]
 })
 export class ComponentsModule {
