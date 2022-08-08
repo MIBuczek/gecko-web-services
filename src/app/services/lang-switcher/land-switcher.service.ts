@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from "rxjs";
+import {TypeLang} from "models/general";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LandSwitcherService {
 
-  private currentLang = new BehaviorSubject<'PL' | 'EN'>('PL');
+  private currentLang = new BehaviorSubject<TypeLang>('PL');
   public isToggling = new BehaviorSubject(false);
 
   constructor() {
@@ -27,7 +28,7 @@ export class LandSwitcherService {
     }
   }
 
-  get getCurrentLang(): Observable<'PL' | 'EN'> {
+  get getCurrentLang(): Observable<TypeLang> {
     return this.currentLang.asObservable();
   }
 }

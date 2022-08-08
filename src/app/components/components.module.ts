@@ -10,6 +10,7 @@ import {ErrorMessageComponent} from './error-message/error-message.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { CopyRightsComponent } from './copy-rights/copy-rights.component';
 import {AppRoutingModule} from "../app-routing.module";
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 
 
 @NgModule({
@@ -21,6 +22,7 @@ import {AppRoutingModule} from "../app-routing.module";
     CookieComponent,
     ErrorMessageComponent,
     CopyRightsComponent,
+    BreadcrumbsComponent,
   ],
   exports: [
     FooterComponent,
@@ -28,7 +30,8 @@ import {AppRoutingModule} from "../app-routing.module";
     NavigationComponent,
     LoaderComponent,
     CookieComponent,
-    CopyRightsComponent
+    CopyRightsComponent,
+    BreadcrumbsComponent
   ],
   imports: [
     CommonModule,

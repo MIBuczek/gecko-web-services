@@ -1,31 +1,28 @@
 @import "../../../styles/variables.scss";
 @import "../../../styles/general-styles.scss";
 
+.container {
+  position: relative;
 
-span {
-  @include header-shadow;
-}
+  span {
+    @include header-shadow;
+  }
 
-h1 {
-  @include page-header;
-}
+  h1 {
+    @include page-header;
+  }
 
-p {
-  @include paragraph-content;
+  p {
+    @include paragraph-content;
 
-  a {
-    @include redirect;
+    a {
+      @include redirect;
+    }
   }
 }
 
 
 @media (max-width: 600px) {
-  span {
-    font-size: 70px;
-  }
-  h1 {
-    font-size: 48px;
-  }
   p {
     font-size: 14px;
 

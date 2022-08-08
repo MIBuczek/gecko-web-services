@@ -2,12 +2,13 @@
 
 footer {
   width: 100%;
-  min-height: 40vh;
+  min-height: 35vh;
   height: auto;
   background-color: $primary_bg;
 
   .contact {
     padding: 50px 0 30px;
+    margin-top: 8vh;
 
     &-header {
       margin-bottom: 30px;

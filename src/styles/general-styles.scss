@@ -1,16 +1,35 @@
 @import '../styles/variables';
 
 @mixin header-shadow {
-  position: relative;
-  top: -10px;
+  position: absolute;
+  top: -70px;
+  left: 50%;
   color: $bg_text_color;
   opacity: 0.35;
-  left: 0;
   z-index: 0;
   font-weight: 700;
   font-size: 90px;
   text-transform: uppercase;
-  line-height: 0;
+  overflow: hidden;
+  width: max-content;
+  transform: translate(-50%, -10%);
+
+  @media (max-width: 1200px) {
+    font-size: 75px;
+  }
+
+  @media (max-width: 1000px) {
+    font-size: 75px;
+    top: -70px;
+    line-height: 0.8;
+    width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 55px;
+    line-height: 0.8;
+    transform: translate(-48%, -10%);
+  }
 }
 
 @mixin page-header {
@@ -21,6 +40,11 @@
   text-transform: uppercase;
   display: inline-block;
   z-index: 10;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    font-size: 48px;
+  }
 }
 
 @mixin paragraph-content {
@@ -30,11 +54,16 @@
   font-size: 16px;
 }
 
-@mixin redirect{
+@mixin redirect {
   color: $green_color;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 3px;
   transition: 0.4s;
+
 
   &:hover {
     color: $hover_text_color;
+    border-bottom-color: $hover_text_color;
   }
 }

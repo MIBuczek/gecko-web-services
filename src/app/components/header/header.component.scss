@@ -1,23 +1,20 @@
 @import "../../../styles/variables.scss";
+@import "../../../styles/general-styles.scss";
 
 
 header {
   display: block;
-  min-width: 400px;
+  top: 60px;
+  left: 0;
   margin: 45px 0;
+  position: relative;
 
   .h-title-shadow {
     span {
-      position: relative;
-      top: 50px;
-      color: $bg_text_color;
-      opacity: 0.35;
-      left: 0;
-      z-index: 0;
-      font-weight: 700;
+      @include header-shadow;
+      top: -50px;
       font-size: 110px;
-      text-transform: uppercase;
-      line-height: 0;
+      text-align: center;
     }
   }
 
@@ -83,7 +80,7 @@ header {
     .h-title-shadow {
       span {
         font-size: 55px;
-        top: 40px;
+        top: -10px;
       }
     }
 
@@ -101,7 +98,6 @@ header {
     .h-title-shadow {
       span {
         font-size: 45px;
-        top: 30px;
       }
     }
 

@@ -7,26 +7,28 @@ import {NotFoundPageComponent} from "views/not-found-page/not-found-page.compone
 const routes: Routes = [
   {
     path: '',
-    pathMatch : 'full',
+    pathMatch: 'full',
     redirectTo: 'main-page'
   },
   {
     path: 'main-page',
-    component: MainPageComponent
+    component: MainPageComponent,
+    data: {breadcrumbs: ['main-page']},
   },
   {
     path: 'privacy-policy',
-    pathMatch : 'full',
-    component: PrivacyPolicyPageComponent
+    component: PrivacyPolicyPageComponent,
+    data: {breadcrumbs: ['main-page', 'privacy-policy']},
   },
   {
     path: '**',
-    component: NotFoundPageComponent
+    component: NotFoundPageComponent,
+    data: {breadcrumbs: ['main-page']},
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
+  imports: [RouterModule.forRoot(routes, {useHash: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule {
