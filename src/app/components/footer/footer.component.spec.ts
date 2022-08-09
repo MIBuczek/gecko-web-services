@@ -6,7 +6,7 @@ import {DB_MESSAGE_ACTIONS, MailingService} from "services/mailing/mailing.servi
 import {By} from "@angular/platform-browser";
 import {ReactiveFormsModule} from "@angular/forms";
 import {of} from "rxjs";
-import {footerTextContent} from "text-content/footer";
+import {footerTextContent} from "text-content/footer/index.json";
 
 describe('FooterComponent', () => {
   let component: FooterComponent;

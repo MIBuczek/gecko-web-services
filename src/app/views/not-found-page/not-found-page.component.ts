@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {notFoundTextContent} from "text-content/not-found";
 import {LandSwitcherService} from "services/lang-switcher/land-switcher.service";
 import {ReplaySubject, takeUntil} from "rxjs";
 import {TypeLang} from "models/general";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
+import notFoundTextContent from "text-content/not-found/index.json";
+import {INotFoundTextContent} from "models/text-content";
 
 @Component({
   selector: 'app-not-found-page',
@@ -12,8 +13,7 @@ import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
   styleUrls: ['./not-found-page.component.scss']
 })
 export class NotFoundPageComponent implements OnInit, OnDestroy {
-
-  public textContent = notFoundTextContent
+  public textContent : INotFoundTextContent = notFoundTextContent
   public currentLang: TypeLang = "PL"
   private subscription$ = new ReplaySubject(0);
   private readonly wrongPath: string;

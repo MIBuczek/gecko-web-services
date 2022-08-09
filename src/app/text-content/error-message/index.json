@@ -1,0 +1,12 @@
+{
+  "PL": {
+    "required": "To pole jest wymagane",
+    "email": "Nie poprawny format adresu e-maila",
+    "minlength": "Minimalna długość to 3 znaki"
+  },
+  "EN": {
+    "required": "This field is requred",
+    "email": "Incorrect format of email address",
+    "minlength": "Minimal length is 3 sign"
+  }
+}

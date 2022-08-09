@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {copyRightsTextContent} from "text-content/copy-rights";
+import copyRightsTextContent from "text-content/copy-rights/index.json";
 import {LandSwitcherService} from "services/lang-switcher/land-switcher.service";
+import {ICopyRightsTextContent} from "models/text-content";
 
 @Component({
   selector: 'app-copy-rights',
@@ -8,8 +9,8 @@ import {LandSwitcherService} from "services/lang-switcher/land-switcher.service"
   styleUrls: ['./copy-rights.component.scss']
 })
 export class CopyRightsComponent {
+  public textContent: ICopyRightsTextContent = copyRightsTextContent
   public currentYear = new Date().getFullYear()
-  public textContent = copyRightsTextContent
   public currentLang: 'PL' | 'EN' = "PL"
 
   constructor(private ls: LandSwitcherService) {

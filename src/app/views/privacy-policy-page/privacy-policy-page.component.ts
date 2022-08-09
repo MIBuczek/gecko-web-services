@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {privacyPolicyTextContent} from "text-content/privacy-policy";
 import {ReplaySubject, takeUntil} from "rxjs";
 import {LandSwitcherService} from "services/lang-switcher/land-switcher.service";
 import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
 import {ActivatedRoute} from "@angular/router";
 import {IAppRouts, TypeLang} from "models/general";
+import privacyPolicyTextContent from "text-content/privacy-policy/index.json";
+import {IPrivacyPolicyTextContent} from "models/text-content";
 
 @Component({
   selector: 'app-privacy-policy-page',
@@ -12,7 +13,7 @@ import {IAppRouts, TypeLang} from "models/general";
   styleUrls: ['./privacy-policy-page.component.scss']
 })
 export class PrivacyPolicyPageComponent implements OnInit, OnDestroy {
-  public textContent = privacyPolicyTextContent
+  public textContent: IPrivacyPolicyTextContent = privacyPolicyTextContent
   public currentLang: TypeLang = "PL"
   private subscription$ = new ReplaySubject(0);
 

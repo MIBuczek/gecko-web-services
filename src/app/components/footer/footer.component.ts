@@ -1,11 +1,12 @@
 import {Component, OnDestroy} from '@angular/core';
-import {footerTextContent} from "text-content/footer";
 import {LandSwitcherService} from "services/lang-switcher/land-switcher.service";
-import {errorMessageTextContent} from "text-content/error-message";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {DB_MESSAGE_ACTIONS, MailingService} from "services/mailing/mailing.service";
 import {EmailMessage} from "classes/email-message.class";
 import {BehaviorSubject, bufferTime, filter, from, Observable, ReplaySubject, takeUntil} from "rxjs";
+import {IErrorTextContent, IFooterTextContent} from "models/text-content";
+import errorMessageTextContent from "text-content/error-message/index.json";
+import footerTextContent from "text-content/footer/index.json";
 
 @Component({
   selector: 'app-footer',
@@ -13,9 +14,10 @@ import {BehaviorSubject, bufferTime, filter, from, Observable, ReplaySubject, ta
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnDestroy {
+  public errorMessages: IErrorTextContent = errorMessageTextContent;
+  public textContent: IFooterTextContent = footerTextContent;
+
   public currentLang: 'PL' | 'EN' = "PL"
-  public textContent = footerTextContent;
-  public errorMessages = errorMessageTextContent;
   public dbMessageActions = DB_MESSAGE_ACTIONS
 
   public submitStatus$?: Observable<DB_MESSAGE_ACTIONS>

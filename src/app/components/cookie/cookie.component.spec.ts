@@ -3,7 +3,7 @@ import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing'
 import {CookieComponent} from './cookie.component';
 import {LandSwitcherService} from "services/lang-switcher/land-switcher.service";
 import {By} from "@angular/platform-browser";
-import {cookiesTextContent} from "text-content/cookies";
+import {cookiesTextContent} from "text-content/cookies/index.json";
 
 describe('CookieComponent', () => {
   let component: CookieComponent;

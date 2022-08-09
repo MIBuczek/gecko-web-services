@@ -2,7 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {ErrorMessageComponent} from './error-message.component';
 import {By} from "@angular/platform-browser";
-import {errorMessageTextContent} from "text-content/error-message";
+import {errorMessageTextContent} from "text-content/error-message/index.json";
 
 describe('ErrorMessageComponent', () => {
   let component: ErrorMessageComponent;

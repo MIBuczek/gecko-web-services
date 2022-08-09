@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {cookiesTextContent} from "text-content/cookies";
 import {LandSwitcherService} from "services/lang-switcher/land-switcher.service";
+import {ICookiesTextContent} from "models/text-content";
+import cookiesTextContent from "text-content/cookies/index.json";
 
 @Component({
   selector: 'app-cookie',
@@ -8,7 +9,7 @@ import {LandSwitcherService} from "services/lang-switcher/land-switcher.service"
   styleUrls: ['./cookie.component.scss']
 })
 export class CookieComponent implements OnInit {
-  public textContent = cookiesTextContent;
+  public textContent: ICookiesTextContent = cookiesTextContent;
   public isCookiesAccepted: boolean = false
   public currentLang: 'PL' | 'EN' = "PL"
 
