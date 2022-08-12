@@ -1,0 +1,27 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/general-styles.scss";
+
+.service {
+  padding: 60px 0;
+
+  .service-title {
+    position: relative;
+
+    span {
+      @include header-shadow;
+      top: -20px;
+      font-size: 40px;
+    }
+
+    h1 {
+      @include page-header;
+      font-size: 32px;
+      color: $grey_color;
+    }
+
+    p {
+      @include paragraph-content;
+
+    }
+  }
+}

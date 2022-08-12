@@ -1,0 +1,78 @@
+{
+  "PL": {
+    "main_header": "Serwis",
+    "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "cards": [
+      {
+        "card_header": "Produkty",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      },
+      {
+        "card_header": "Strony Internetowe",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      },
+      {
+        "card_header": "Aplikacje Internetowe",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      },
+      {
+        "card_header": "Hosting",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      },
+      {
+        "card_header": "Tworzenie baz danych",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      },
+      {
+        "card_header": "Konsultacje technologiczne",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      }
+    ],
+    "btn_more": "Rowiń",
+    "btn_hide": "Zwiń"
+  },
+  "EN": {
+    "main_header": "Service",
+    "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "cards": [
+      {
+        "card_header": "Products",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      },
+      {
+        "card_header": "Personal Web Pages",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      },
+      {
+        "card_header": "Web Applications",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      },
+      {
+        "card_header": "Hosting",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      },
+      {
+        "card_header": "Cloud Data Base",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      },
+      {
+        "card_header": "Technology consultation",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus."
+      }
+    ],
+    "btn_more": "More",
+    "btn_hide": "Hide"
+  }
+}

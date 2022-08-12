@@ -19,11 +19,15 @@ $white_color : #fff;
 $btn_primary: $main_primary_color;
 $btn_secondary: $main_secondary_color;
 
-/*Box shadow */
+/* Box shadow */
 $box_shadow_primary: 0 8px 28px rgb(22 223 126 / 45%);
+$box_shadow_secondary : 0 0 21px -15px rgba(66, 68, 90, 1);
 
 /* Borders color */
 $primary_border: $main_primary_color;
 $secondary_border: #d9dce2;
 $tertiary_border : #e4e6ea;
 
+
+/* Transition animation */
+$main_transition : all ease-in-out 0.3s

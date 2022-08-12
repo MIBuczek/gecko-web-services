@@ -65,12 +65,11 @@ footer {
         background: $green_color;
         color: $white_color;
         transition: 0.3s;
-        border-radius: 0 4px 4px 0;
         height: 100%;
 
         &:hover {
           box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
-          opacity: 0.7;
+          border-radius: 20px;
         }
       }
     }

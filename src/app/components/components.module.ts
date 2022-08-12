@@ -8,9 +8,10 @@ import {PipeModule} from "pipes/pipe.module";
 import {CookieComponent} from './cookie/cookie.component';
 import {ErrorMessageComponent} from './error-message/error-message.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import { CopyRightsComponent } from './copy-rights/copy-rights.component';
+import {CopyRightsComponent} from './copy-rights/copy-rights.component';
 import {AppRoutingModule} from "../app-routing.module";
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+import {BreadcrumbsComponent} from './breadcrumbs/breadcrumbs.component';
+import {ServiceCardComponent} from './service-card/service-card.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
     ErrorMessageComponent,
     CopyRightsComponent,
     BreadcrumbsComponent,
+    ServiceCardComponent,
   ],
   exports: [
     FooterComponent,
@@ -31,7 +33,8 @@ import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
     LoaderComponent,
     CookieComponent,
     CopyRightsComponent,
-    BreadcrumbsComponent
+    BreadcrumbsComponent,
+    ServiceCardComponent
   ],
   imports: [
     CommonModule,

@@ -70,3 +70,22 @@ export interface IPrivacyPolicyTextContent {
   PL: IPrivacyPolicy;
   EN: IPrivacyPolicy
 }
+
+export interface ISingleCard {
+  card_header: string;
+  card_short_description: string;
+  card_full_description: string;
+}
+
+export interface IServiceCard {
+  main_header: string;
+  intro: string;
+  cards: Array<ISingleCard>;
+  btn_more: string;
+  btn_hide: string;
+}
+
+export interface IServiceCardsTextContent {
+  PL: IServiceCard;
+  EN: IServiceCard;
+}
