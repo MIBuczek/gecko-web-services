@@ -1,6 +1,14 @@
-<div class="card my-3 d-flex flex-column justify-content-between align-items-center">
-  <div class="icon"><i class="bi bi-dribbble"></i></div>
-  <h3>{{cardContent?.card_header}}</h3>
-  <p>{{cardContent?.card_short_description}}</p>
-  <button class="modal_btn text-center">Show more</button>
+<div
+  class="card my-3 d-flex flex-column justify-content-between align-items-center"
+  [ngClass]="{ 'full' : isCardOpen }">
+  <div class="icon"><i [class]="cardContent?.card_icon"></i></div>
+  <h3>{{ cardContent?.card_header }}</h3>
+  <p>{{ isCardOpen ? cardContent?.card_full_description : cardContent?.card_short_description }}</p>
+  <button
+    class="modal_btn text-center"
+    type="button"
+    (click)="showMore()">
+    {{ isCardOpen ? cardBtn?.hide : cardBtn?.more }}
+  </button>
 </div>
+

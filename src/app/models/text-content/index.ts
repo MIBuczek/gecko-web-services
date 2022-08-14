@@ -73,16 +73,21 @@ export interface IPrivacyPolicyTextContent {
 
 export interface ISingleCard {
   card_header: string;
+  card_icon: string;
   card_short_description: string;
   card_full_description: string;
+}
+
+export interface ISingleCardBtn {
+  more: string;
+  hide: string;
 }
 
 export interface IServiceCard {
   main_header: string;
   intro: string;
   cards: Array<ISingleCard>;
-  btn_more: string;
-  btn_hide: string;
+  btn: ISingleCardBtn
 }
 
 export interface IServiceCardsTextContent {

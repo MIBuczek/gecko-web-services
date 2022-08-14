@@ -1,5 +1,6 @@
 @import "../../../styles/variables.scss";
 @import "../../../styles/general-styles.scss";
+@import "../../../styles/animation.scss";
 
 .service {
   padding: 60px 0;
@@ -22,6 +23,31 @@
     p {
       @include paragraph-content;
 
+    }
+  }
+
+  .card-wrapper {
+    /* Styles for open card */
+    &.open {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      transform: translate(50%, 50%);
+      border-width: 2px;
+      animation: fadeIn 0.5s ease-in-out;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 100vw;
+        height: 100vh;
+        z-index: -100;
+        background: $light_color;
+        opacity: 0.8;
+      }
     }
   }
 }
