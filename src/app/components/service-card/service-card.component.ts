@@ -1,10 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ISingleCard, ISingleCardBtn} from "models/text-content";
-
-export interface ICardEmitter {
-  cardIndex: number | undefined,
-  isCardOpen: boolean
-}
+import {ISingleCard} from "models/text-content";
 
 @Component({
   selector: 'app-service-card',
@@ -13,13 +8,11 @@ export interface ICardEmitter {
 })
 export class ServiceCardComponent {
   @Input() cardContent: ISingleCard | undefined;
-  @Input() cardIndex: number | undefined;
-  @Input() cardBtn: ISingleCardBtn | undefined;
-  @Output() emitIsOpen = new EventEmitter<ICardEmitter>()
-  public isCardOpen = false
+  @Input() cardIndex: number | null = null
+  @Input() cardBtn: string = '';
+  @Output() emitIsOpen = new EventEmitter<number | null>()
 
-  public showMore() {
-    this.isCardOpen = !this.isCardOpen
-    this.emitIsOpen.emit({cardIndex: this.cardIndex, isCardOpen: this.isCardOpen})
+  public showCard() {
+    this.emitIsOpen.emit(this.cardIndex)
   }
 }

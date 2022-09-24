@@ -12,6 +12,7 @@ import {CopyRightsComponent} from './copy-rights/copy-rights.component';
 import {AppRoutingModule} from "../app-routing.module";
 import {BreadcrumbsComponent} from './breadcrumbs/breadcrumbs.component';
 import {ServiceCardComponent} from './service-card/service-card.component';
+import { ServiceCardDetailsComponent } from './service-card-details/service-card-details.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import {ServiceCardComponent} from './service-card/service-card.component';
     CopyRightsComponent,
     BreadcrumbsComponent,
     ServiceCardComponent,
+    ServiceCardDetailsComponent,
   ],
   exports: [
     FooterComponent,
@@ -34,7 +36,8 @@ import {ServiceCardComponent} from './service-card/service-card.component';
     CookieComponent,
     CopyRightsComponent,
     BreadcrumbsComponent,
-    ServiceCardComponent
+    ServiceCardComponent,
+    ServiceCardDetailsComponent
   ],
   imports: [
     CommonModule,
