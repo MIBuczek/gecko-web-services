@@ -5,8 +5,7 @@ import {IAppRouts, TypeLang} from "models/general";
 import ServiceCardsTextContent from "text-content/services-cards/index.json";
 import {IServiceCardsTextContent} from "models/text-content";
 import {LandSwitcherService} from "services/lang-switcher/land-switcher.service";
-import {Observable, of} from "rxjs";
-import {isNil} from 'lodash'
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-main-page',
@@ -15,8 +14,8 @@ import {isNil} from 'lodash'
 })
 export class MainPageComponent implements OnInit {
   readonly sctc: IServiceCardsTextContent = ServiceCardsTextContent
-  readonly currentLang$: Observable<TypeLang>
-  public currentOpenCardIndex: number | null = null;
+  readonly currentLang$: Observable<TypeLang>;
+  public openCardIndex: number | null = null;
 
   constructor(
     private ls: LandSwitcherService,
@@ -25,16 +24,12 @@ export class MainPageComponent implements OnInit {
     this.currentLang$ = this.ls.getCurrentLang
   }
 
-
-  get lang (){
-   return this.currentLang$ || of('PL')
-  }
   public isOpenCard(cardIndex: number | null): boolean {
-    return !isNil(cardIndex)
+    return typeof cardIndex === 'number'
   }
 
-  public setOpenCard(card_index: number | null) {
-    this.currentOpenCardIndex = card_index
+  public setCardStatus(card_index: number | null) {
+    this.openCardIndex = card_index
   }
 
   ngOnInit() {

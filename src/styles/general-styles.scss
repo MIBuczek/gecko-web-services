@@ -67,3 +67,43 @@
     border-bottom-color: $hover_text_color;
   }
 }
+
+@mixin single-icon {
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    color: $green_color;
+    font-size: 36px;
+  }
+}
+
+@mixin header_card {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: $grey_color;
+  position: relative;
+  z-index: 2;
+}
+
+@mixin text_card {
+  line-height: 24px;
+  font-size: 14px;
+  margin: 20px 0 30px
+}
+
+@mixin modal_btn {
+  border: none;
+  background: $green_color;
+  color: white;
+  width: fit-content;
+  padding: 8px 20px;
+  transition: 0.3s;
+
+  &:hover {
+    border-radius: 20px;
+  }
+}

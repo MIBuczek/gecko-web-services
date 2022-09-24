@@ -12,7 +12,7 @@ import {CopyRightsComponent} from './copy-rights/copy-rights.component';
 import {AppRoutingModule} from "../app-routing.module";
 import {BreadcrumbsComponent} from './breadcrumbs/breadcrumbs.component';
 import {ServiceCardComponent} from './service-card/service-card.component';
-import { ServiceCardDetailsComponent } from './service-card-details/service-card-details.component';
+import { ModalCardDetailsComponent } from './modals/modal-card-details/modal-card-details.component';
 
 
 @NgModule({
@@ -26,7 +26,7 @@ import { ServiceCardDetailsComponent } from './service-card-details/service-card
     CopyRightsComponent,
     BreadcrumbsComponent,
     ServiceCardComponent,
-    ServiceCardDetailsComponent,
+    ModalCardDetailsComponent,
   ],
   exports: [
     FooterComponent,
@@ -37,7 +37,7 @@ import { ServiceCardDetailsComponent } from './service-card-details/service-card
     CopyRightsComponent,
     BreadcrumbsComponent,
     ServiceCardComponent,
-    ServiceCardDetailsComponent
+    ModalCardDetailsComponent
   ],
   imports: [
     CommonModule,

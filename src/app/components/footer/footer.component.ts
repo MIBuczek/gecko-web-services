@@ -1,6 +1,6 @@
 import {Component, OnDestroy} from '@angular/core';
 import {LandSwitcherService} from "services/lang-switcher/land-switcher.service";
-import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AbstractControl, UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {DB_MESSAGE_ACTIONS, MailingService} from "services/mailing/mailing.service";
 import {EmailMessage} from "classes/email-message.class";
 import {BehaviorSubject, bufferTime, filter, from, Observable, ReplaySubject, takeUntil} from "rxjs";
@@ -24,9 +24,9 @@ export class FooterComponent implements OnDestroy {
   private submitStateClear$ = new BehaviorSubject(true)
   private subscription$ = new ReplaySubject(0);
 
-  public formUserMessage = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(3)]),
-    message: new FormControl('', [Validators.required, Validators.minLength(3)])
+  public formUserMessage = new UntypedFormGroup({
+    email: new UntypedFormControl('', [Validators.required, Validators.email, Validators.minLength(3)]),
+    message: new UntypedFormControl('', [Validators.required, Validators.minLength(3)])
   })
 
   constructor(private ls: LandSwitcherService, private ms: MailingService) {

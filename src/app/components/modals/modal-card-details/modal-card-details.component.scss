@@ -1,0 +1,40 @@
+@import "../../../../styles/variables.scss";
+@import "../../../../styles/general-styles.scss";
+
+
+.modal {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #aaaaaab3;
+  animation: fadeIn 0.5s ease-in-out;
+
+  .card-details {
+    width: 800px;
+    min-height: 500px;
+    text-align: center;
+    border: 1px solid $white_color;
+    padding: 40px 60px;
+    background: $primary_bg;
+    border-radius: 10px;
+
+    .icon {
+      @include single-icon;
+    }
+
+    h3 {
+      @include header_card;
+    }
+
+    p {
+      @include text_card
+    }
+
+    .modal_btn {
+      @include modal_btn;
+    }
+  }
+
+}

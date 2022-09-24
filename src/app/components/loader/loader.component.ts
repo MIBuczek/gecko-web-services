@@ -10,7 +10,7 @@ export class LoaderComponent {
   public isLoading: null | boolean = null;
 
   constructor(public ls: LandSwitcherService) {
-    this.ls.isToggling.subscribe((status) => {
+    this.ls.isToggling$.subscribe((status) => {
       this.isLoading = status;
     });
   }

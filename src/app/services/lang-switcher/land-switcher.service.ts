@@ -7,28 +7,28 @@ import {TypeLang} from "models/general";
 })
 export class LandSwitcherService {
 
-  private currentLang = new BehaviorSubject<TypeLang>('PL');
-  public isToggling = new BehaviorSubject(false);
+  private currentLang$ = new BehaviorSubject<TypeLang>('PL');
+  public isToggling$ = new BehaviorSubject(false);
 
   constructor() {
   }
 
   langToggle(): void {
-    this.isToggling.next(true);
-    if (this.currentLang.getValue() === 'PL') {
+    this.isToggling$.next(true);
+    if (this.currentLang$.getValue() === 'PL') {
       setTimeout(() => {
-        this.currentLang.next('EN');
-        this.isToggling.next(false);
+        this.currentLang$.next('EN');
+        this.isToggling$.next(false);
       }, 800);
     } else {
       setTimeout(() => {
-        this.currentLang.next('PL');
-        this.isToggling.next(false);
+        this.currentLang$.next('PL');
+        this.isToggling$.next(false);
       }, 800);
     }
   }
 
   get getCurrentLang(): Observable<TypeLang> {
-    return this.currentLang.asObservable();
+    return this.currentLang$.asObservable();
   }
 }

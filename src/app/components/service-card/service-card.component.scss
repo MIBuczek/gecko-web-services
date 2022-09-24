@@ -1,4 +1,5 @@
 @import "../../../styles/variables.scss";
+@import "../../../styles/general-styles.scss";
 
 .card {
   text-align: center;
@@ -7,16 +8,6 @@
   background: $primary_bg;
   min-height: 400px;
   border-radius: 10px;
-
-  &.full {
-    position: relative;
-    top: 50%;
-    left: 50%;
-    width: 800px;
-    min-height: 500px;
-    transform: translate(-50%, -20%)
-
-  }
 
   &:hover {
     box-shadow: $box_shadow_secondary;
@@ -29,43 +20,18 @@
   }
 
   .icon {
-    margin: 0 auto 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    i {
-      color: $green_color;
-      font-size: 36px;
-    }
-
+    @include single-icon;
   }
 
   h3 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: $grey_color;
-    position: relative;
-    z-index: 2;
+    @include header_card;
   }
 
   p {
-    line-height: 24px;
-    font-size: 14px;
-    margin: 20px 0 30px
+    @include text_card
   }
 
   .modal_btn {
-    border: none;
-    background: $green_color;
-    color: white;
-    width: fit-content;
-    padding: 8px 20px;
-    transition: 0.3s;
-
-    &:hover {
-      border-radius: 20px;
-    }
+    @include modal_btn;
   }
 }
