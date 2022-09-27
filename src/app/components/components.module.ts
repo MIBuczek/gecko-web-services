@@ -12,7 +12,10 @@ import {CopyRightsComponent} from './copy-rights/copy-rights.component';
 import {AppRoutingModule} from "../app-routing.module";
 import {BreadcrumbsComponent} from './breadcrumbs/breadcrumbs.component';
 import {ServiceCardComponent} from './service-card/service-card.component';
-import { ModalCardDetailsComponent } from './modals/modal-card-details/modal-card-details.component';
+import {ModalCardDetailsComponent} from './modals/modal-card-details/modal-card-details.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatNativeDateModule} from "@angular/material/core";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -43,7 +46,10 @@ import { ModalCardDetailsComponent } from './modals/modal-card-details/modal-car
     CommonModule,
     PipeModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatDialogModule,
+    MatNativeDateModule,
+    BrowserAnimationsModule
   ]
 })
 export class ComponentsModule {

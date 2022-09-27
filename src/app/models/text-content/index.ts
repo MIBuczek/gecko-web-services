@@ -76,6 +76,7 @@ export interface ISingleCard {
   card_icon: string;
   card_short_description: string;
   card_full_description: string;
+  card_tags: string[];
 }
 
 export interface ISingleCardBtn {

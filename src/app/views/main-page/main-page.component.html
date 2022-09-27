@@ -2,30 +2,24 @@
 <section class="service container-fluid my-5">
   <div class="container text-center">
     <div class="service-title d-flex flex-column justify-content-center my-5">
-      <span>{{sctc[(currentLang$ | async) || 'PL'].main_header}}</span>
-      <h1>{{sctc[(currentLang$ | async) || 'PL'].main_header}}</h1>
-      <p>{{sctc[(currentLang$ | async) || 'PL'].intro}}</p>
+      <span>{{sctc[currentLang].main_header}}</span>
+      <h1>{{sctc[currentLang].main_header}}</h1>
+      <p>{{sctc[currentLang].intro}}</p>
     </div>
     <div class="row">
       <div
         class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0"
-        *ngFor="let card of sctc[(currentLang$ | async) || 'PL'].cards ; let index = index">
+        *ngFor="let card of sctc[currentLang].cards ; let index = index">
         <div class="card-wrapper">
           <app-service-card
             [cardIndex]="index"
             [cardContent]="card"
-            [cardBtn]="sctc[(currentLang$ | async) || 'PL'].btn.more"
+            [cardBtn]="sctc[currentLang].btn.more"
             (emitIsOpen)="setCardStatus($event)">
           </app-service-card>
         </div>
       </div>
     </div>
-    <app-modal-card-details
-      *ngIf="isOpenCard(openCardIndex)"
-      [cardContent]="sctc[(currentLang$ | async) || 'PL'].cards[openCardIndex || 0]"
-      [cardBtn]="sctc[(currentLang$ | async) || 'PL'].btn.hide"
-      (emitIsHide)="setCardStatus($event)">
-    </app-modal-card-details>
   </div>
 </section>
 <app-footer></app-footer>

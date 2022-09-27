@@ -1,5 +1,11 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, Inject,} from '@angular/core';
 import {ISingleCard} from "models/text-content";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+
+interface IModalData {
+  openCard: ISingleCard;
+  btnText: string;
+}
 
 @Component({
   selector: 'app-modal-card-details',
@@ -7,15 +13,14 @@ import {ISingleCard} from "models/text-content";
   styleUrls: ['./modal-card-details.component.scss']
 })
 export class ModalCardDetailsComponent {
-  @Input() cardContent: ISingleCard | undefined;
-  @Input() cardBtn: string = '';
-  @Output() emitIsHide = new EventEmitter<number | null>()
 
-  constructor() {
+  constructor(
+    private modalRef: MatDialogRef<ModalCardDetailsComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: IModalData) {
   }
 
   public hideCard() {
-    this.emitIsHide.emit(null)
+    this.modalRef.close()
   }
 
 }

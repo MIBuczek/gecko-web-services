@@ -26,15 +26,29 @@
 
     h3 {
       @include header_card;
+      margin-bottom: 0;
     }
 
     p {
       @include text_card
     }
 
+    hr {
+      width: 100%;
+      height: 2px;
+      color: $main_primary_color;
+    }
+
+    .badge-secondary {
+      width: fit-content;
+      background: $grey_color;
+      margin: 3px 5px;
+    }
+
     .modal_btn {
       @include modal_btn;
     }
   }
+
 
 }
