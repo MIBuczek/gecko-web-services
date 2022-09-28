@@ -12,7 +12,8 @@ export class ServiceCardComponent {
   @Input() cardBtn: string = '';
   @Output() emitIsOpen = new EventEmitter<number | null>()
 
-  public showCard() {
+  public showCard(event: Event) {
+    event.stopPropagation()
     this.emitIsOpen.emit(this.cardIndex)
   }
 }

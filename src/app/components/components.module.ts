@@ -16,6 +16,7 @@ import {ModalCardDetailsComponent} from './modals/modal-card-details/modal-card-
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatNativeDateModule} from "@angular/material/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
     AppRoutingModule,
     MatDialogModule,
     MatNativeDateModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    TranslateModule
   ]
 })
 export class ComponentsModule {

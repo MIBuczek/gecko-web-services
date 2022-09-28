@@ -3,8 +3,7 @@ import {ISingleCard} from "models/text-content";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 interface IModalData {
-  openCard: ISingleCard;
-  btnText: string;
+  card: ISingleCard;
 }
 
 @Component({

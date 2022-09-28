@@ -3,17 +3,17 @@
     <div class="row justify-content-center">
       <div class="col-lg-6 contact-header text-center">
         <span>
-          {{ textContent[currentLang]['title'] }}
+          {{ 'footer.title' | translate }}
         </span>
         <h3>
-          {{ textContent[currentLang]['title'] }}
+          {{'footer.title' | translate }}
         </h3>
       </div>
     </div>
     <div class="row justify-content-center">
       <div class="col-lg-6">
         <p class="fs-m-6">
-          {{textContent[currentLang]['description']}}
+          {{'footer.description' | translate}}
         </p>
         <div class="contact-links ">
           <p class="d-inline mr-3">
@@ -37,49 +37,48 @@
               type="email"
               name="email"
               formControlName="email"
-              [placeholder]="textContent[currentLang].formEmail"
-            >
+              [placeholder]="'footer.input-email' | translate">
             <ng-container *ngIf="formUserMessage.touched && formControls['email'].errors">
               <app-error-message
                 *ngIf="formControls['email'].touched && formControls['email'].errors['required'] "
-                [message]="errorMessages[currentLang]['required']"
+                [message]="'error-message.required' | translate"
               ></app-error-message>
               <app-error-message
                 *ngIf="formControls['email'].errors['email']"
-                [message]="errorMessages[currentLang]['email']"
+                [message]="'error-message.email' | translate"
               ></app-error-message>
               <app-error-message
                 *ngIf="formControls['email'].errors['minlength']"
-                [message]="errorMessages[currentLang]['minlength']"
+                [message]="'error-message.min-length' | translate"
               ></app-error-message>
             </ng-container>
             <textarea
               name="message"
               formControlName="message"
-              [placeholder]="textContent[currentLang].formMessage"
-            ></textarea>
+              [placeholder]="'footer.input-message' | translate">
+            </textarea>
             <ng-container *ngIf="formControls['message'].errors">
               <app-error-message
                 *ngIf="formControls['message'].touched && formControls['message'].errors['required']"
-                [message]="errorMessages[currentLang]['required']"
+                [message]="'error-message.required' | translate"
               ></app-error-message>
               <app-error-message
                 *ngIf="formControls['message'].touched && formControls['message'].errors['minlength']"
-                [message]="errorMessages[currentLang]['minlength']"
+                [message]="'error-message.min-length' | translate"
               ></app-error-message>
             </ng-container>
           </div>
           <div class="col-md-2 col-12">
-            <input type="submit" [value]="textContent[currentLang].formBtn" [disabled]="!formUserMessage.touched">
+            <input type="submit" [value]="'footer.submit-btn' | translate" [disabled]="!formUserMessage.touched">
           </div>
           <ng-container *ngIf="!!submitStatus$ && (submitClearStatus | async)">
             <p class="p-3 m-0 message-success text-success"
                *ngIf="( submitStatus$ | async) === dbMessageActions.SUCCESS">
-              {{textContent[currentLang][dbMessageActions.SUCCESS]}}
+              {{'footer.submit-success'| translate}}
               <span class="mx-1"><i class="bi bi-check-square"></i></span>
             </p>
             <p class="p-3 m-0 message-error text-danger" *ngIf="( submitStatus$ | async) === dbMessageActions.ERROR">
-              {{textContent[currentLang][dbMessageActions.ERROR]}}
+              {{'footer.submit-error' | translate}}
               <span class="mx-1"><i class="bi bi-exclamation-square"></i></span>
             </p>
           </ng-container>

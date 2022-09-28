@@ -1,0 +1,131 @@
+{
+  "not-found-page": {
+    "header": "Bład 404",
+    "description": "Podany URL nie istnieje w serwisie.",
+    "redirect": "Powrót do strony głównej"
+  },
+  "privacy-policy-page": {
+    "main_header": "Polityka Prywatności",
+    "main_description": "W związku z udostępnianiem usług internetowych, strona Gecko Web Services stosuje tzw. cookies oraz local storage, tj. dane informatyczne, w szczególności pliki tekstowe zapisywane przez serwery na urządzeniu końcowym użytkownika,które serwery mogą odczytać przy każdorazowym połączeniu się z tego urządzenia końcowego.Oprogramowanie służące do przeglądania stron internetowych (przeglądarka internetowa) domyślnie dopuszcza przechowywanie plików cookies w urządzeniu końcowym użytkownika. Użytkownicy serwisu mogą dokonać w każdym czasie zmiany ustawień dotyczących plików cookies. Ustawienia te mogą zostać zmienione w szczególności w taki sposób, aby blokować automatyczną obsługę plików cookiesw ustawieniach przeglądarki internetowej, bądź informować o ich każdorazowym zamieszczeniu w urządzeniu użytkownika serwisu internetowego. Szczegółowe informacje o możliwości i sposobach obsługi plików cookies dostępne są w ustawieniach oprogramowania (przeglądarki internetowej). Mechanizm Cookies nie jest wykorzystywany do pozyskiwania jakichkolwiek informacji o użytkownikach serwisu ani śledzenia ich nawigacji. Pliki Cookies stosowane w serwisie nie przechowują żadnych danych osobowych ani innych informacji zebranych od użytkowników. Serwis wykorzystuje plik sesyjny, który tworzony jest i istnieje tylko w czasie trwania sesji przeglądarki. Jest on niezbędny dla prawidłowego działania poszczególnych elementów serwisu",
+    "parts": [
+      {
+        "inner_header": "Adres e-mail",
+        "inner_description": "Gecko Web Services informuje, że adres email podawany przez użytkowników w formularzu udostępnionym w niniejszym serwisie internetowym jest używany jedynie do przesłania odpowiedzi na złożone zapytanie."
+      },
+      {
+        "inner_header": "Odnośniki do innych stron",
+        "inner_description": "Nie odpowiadamy za politykę prywatności serwisów, do których prowadzą linki ze strony www.gecko-web-services.web.app"
+      },
+      {
+        "inner_header": "Zmiany wraz z rozwojem serwisu",
+        "inner_description": "Zastrzegamy sobie prawo zmiany powyższej polityki prywatności poprzez opublikowanie nowej polityki prywatności na tej że stronie."
+      }
+    ],
+    "redirect": "Powrót na stronę główną"
+  },
+  "main-page": {
+    "main_header": "Serwis",
+    "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "cards": [
+      {
+        "card_header": "Gotowe Produkty",
+        "card_icon": "bi bi-app-indicator",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus.",
+        "card_tags": [
+          "react",
+          "angular",
+          "express",
+          "node.js"
+        ]
+      },
+      {
+        "card_header": "Strony Internetowe",
+        "card_icon": "bi bi-filetype-html",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus.",
+        "card_tags": [
+          "html",
+          "css",
+          "bootstrap",
+          "react",
+          "angular"
+        ]
+      },
+      {
+        "card_header": "Aplikacje Internetowe",
+        "card_icon": "bi bi-terminal",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus.",
+        "card_tags": [
+          "react",
+          "angular",
+          "express",
+          "node.js",
+          "firebase",
+          "mongodb",
+          "google-cloud-platform"
+        ]
+      },
+      {
+        "card_header": "Hosting",
+        "card_icon": "bi bi-server",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus.",
+        "card_tags": [
+          "firebase",
+          "google-cloud-platform"
+        ]
+      },
+      {
+        "card_header": "Tworzenie baz danych",
+        "card_icon": "bi bi-cloud",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus.",
+        "card_tags": [
+          "firebase",
+          "mongodb",
+          "google-cloud-platform"
+        ]
+      },
+      {
+        "card_header": "Konsultacje technologiczne",
+        "card_icon": "bi bi-person-lines-fill",
+        "card_short_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur.",
+        "card_full_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nisi id tincidunt consectetur. Morbi a lobortis metus. Morbi porttitor diam a arcu semper tempor. Fusce congue feugiat turpis, id vehicula dui lacinia sed. Nullam ut cursus lectus, nec feugiat neque. Phasellus a consectetur tellus.",
+        "card_tags": [
+          "online",
+          "meetings"
+        ]
+      }
+    ],
+    "btn": {
+      "more": "Otwórz",
+      "hide": "Zamknij"
+    }
+  },
+  "cookies": {
+    "title": "Pliki Cookies",
+    "description": "Serwis wykorzystuje pliki cookies. Korzystając ze strony wyrażasz zgodę na wykorzystywanie plików cookies.",
+    "redirect": "Informacje o Polityce prywatności.",
+    "btn": "Akceptuje"
+  },
+  "copy-rights": {
+    "copy-right": "Prawa autorskie",
+    "right-reserved": "Wszystkie prawa do kopiowania zastrzeżone."
+  },
+  "error-messages": {
+    "required": "To pole jest wymagane",
+    "email": "Nie poprawny format adresu e-maila",
+    "min-length": "Minimalna długość to 3 znaki"
+  },
+  "footer": {
+    "title": "Kontakt",
+    "description": "Pozwól pomóc sobie odnaleźć się w współczesnej dżungli Internetu, wystarczy ze do nas napiszesz.",
+    "input-email": "Wpisz adres e-mail",
+    "input-message": "Wpisz wiadomość",
+    "submit-btn": "Wyślij",
+    "submit-success": "Dziękujemy, Twoja wiadomość została wysłana pomyślnie",
+    "submit-error": "Przepraszamy mamy problem z bazą danych, Twoja wiadomość nie została wysłana do nas poprawnie"
+  }
+}

@@ -1,8 +1,8 @@
 <nav class="container-fluid">
   <div class="container d-flex justify-content-end ">
-    <button class="lang-switcher" (click)="ls.langToggle()">
+    <button class="lang-switcher" (click)="langToggle($event)">
       <img
-        [src]="'../../../assets/flags/' + (currentLang$ | async) + '.png'"
+        [src]="'../../../assets/flags/' + selectedLang.toUpperCase() + '.png'"
         alt="flag"
         class="img-fluid"
       />

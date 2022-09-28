@@ -1,17 +1,17 @@
 <div class="modal">
   <div class="card-details my-3 d-flex flex-column justify-content-between align-items-center">
-    <div class="icon"><i [class]="data.openCard.card_icon"></i></div>
-    <h3>{{ data.openCard.card_header }}</h3>
-    <p>{{ data.openCard.card_full_description }}</p>
+    <div class="icon"><i [class]="data.card.card_icon"></i></div>
+    <h3>{{ data.card.card_header }}</h3>
+    <p>{{ data.card.card_full_description }}</p>
     <div class="row d-flex w-100 justify-content-center">
       <hr/>
-      <span class="badge badge-secondary" *ngFor="let tag of data.openCard.card_tags">{{tag}}</span>
+      <span class="badge badge-secondary" *ngFor="let tag of data.card.card_tags">{{tag}}</span>
     </div>
     <button
       class="modal_btn text-center"
       type="button"
       (click)="hideCard()">
-      {{ data.btnText }}
+      {{ "main-page.btn.hide" | translate }}
     </button>
   </div>
 </div>

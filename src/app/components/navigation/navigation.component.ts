@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {LandSwitcherService} from "services/lang-switcher/land-switcher.service";
-import {Observable} from "rxjs";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-navigation',
@@ -8,9 +7,15 @@ import {Observable} from "rxjs";
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent {
-  public currentLang$: Observable<'PL' | 'EN'>;
+  public selectedLang: 'pl' | 'en' = 'pl';
 
-  constructor(public ls: LandSwitcherService) {
-    this.currentLang$ = this.ls.getCurrentLang;
+  constructor(private translate: TranslateService) {
+  }
+
+  public langToggle(event : Event) {
+    event.stopPropagation()
+    const currentLang = this.selectedLang.includes('pl') ? 'en' : 'pl'
+    this.translate.use(currentLang)
+    this.selectedLang = currentLang
   }
 }

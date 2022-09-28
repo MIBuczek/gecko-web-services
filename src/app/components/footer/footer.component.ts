@@ -1,12 +1,8 @@
 import {Component, OnDestroy} from '@angular/core';
-import {LandSwitcherService} from "services/lang-switcher/land-switcher.service";
 import {AbstractControl, UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {DB_MESSAGE_ACTIONS, MailingService} from "services/mailing/mailing.service";
 import {EmailMessage} from "classes/email-message.class";
 import {BehaviorSubject, bufferTime, filter, from, Observable, ReplaySubject, takeUntil} from "rxjs";
-import {IErrorTextContent, IFooterTextContent} from "models/text-content";
-import errorMessageTextContent from "text-content/error-message/index.json";
-import footerTextContent from "text-content/footer/index.json";
 
 @Component({
   selector: 'app-footer',
@@ -14,12 +10,7 @@ import footerTextContent from "text-content/footer/index.json";
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnDestroy {
-  public errorMessages: IErrorTextContent = errorMessageTextContent;
-  public textContent: IFooterTextContent = footerTextContent;
-
-  public currentLang: 'PL' | 'EN' = "PL"
   public dbMessageActions = DB_MESSAGE_ACTIONS
-
   public submitStatus$?: Observable<DB_MESSAGE_ACTIONS>
   private submitStateClear$ = new BehaviorSubject(true)
   private subscription$ = new ReplaySubject(0);
@@ -29,9 +20,8 @@ export class FooterComponent implements OnDestroy {
     message: new UntypedFormControl('', [Validators.required, Validators.minLength(3)])
   })
 
-  constructor(private ls: LandSwitcherService, private ms: MailingService) {
-    ls.getCurrentLang.pipe(takeUntil(this.subscription$))
-      .subscribe((lang) => this.currentLang = lang)
+  constructor(private ms: MailingService) {
+    /* Observable to clear state after submit the message */
     this.submitStateClear$.pipe(filter(Boolean), bufferTime(10000), takeUntil(this.subscription$))
       .subscribe(() => this.submitStateClear$.next(false))
   }
@@ -56,5 +46,4 @@ export class FooterComponent implements OnDestroy {
     this.subscription$.next(1)
     this.subscription$.complete()
   }
-
 }
