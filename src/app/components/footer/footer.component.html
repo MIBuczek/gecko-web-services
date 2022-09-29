@@ -18,13 +18,13 @@
         <div class="contact-links ">
           <p class="d-inline mr-3">
             <span>
-              <i class="bx bi-phone"></i>
+              <i class="fa-solid fa-mobile"></i>
             </span>
             509-312-832
           </p>
           <p class="d-inline">
             <span>
-              <i class="bx bi-envelope"></i>
+              <i class="fa-solid fa-envelope"></i>
             </span>
             gecko.web.services@gmail.com
           </p>
@@ -41,15 +41,15 @@
             <ng-container *ngIf="formUserMessage.touched && formControls['email'].errors">
               <app-error-message
                 *ngIf="formControls['email'].touched && formControls['email'].errors['required'] "
-                [message]="'error-message.required' | translate"
+                [message]="'error-messages.required' | translate"
               ></app-error-message>
               <app-error-message
                 *ngIf="formControls['email'].errors['email']"
-                [message]="'error-message.email' | translate"
+                [message]="'error-messages.email' | translate"
               ></app-error-message>
               <app-error-message
                 *ngIf="formControls['email'].errors['minlength']"
-                [message]="'error-message.min-length' | translate"
+                [message]="'error-messages.min-length' | translate"
               ></app-error-message>
             </ng-container>
             <textarea
@@ -60,11 +60,11 @@
             <ng-container *ngIf="formControls['message'].errors">
               <app-error-message
                 *ngIf="formControls['message'].touched && formControls['message'].errors['required']"
-                [message]="'error-message.required' | translate"
+                [message]="'error-messages.required' | translate"
               ></app-error-message>
               <app-error-message
                 *ngIf="formControls['message'].touched && formControls['message'].errors['minlength']"
-                [message]="'error-message.min-length' | translate"
+                [message]="'error-messages.min-length' | translate"
               ></app-error-message>
             </ng-container>
           </div>
@@ -75,11 +75,11 @@
             <p class="p-3 m-0 message-success text-success"
                *ngIf="( submitStatus$ | async) === dbMessageActions.SUCCESS">
               {{'footer.submit-success'| translate}}
-              <span class="mx-1"><i class="bi bi-check-square"></i></span>
+              <i class="fa-solid fa-check"></i>
             </p>
             <p class="p-3 m-0 message-error text-danger" *ngIf="( submitStatus$ | async) === dbMessageActions.ERROR">
               {{'footer.submit-error' | translate}}
-              <span class="mx-1"><i class="bi bi-exclamation-square"></i></span>
+              <i class="fa-solid fa-exclamation"></i>
             </p>
           </ng-container>
         </form>

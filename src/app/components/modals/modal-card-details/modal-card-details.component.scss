@@ -22,6 +22,10 @@
 
     .icon {
       @include single-icon;
+
+      i {
+        font-size: 56px;
+      }
     }
 
     h3 {
