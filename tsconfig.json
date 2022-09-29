@@ -41,6 +41,9 @@
       "models/*": [
         "app/models/*"
       ],
+      "utilities/*": [
+        "app/utilities/*"
+      ],
       "classes/*": [
         "app/classes/*"
       ],

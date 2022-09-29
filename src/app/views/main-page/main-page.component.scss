@@ -68,3 +68,17 @@
     }
   }
 }
+
+.technologies {
+  background: $main_primary_color;
+  margin-top: 8vh;
+  font-size: 3rem;
+  color: $dark_grey_color;
+  position: relative;
+
+  i:hover {
+    color: $white_color;
+    transition: 0.4s;
+    transform: scale(1.5);
+  }
+}

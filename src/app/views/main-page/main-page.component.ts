@@ -5,6 +5,7 @@ import {IAppRouts} from "models/general";
 import {ISingleCard} from "models/text-content";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalCardDetailsComponent} from "components/modals/modal-card-details/modal-card-details.component";
+import {tech_icons} from "utilities/variables/tehc-icon";
 
 @Component({
   selector: 'app-main-page',
@@ -12,6 +13,7 @@ import {ModalCardDetailsComponent} from "components/modals/modal-card-details/mo
   styleUrls: ['./main-page.component.scss']
 })
 export class MainPageComponent implements OnInit {
+  readonly tech_icons = tech_icons
 
   constructor(
     private modalRef: MatDialog,
