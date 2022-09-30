@@ -5,7 +5,7 @@ import {IAppRouts} from "models/general";
 import {ISingleCard} from "models/text-content";
 import {MatDialog} from "@angular/material/dialog";
 import {ModalCardDetailsComponent} from "components/modals/modal-card-details/modal-card-details.component";
-import {tech_icons} from "utilities/variables/tehc-icon";
+import {tech_icons} from "utilities/variables/tech-icon";
 
 @Component({
   selector: 'app-main-page',
