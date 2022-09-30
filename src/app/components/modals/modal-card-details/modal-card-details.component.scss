@@ -16,9 +16,9 @@
     min-height: 500px;
     text-align: center;
     border: 1px solid $white_color;
-    padding: 40px 60px;
+    padding: 2.5rem 3.75rem;
     background: $primary_bg;
-    border-radius: 10px;
+    border-radius: 0.625rem;
 
     .icon {
       @include single-icon;

@@ -4,16 +4,16 @@
 
 header {
   display: block;
-  top: 60px;
+  top: 3.75rem;
   left: 0;
-  margin: 45px 0;
+  margin: 7.5rem 0;
   position: relative;
 
   .h-title-shadow {
     span {
       @include header-shadow;
       top: -50px;
-      font-size: 110px;
+      font-size: 6.75rem;
       text-align: center;
     }
   }
@@ -24,9 +24,9 @@ header {
     background: transparent;
 
     h1 {
-      font-size: 88px;
+      font-size: 5.5rem;
       font-weight: 700;
-      line-height: 56px;
+      line-height: 5.65rem;
       color: $dark_grey_color;
       display: inline-block;
     }
@@ -35,7 +35,7 @@ header {
       display: inline-block;
       color: $grey_color;
       margin: 10px 0 30px 15px;
-      font-size: 88px;
+      font-size: 5.5rem;
     }
 
   }

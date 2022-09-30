@@ -8,34 +8,47 @@
   opacity: 0.35;
   z-index: 0;
   font-weight: 700;
-  font-size: 90px;
+  font-size: 5.65rem;
   text-transform: uppercase;
   overflow: hidden;
   width: max-content;
   transform: translate(-50%, -10%);
 
   @media (max-width: 1200px) {
-    font-size: 75px;
+    font-size: 4.65rem;
   }
 
   @media (max-width: 1000px) {
-    font-size: 75px;
+    font-size: 4.65rem;
     top: -70px;
     line-height: 0.8;
     width: 100%;
   }
 
   @media (max-width: 600px) {
-    font-size: 55px;
+    font-size: 3.45rem;
     line-height: 0.8;
     transform: translate(-48%, -10%);
   }
 }
 
+@mixin under_line($width) {
+  position: relative;
+  &:after {
+    content: '';
+    width: $width;
+    height: .25rem;
+    position: absolute;
+    bottom: -1rem;
+    left: 0;
+    background: $green_color;
+  }
+}
+
 @mixin page-header {
-  font-size: 58px;
+  font-size: 3.625rem;
   font-weight: 700;
-  line-height: 56px;
+  line-height: 3.5rem;
   color: $dark_grey_color;
   text-transform: uppercase;
   display: inline-block;
@@ -43,15 +56,23 @@
   overflow: hidden;
 
   @media (max-width: 600px) {
-    font-size: 48px;
+    font-size: 3rem;
   }
+}
+
+@mixin page_header_secondary {
+  color: $light_color;
+  margin: 0.625rem 0 2rem 0;
+  font-size: 24px;
 }
 
 @mixin paragraph-content {
   display: inline-block;
-  color: $grey_color;
-  margin: 10px 0 20px 15px;
-  font-size: 16px;
+  color: $light_color;
+  margin: 0.625rem 0 1.25rem 1rem;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 @mixin redirect {
@@ -59,7 +80,7 @@
   text-decoration: none;
   border-bottom: 1px solid transparent;
   padding-bottom: 3px;
-  transition: 0.4s;
+  transition: $main_transition;
 
 
   &:hover {
@@ -69,7 +90,7 @@
 }
 
 @mixin single-icon {
-  margin: 0 auto 20px;
+  margin: 0 auto 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,18 +102,18 @@
 }
 
 @mixin header_card {
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
   color: $grey_color;
   position: relative;
   z-index: 2;
 }
 
 @mixin text_card {
-  line-height: 24px;
+  line-height: 1.5rem;
   font-size: 14px;
-  margin: 20px 0 30px
+  margin: 1.25rem 0 2rem
 }
 
 @mixin modal_btn {
@@ -100,10 +121,10 @@
   background: $green_color;
   color: white;
   width: fit-content;
-  padding: 8px 20px;
-  transition: 0.3s;
+  padding: 0.5rem 1.25rem;
+  transition: $main_transition;
 
   &:hover {
-    border-radius: 20px;
+    border-radius: 1.25rem;
   }
 }

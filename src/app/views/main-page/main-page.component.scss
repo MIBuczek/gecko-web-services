@@ -2,27 +2,44 @@
 @import "../../../styles/general-styles.scss";
 @import "../../../styles/animation.scss";
 
+.about {
+  .about-title {
+    padding: 5rem 2.5rem 4rem;
+
+    h1 {
+      @include page-header;
+      font-size: 3rem;
+      text-transform: none;
+    }
+
+    h2 {
+      @include page_header_secondary;
+      @include under_line(10rem);
+    }
+  }
+}
+
 .service {
-  padding: 60px 0;
+  padding: 3.75rem;
 
   .service-title {
     position: relative;
 
     span {
       @include header-shadow;
-      top: -20px;
-      font-size: 40px;
+      top: -1.75rem;
+      font-size: 3.25rem;
     }
 
     h1 {
       @include page-header;
-      font-size: 32px;
+      font-size: 2rem;
       color: $grey_color;
     }
 
-    p {
-      @include paragraph-content;
-
+    h2 {
+      @include page_header_secondary;
+      @include under_line(20rem);
     }
   }
 
