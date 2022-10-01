@@ -8,7 +8,7 @@ footer {
   background-color: $primary_bg;
 
   .contact {
-    padding: 50px 0 30px;
+    padding: 50px 0;
 
     &-header {
       margin-bottom: 30px;
@@ -17,13 +17,11 @@ footer {
       span {
         @include header-shadow;
         color: $bg_text_color;
-        top: -1.75rem;
-        font-size: 3.25rem;
+        top: -2.5rem;
       }
 
       h3 {
         @include page-header;
-        font-size: 2rem;
         margin-bottom: 0.625rem;
         color: $grey_color;
         position: relative;

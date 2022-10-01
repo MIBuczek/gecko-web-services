@@ -1,3 +1,5 @@
+@import '../styles/variables';
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -6,5 +8,17 @@
   100% {
     opacity: 1;
     visibility: visible;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
   }
 }

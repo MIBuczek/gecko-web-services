@@ -3,12 +3,12 @@
 @import "../../../styles/animation.scss";
 
 .about {
+  height: 80vh;
   .about-title {
     padding: 5rem 2.5rem 4rem;
 
     h1 {
       @include page-header;
-      font-size: 3rem;
       text-transform: none;
     }
 
@@ -20,20 +20,18 @@
 }
 
 .service {
-  padding: 3.75rem;
+  padding: 3.75rem 0 8rem;
 
   .service-title {
     position: relative;
 
     span {
       @include header-shadow;
-      top: -1.75rem;
-      font-size: 3.25rem;
+      top: -2.5rem;
     }
 
     h1 {
       @include page-header;
-      font-size: 2rem;
       color: $grey_color;
     }
 

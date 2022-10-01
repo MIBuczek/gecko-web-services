@@ -8,7 +8,7 @@
   opacity: 0.35;
   z-index: 0;
   font-weight: 700;
-  font-size: 5.65rem;
+  font-size: 4.25rem;
   text-transform: uppercase;
   overflow: hidden;
   width: max-content;
@@ -46,9 +46,9 @@
 }
 
 @mixin page-header {
-  font-size: 3.625rem;
+  font-size: 3rem;
   font-weight: 700;
-  line-height: 3.5rem;
+  line-height: 3.75rem;
   color: $dark_grey_color;
   text-transform: uppercase;
   display: inline-block;
@@ -61,16 +61,17 @@
 }
 
 @mixin page_header_secondary {
+  display: inline-block;
   color: $light_color;
   margin: 0.625rem 0 2rem 0;
-  font-size: 24px;
+  font-size: 1.75rem;
 }
 
 @mixin paragraph-content {
   display: inline-block;
   color: $light_color;
   margin: 0.625rem 0 1.25rem 1rem;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 500;
   line-height: 1.2;
 }
@@ -112,7 +113,7 @@
 
 @mixin text_card {
   line-height: 1.5rem;
-  font-size: 14px;
+  font-size: 1rem;
   margin: 1.25rem 0 2rem
 }
 
