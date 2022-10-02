@@ -1,5 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, HostListener} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
+import {ViewportScroller} from "@angular/common";
+
+type TypeLang = 'pl' | 'en'
+type TypeContentId = 'start' | 'about' | 'service' | 'contact'
 
 @Component({
   selector: 'app-navigation',
@@ -7,15 +11,36 @@ import {TranslateService} from "@ngx-translate/core";
   styleUrls: ['./navigation.component.scss']
 })
 export class NavigationComponent {
-  public selectedLang: 'pl' | 'en' = 'pl';
+  public selectedLang: TypeLang = 'pl';
+  public isNavbarOpen: boolean = false
+  public selectedContentId: TypeContentId = 'start'
 
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService, private viewportScroller: ViewportScroller) {
   }
 
-  public langToggle(event : Event) {
+  /* Listener to tract vertical and horizontal pixels */
+  @HostListener('window:scroll', ['$event'])
+  checkPosition(vertical: boolean): boolean {
+    if (vertical) return window.scrollY > 60
+    else return window.innerWidth < 650
+  }
+
+  /* Method to change page language */
+  public langToggle(event: Event) {
     event.stopPropagation()
     const currentLang = this.selectedLang.includes('pl') ? 'en' : 'pl'
     this.translate.use(currentLang)
     this.selectedLang = currentLang
+  }
+
+  /* Method to hide and show navigation if width is lower then 650px */
+  public navbarToggle(): void {
+    this.isNavbarOpen = !this.isNavbarOpen;
+  }
+
+  /* Method to smooth scroll to the selected element on page */
+  public scrollToElement(contentId: TypeContentId): void {
+    this.selectedContentId = contentId
+    this.viewportScroller.scrollToAnchor(contentId)
   }
 }

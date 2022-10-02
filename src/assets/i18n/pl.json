@@ -104,6 +104,12 @@
       "hide": "Zamknij"
     }
   },
+  "navigation" : {
+    "main" : "Strona główna",
+    "about": "O Firmie",
+    "service" : "Serwis",
+    "contact": "Kontakt"
+  },
   "cookies": {
     "title": "Pliki Cookies",
     "description": "Serwis wykorzystuje pliki cookies. Korzystając ze strony wyrażasz zgodę na wykorzystywanie plików cookies.",

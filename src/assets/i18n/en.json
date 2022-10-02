@@ -23,6 +23,12 @@
     ],
     "redirect": "Go back to main page"
   },
+  "navigation" : {
+    "main" : "Main",
+    "about": "About",
+    "service" : "Service",
+    "contact": "Contact"
+  },
   "main-page": {
     "main_header": "Service",
     "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
