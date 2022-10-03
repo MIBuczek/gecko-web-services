@@ -17,6 +17,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatNativeDateModule} from "@angular/material/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {TranslateModule} from "@ngx-translate/core";
+import {ScrollTopComponent} from './scroll-top/scroll-top.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import {TranslateModule} from "@ngx-translate/core";
     BreadcrumbsComponent,
     ServiceCardComponent,
     ModalCardDetailsComponent,
+    ScrollTopComponent,
   ],
   exports: [
     FooterComponent,
@@ -41,7 +43,8 @@ import {TranslateModule} from "@ngx-translate/core";
     CopyRightsComponent,
     BreadcrumbsComponent,
     ServiceCardComponent,
-    ModalCardDetailsComponent
+    ModalCardDetailsComponent,
+    ScrollTopComponent
   ],
   imports: [
     CommonModule,
