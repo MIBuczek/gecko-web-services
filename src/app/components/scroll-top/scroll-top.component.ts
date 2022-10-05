@@ -13,7 +13,6 @@ export class ScrollTopComponent {
 
   @HostListener('window:scroll', ['$event'])
   checkPosition(): boolean {
-    console.log(window.scrollY)
     return window.scrollY > 200
   }
 

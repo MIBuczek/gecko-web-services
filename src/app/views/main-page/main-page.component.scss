@@ -4,17 +4,42 @@
 
 .about {
   height: 80vh;
+
   .about-title {
     padding: 5rem 2.5rem 4rem;
 
     h1 {
       @include page-header;
       text-transform: none;
+      color: $grey_color;
     }
 
     h2 {
       @include page_header_secondary;
       @include under_line(10rem);
+    }
+  }
+
+  @media (max-width: 990px) {
+    .about-title {
+      text-align: center;
+
+      h1 {
+        font-size: 2.75rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        @include under_line(100%);
+      }
+    }
+
+    .hero-img {
+      img {
+        width: 70%;
+        margin: auto;
+        display: block;
+      }
     }
   }
 }
@@ -40,6 +65,26 @@
       @include under_line(20rem);
     }
   }
+
+  @media (max-width: 990px) {
+    .service-title {
+
+      span {
+        font-size: 3.5rem;
+        top: -1rem
+      }
+
+      h1 {
+        font-size: 2.75rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        @include under_line(100%);
+      }
+    }
+  }
+
 }
 
 .technologies {
@@ -51,7 +96,6 @@
 
   i:hover {
     color: $white_color;
-    transition: 0.4s;
-    transform: scale(1.5);
+    transition: $main_transition;
   }
 }

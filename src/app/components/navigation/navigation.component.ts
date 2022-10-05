@@ -1,6 +1,7 @@
 import {Component, HostListener} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 import {ViewportScroller} from "@angular/common";
+import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
 
 type TypeLang = 'pl' | 'en'
 type TypeContentId = 'start' | 'about' | 'service' | 'contact'
@@ -14,8 +15,17 @@ export class NavigationComponent {
   public selectedLang: TypeLang = 'pl';
   public isNavbarOpen: boolean = false
   public selectedContentId: TypeContentId = 'start'
+  public isMainPage = true;
 
-  constructor(private translate: TranslateService, private viewportScroller: ViewportScroller) {
+  constructor(
+    private translate: TranslateService,
+    private viewportScroller: ViewportScroller,
+    private bc: BreadcrumbsService,
+  ) {
+    /* Logic to check are we on main page to display full or replacement navigation */
+    this.bc.getBreadcrumbsItems.subscribe(
+      (bci) => this.isMainPage = bci.length === 1 && bci[0].rout === 'main-page'
+    )
   }
 
   /* Listener to tract vertical and horizontal pixels */

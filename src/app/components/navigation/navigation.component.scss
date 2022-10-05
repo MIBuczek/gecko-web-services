@@ -14,7 +14,13 @@ section {
   .navbar-toggler {
     min-height: 50px;
     margin: 0 auto auto 0;
+    font-size: 2rem;
+    color: $green_color;
 
+    i.rotate {
+      transition: $main_transition;
+      transform: rotate(180deg);
+    }
   }
 
   .navbar {
