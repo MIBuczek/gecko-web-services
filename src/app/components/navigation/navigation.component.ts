@@ -2,6 +2,7 @@ import {Component, HostListener} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
 import {ViewportScroller} from "@angular/common";
 import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
+import {LoaderService} from "services/loader/loader.service";
 
 type TypeLang = 'pl' | 'en'
 type TypeContentId = 'start' | 'about' | 'service' | 'contact'
@@ -21,6 +22,7 @@ export class NavigationComponent {
     private translate: TranslateService,
     private viewportScroller: ViewportScroller,
     private bc: BreadcrumbsService,
+    private ls: LoaderService
   ) {
     /* Logic to check are we on main page to display full or replacement navigation */
     this.bc.getBreadcrumbsItems.subscribe(
@@ -39,8 +41,10 @@ export class NavigationComponent {
   public langToggle(event: Event) {
     event.stopPropagation()
     const currentLang = this.selectedLang.includes('pl') ? 'en' : 'pl'
+    this.ls.changeLoadingStatus = true;
     this.translate.use(currentLang)
     this.selectedLang = currentLang
+    setTimeout(() => this.ls.changeLoadingStatus = false, 1500)
   }
 
   /* Method to hide and show navigation if width is lower then 650px */

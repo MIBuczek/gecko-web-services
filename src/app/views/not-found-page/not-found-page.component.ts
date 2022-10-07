@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {TypeLang} from "models/general";
 import {ActivatedRoute, Router} from "@angular/router";
 import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
 
@@ -9,7 +8,6 @@ import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
   styleUrls: ['./not-found-page.component.scss']
 })
 export class NotFoundPageComponent implements OnInit {
-  public currentLang: TypeLang = "PL"
   private readonly wrongPath: string;
 
   constructor(

@@ -1,15 +1,26 @@
 @import "../../../styles/variables.scss";
 @import "../../../styles/general-styles.scss";
 
-li.breadcrumb-item {
-  a {
-    @include redirect;
-
-    &.disabled {
-      pointer-events: none;
-      text-decoration: none;
-      color: $grey_color;
-    }
-  }
+:host {
+  position: relative;
+  top: 80px;
 }
 
+ol {
+  li.breadcrumb-item {
+    a {
+      @include redirect;
+
+      &.disabled {
+        pointer-events: none;
+        text-decoration: none;
+        color: $grey_color;
+      }
+    }
+  }
+
+  i {
+    font-size: .8rem;
+    margin: 5px 8px 0;
+  }
+}

@@ -24,8 +24,10 @@
     "redirect": "Powrót na stronę główną"
   },
   "main-page": {
-    "main_header": "Serwis",
-    "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "about_header" : "Elegant and creative solutions",
+    "about_intro" : "We are team of talented designers making websites with Bootstrap",
+    "service_header": "Serwis",
+    "service_intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
     "cards": [
       {
         "card_header": "Gotowe Produkty",
@@ -104,11 +106,15 @@
       "hide": "Zamknij"
     }
   },
-  "navigation" : {
-    "main" : "Strona główna",
+  "navigation": {
+    "main": "Strona główna",
     "about": "O Firmie",
-    "service" : "Serwis",
+    "service": "Serwis",
     "contact": "Kontakt"
+  },
+  "breadcrumbs": {
+    "main-page": "Strona główna",
+    "privacy-policy": "Polityka prywatności"
   },
   "cookies": {
     "title": "Pliki Cookies",

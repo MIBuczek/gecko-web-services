@@ -8,6 +8,8 @@ import {Component, OnInit} from '@angular/core';
 export class CookieComponent implements OnInit {
   public isCookiesAccepted: boolean = false
 
+  constructor() {
+  }
   acceptCookies(): void {
     window.localStorage.setItem('cookies', String(true))
     this.isCookiesAccepted = true;

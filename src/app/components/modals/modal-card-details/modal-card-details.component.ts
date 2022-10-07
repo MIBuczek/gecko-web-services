@@ -21,5 +21,4 @@ export class ModalCardDetailsComponent {
   public hideCard() {
     this.modalRef.close()
   }
-
 }

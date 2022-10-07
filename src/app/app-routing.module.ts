@@ -4,7 +4,7 @@ import {MainPageComponent} from "views/main-page/main-page.component";
 import {PrivacyPolicyPageComponent} from "views/privacy-policy-page/privacy-policy-page.component";
 import {NotFoundPageComponent} from "views/not-found-page/not-found-page.component";
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',

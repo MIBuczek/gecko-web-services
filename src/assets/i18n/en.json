@@ -23,15 +23,11 @@
     ],
     "redirect": "Go back to main page"
   },
-  "navigation" : {
-    "main" : "Main",
-    "about": "About",
-    "service" : "Service",
-    "contact": "Contact"
-  },
   "main-page": {
-    "main_header": "Service",
-    "intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "about_header" : "Elegant and creative solutions",
+    "about_intro" : "We are team of talented designers making websites with Bootstrap",
+    "service_header": "Service",
+    "service_intro": "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
     "cards": [
       {
         "card_header": "Ready Products",
@@ -112,11 +108,21 @@
       "hide": "Close"
     }
   },
+  "navigation" : {
+    "main" : "Main",
+    "about": "About",
+    "service" : "Service",
+    "contact": "Contact"
+  },
   "cookies": {
     "title": "Cookies Files",
     "description": "The website uses cookies. By using the site, you consent to the use of cookies.",
     "redirect": "Privacy Policy Information.",
     "btn": "Accept"
+  },
+  "breadcrumbs": {
+    "main-page": "Main page",
+    "privacy-policy": "Privacy policy"
   },
   "copy-rights": {
     "copy-right": "copyright",

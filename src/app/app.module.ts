@@ -4,7 +4,6 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 
-import {PipeModule} from "pipes/pipe.module";
 import {ComponentsModule} from "components/components.module";
 import {MainPageComponent} from 'views/main-page/main-page.component';
 import {PrivacyPolicyPageComponent} from 'views/privacy-policy-page/privacy-policy-page.component';
@@ -24,7 +23,6 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PipeModule,
     ComponentsModule,
     HttpClientModule,
     TranslateModule.forRoot({
