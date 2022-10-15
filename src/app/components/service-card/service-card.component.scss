@@ -1,0 +1,37 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/general-styles.scss";
+
+.card {
+  text-align: center;
+  border: 1px solid $white_color;
+  padding: 2.5rem 3.75rem;
+  background: $primary_bg;
+  min-height: 400px;
+  border-radius: 0.625rem;
+
+  &:hover {
+    box-shadow: $box_shadow_secondary;
+    border-color: $green_color;
+
+    h3 {
+      transition: $main_transition;
+      color: $green_color;
+    }
+  }
+
+  .icon {
+    @include single-icon;
+  }
+
+  h3 {
+    @include header_card;
+  }
+
+  p {
+    @include text_card
+  }
+
+  .modal_btn {
+    @include modal_btn;
+  }
+}

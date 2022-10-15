@@ -1,0 +1,95 @@
+@import "../../../styles/variables.scss";
+
+section {
+  min-height: 4vh;
+  background: $primary_bg;
+  padding: .675rem 0;
+  transition: $main_transition;
+
+  &.sticky {
+    box-shadow: 0px 2px 15px rgb(0 0 0 / 10%);
+    padding: 0;
+  }
+
+  .navbar-toggler {
+    min-height: 50px;
+    margin: 0 auto auto 0;
+    font-size: 2rem;
+    color: $green_color;
+
+    i.rotate {
+      transition: $main_transition;
+      transform: rotate(180deg);
+    }
+  }
+
+  .navbar {
+    width: fit-content;
+    animation: fadeIn 0.5s ease-in-out;
+
+    .navbar-nav {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+
+      li {
+        a {
+          display: inline-block;
+          padding: 0.675rem 1rem 0.675rem 1rem;
+          font-size: 1rem;
+          font-weight: 700;
+          color: #6a7489;
+          white-space: nowrap;
+          transition: $main_transition;
+
+          &:hover {
+            color: $green_color;
+          }
+        }
+
+        &.active {
+          a {
+            color: $green_color;
+          }
+        }
+      }
+    }
+  }
+
+  button.lang-switcher {
+    background: transparent;
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    transition: $main_transition;
+    border: 1px solid transparent;
+    padding: 2px 2px 8px;
+    margin-left: 1rem;
+
+    &:hover {
+      border-bottom-color: $green_color;
+    }
+  }
+
+  @media (max-width: 650px) {
+    &.sticky {
+      padding: .675rem 0;
+    }
+
+    .navbar {
+      width: 100%;
+      border-top: 1px solid $green_color;
+
+      .navbar-nav {
+        flex-direction: column;
+        margin: 0 auto;
+
+        button.lang-switcher {
+          margin-left: 0;
+
+        }
+      }
+    }
+  }
+}

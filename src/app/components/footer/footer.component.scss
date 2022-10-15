@@ -1,0 +1,177 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/general-styles.scss";
+
+footer {
+  width: 100%;
+  min-height: 35vh;
+  height: auto;
+  background-color: $primary_bg;
+
+  .contact {
+    padding: 50px 0;
+
+    &-header {
+      margin-bottom: 30px;
+      position: relative;
+
+      span {
+        @include header-shadow;
+        top: -2.5rem;
+      }
+
+      h1 {
+        @include page-header;
+        color: $grey_color;
+        position: relative;
+      }
+    }
+
+    &-form {
+      padding: 0.375rem 0.625rem;
+      border-radius: 4px;
+      text-align: left;
+      font-size: 1rem;
+
+      input[type='email'],
+      textarea {
+        background: $secondary-bg;
+        padding: 0.25rem 0.5rem;
+        border: 1px solid $tertiary_border;
+      }
+
+      textarea {
+        margin-top: 0.625rem;
+        resize: none;
+        height: 6.25rem;
+      }
+
+      input[type='submit'] {
+        border: 0;
+        background: none;
+        font-size: 1rem;
+        padding: 0 1.25rem;
+        background: $green_color;
+        color: $white_color;
+        transition: $main_transition;
+        height: 100%;
+
+        &:hover {
+          box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+          border-radius: 1.25rem;
+        }
+      }
+    }
+
+    &-links {
+      display: flex;
+
+      p {
+        margin-right: 1.25rem;
+
+        span {
+          margin-top: 1.875rem;
+          font-size: 1.2rem;
+          display: inline-block;
+          background: $main_secondary_color;
+          color: $grey_color;
+          line-height: 1;
+          padding: 0.5rem 0;
+          margin-right: 0.25rem;
+          border-radius: 1rem;
+          text-align: center;
+          width: 36px;
+          height: 36px;
+          transition: $main_transition;
+
+          &:hover {
+            background: $main_primary_color;
+            color: $white_color;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1400px) {
+    .contact {
+      padding: 50px 0 30px;
+    }
+  }
+
+  @media (max-width: 990px) {
+    .contact {
+      &-header {
+        span {
+          font-size: 3.5rem;
+          top: -1rem
+        }
+
+        h1 {
+          font-size: 2.75rem;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 778px) {
+    .contact {
+      padding: 30px 0 15px;
+
+      p {
+        font-size: 14px;
+        text-align: center;
+        padding: 0 10px;
+      }
+
+      &-links {
+        justify-content: center;
+      }
+
+      &-form {
+        text-align: center;
+
+        input[type='email'],
+        input[type='submit'],
+        error-message,
+        textarea {
+          width: 90%;
+        }
+
+        error-message {
+          text-align: left;
+        }
+
+        input[type='submit'] {
+          min-height: 50px;
+          border-radius: 4px;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .contact {
+      flex-direction: column;
+      overflow: hidden;
+
+      &-form {
+        input[type='email'],
+        input[type='submit'],
+        textarea {
+          width: 90%;
+        }
+
+        input[type='submit'] {
+          min-height: 50px;
+          border-radius: 4px;
+          margin-top: 10px;
+        }
+      }
+    }
+  }
+}
+
+
+

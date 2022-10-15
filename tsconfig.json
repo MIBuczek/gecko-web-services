@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -16,17 +16,55 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "target": "es2017",
     "module": "es2020",
+    "types": [
+      "jest",
+      "node"
+    ],
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+    "paths": {
+      "views/*": [
+        "app/views/*"
+      ],
+      "components/*": [
+        "app/components/*"
+      ],
+      "services/*": [
+        "app/services/*"
+      ],
+      "models/*": [
+        "app/models/*"
+      ],
+      "utilities/*": [
+        "app/utilities/*"
+      ],
+      "classes/*": [
+        "app/classes/*"
+      ],
+      "pipes/*": [
+        "app/pipes/*"
+      ],
+      "text-content/*": [
+        "app/text-content/*"
+      ],
+      "assets/*": [
+        "assets/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }

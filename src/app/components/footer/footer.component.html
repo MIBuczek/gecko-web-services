@@ -1,0 +1,89 @@
+<footer>
+  <div id="contact" class="container contact">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 contact-header text-center my-5">
+        <span>
+          {{ 'footer.title' | translate }}
+        </span>
+        <h1>
+          {{'footer.title' | translate }}
+        </h1>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <p class="fs-m-6">
+          {{'footer.description' | translate}}
+        </p>
+        <div class="contact-links ">
+          <p class="d-inline mr-3">
+            <span>
+              <i class="fa-solid fa-mobile"></i>
+            </span>
+            509-312-832
+          </p>
+          <p class="d-inline">
+            <span>
+              <i class="fa-solid fa-envelope"></i>
+            </span>
+            gecko.web.services@gmail.com
+          </p>
+        </div>
+      </div>
+      <div class="col-lg-6 contact-form">
+        <form class="row flex-md-row flex-column" [formGroup]="formUserMessage" (submit)="submit()">
+          <div class="col-12 col-md-10 d-flex flex-column align-items-md-stretch align-items-center">
+            <input
+              type="email"
+              name="email"
+              formControlName="email"
+              [placeholder]="'footer.input-email' | translate">
+            <ng-container *ngIf="formUserMessage.touched && formControls['email'].errors">
+              <app-error-message
+                *ngIf="formControls['email'].touched && formControls['email'].errors['required'] "
+                [message]="'error-messages.required' | translate"
+              ></app-error-message>
+              <app-error-message
+                *ngIf="formControls['email'].errors['email']"
+                [message]="'error-messages.email' | translate"
+              ></app-error-message>
+              <app-error-message
+                *ngIf="formControls['email'].errors['minlength']"
+                [message]="'error-messages.min-length' | translate"
+              ></app-error-message>
+            </ng-container>
+            <textarea
+              name="message"
+              formControlName="message"
+              [placeholder]="'footer.input-message' | translate">
+            </textarea>
+            <ng-container *ngIf="formControls['message'].errors">
+              <app-error-message
+                *ngIf="formControls['message'].touched && formControls['message'].errors['required']"
+                [message]="'error-messages.required' | translate"
+              ></app-error-message>
+              <app-error-message
+                *ngIf="formControls['message'].touched && formControls['message'].errors['minlength']"
+                [message]="'error-messages.min-length' | translate"
+              ></app-error-message>
+            </ng-container>
+          </div>
+          <div class="col-md-2 col-12">
+            <input type="submit" [value]="'footer.submit-btn' | translate" [disabled]="!formUserMessage.touched">
+          </div>
+          <ng-container *ngIf="!!submitStatus$ && (submitClearStatus | async)">
+            <p class="p-3 m-0 message-success text-success"
+               *ngIf="( submitStatus$ | async) === dbMessageActions.SUCCESS">
+              {{'footer.submit-success'| translate}}
+              <i class="fa-solid fa-check"></i>
+            </p>
+            <p class="p-3 m-0 message-error text-danger" *ngIf="( submitStatus$ | async) === dbMessageActions.ERROR">
+              {{'footer.submit-error' | translate}}
+              <i class="fa-solid fa-exclamation"></i>
+            </p>
+          </ng-container>
+        </form>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,40 @@
+@import "../../../styles/variables.scss";
+@import "../../../styles/general-styles.scss";
+
+.cookies-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: $grey_color;
+  color: $white_color;
+  min-height: 120px;
+  height: auto;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 3px solid $green_color;
+
+  a {
+    @include redirect;
+
+    &:hover {
+      color: $white_color;
+    }
+  }
+
+  .cookie-btn {
+    background: $green_color;
+    color: $white_color;
+    transition: $main_transition;
+    border: 0;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    height: 45px;
+
+    &:hover {
+      box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
+      opacity: 0.7;
+    }
+  }
+}

@@ -1,0 +1,131 @@
+@import '../styles/variables';
+
+@mixin header-shadow {
+  position: absolute;
+  top: -70px;
+  left: 50%;
+  color: $bg_text_color;
+  opacity: 0.35;
+  z-index: 0;
+  font-weight: 700;
+  font-size: 4.25rem;
+  text-transform: uppercase;
+  overflow: hidden;
+  width: max-content;
+  transform: translate(-50%, -10%);
+
+  @media (max-width: 1200px) {
+    font-size: 4.65rem;
+  }
+
+  @media (max-width: 1000px) {
+    font-size: 4.65rem;
+    top: -70px;
+    line-height: 0.8;
+    width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    font-size: 3.45rem;
+    line-height: 0.8;
+    transform: translate(-48%, -10%);
+  }
+}
+
+@mixin under_line($width) {
+  position: relative;
+  &:after {
+    content: '';
+    width: $width;
+    height: .25rem;
+    position: absolute;
+    bottom: -1rem;
+    left: 0;
+    background: $green_color;
+  }
+}
+
+@mixin page-header {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 3.75rem;
+  color: $dark_grey_color;
+  text-transform: uppercase;
+  display: inline-block;
+  z-index: 10;
+  overflow: hidden;
+
+  @media (max-width: 600px) {
+    font-size: 3rem;
+  }
+}
+
+@mixin page_header_secondary {
+  display: inline-block;
+  color: $light_color;
+  margin: 0.625rem 0 2rem 0;
+  font-size: 1.75rem;
+}
+
+@mixin paragraph-content {
+  display: inline-block;
+  color: $light_color;
+  margin: 0.625rem 0 1.25rem 1rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+@mixin redirect {
+  color: $green_color;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 3px;
+  transition: $main_transition;
+
+
+  &:hover {
+    color: $hover_text_color;
+    border-bottom-color: $hover_text_color;
+  }
+}
+
+@mixin single-icon {
+  margin: 0 auto 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i {
+    color: $green_color;
+    font-size: 36px;
+  }
+}
+
+@mixin header_card {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  color: $grey_color;
+  position: relative;
+  z-index: 2;
+}
+
+@mixin text_card {
+  line-height: 1.5rem;
+  font-size: 1rem;
+  margin: 1.25rem 0 2rem
+}
+
+@mixin modal_btn {
+  border: none;
+  background: $green_color;
+  color: white;
+  width: fit-content;
+  padding: 0.5rem 1.25rem;
+  transition: $main_transition;
+
+  &:hover {
+    border-radius: 1.25rem;
+  }
+}

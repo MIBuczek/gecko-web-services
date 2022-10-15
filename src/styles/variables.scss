@@ -1,0 +1,33 @@
+/* Main accent color */
+$main_primary_color: #16df7e;
+$main_secondary_color: #eaecef;
+
+/* Main background colors */
+$primary_bg: #f3f4f6;
+$secondary-bg: #fff;
+
+/* Main text colors */
+$dark_grey_color: #3e4450;
+$grey_color: #5f687b;
+$light_color: #aaaaaa;
+$green_color : $main_primary_color;
+$hover_text_color : #0b9b55;
+$bg_text_color : #e2e3e5;
+$white_color : #fff;
+
+/* Actions colors */
+$btn_primary: $main_primary_color;
+$btn_secondary: $main_secondary_color;
+
+/* Box shadow */
+$box_shadow_primary: 0 8px 28px rgb(22 223 126 / 45%);
+$box_shadow_secondary : 0 0 21px -15px rgba(66, 68, 90, 1);
+
+/* Borders color */
+$primary_border: $main_primary_color;
+$secondary_border: #d9dce2;
+$tertiary_border : #e4e6ea;
+
+
+/* Transition animation */
+$main_transition : all ease-in-out 0.3s
