@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
 import {BreadCrumbItem} from "classes/breadcrumbs-item.class";
 import {IAppRouts} from "models/general";
-import {TranslateService} from "@ngx-translate/core";
 import { Observable} from "rxjs";
 
 @Component({
