@@ -118,12 +118,15 @@
 }
 
 @mixin modal_btn {
+  outline: none;
   border: none;
   background: $green_color;
+  color: $white_color;
   color: white;
   width: fit-content;
   padding: 0.5rem 1.25rem;
   transition: $main_transition;
+  border-radius: 0;
 
   &:hover {
     border-radius: 1.25rem;

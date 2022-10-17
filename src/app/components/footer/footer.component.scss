@@ -46,19 +46,10 @@ footer {
       }
 
       input[type='submit'] {
-        border: 0;
-        background: none;
+        @include modal_btn;
         font-size: 1rem;
         padding: 0 1.25rem;
-        background: $green_color;
-        color: $white_color;
-        transition: $main_transition;
         height: 100%;
-
-        &:hover {
-          box-shadow: 0 2px 15px rgb(0 0 0 / 10%);
-          border-radius: 1.25rem;
-        }
       }
     }
 
