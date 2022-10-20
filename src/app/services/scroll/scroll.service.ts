@@ -1,35 +1,39 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
+import {Injectable, OnDestroy} from '@angular/core';
+import {BehaviorSubject, fromEvent, Observable, Subscription} from "rxjs";
 
 export type TypeContentId = 'start' | 'about' | 'service' | 'contact'
 
 @Injectable({
     providedIn: 'root',
 })
-export class ScrollService {
+export class ScrollService implements OnDestroy {
     private currentSection = new BehaviorSubject<TypeContentId>('start');
     readonly sections: TypeContentId[] = ['start', 'about', 'service', 'contact']
+    private subscription = new Subscription()
 
     constructor() {
-        document.addEventListener('scroll', () => this.keepTrack())
+        this.subscription.add(fromEvent(window, 'scroll').subscribe(() => this.keepTrack()))
     }
 
     get getCurrentActiveSection(): Observable<TypeContentId> {
         return this.currentSection.asObservable()
     }
 
-    /* Method to track sections and set active which is currently on view */
+    /* Method to track sections and set active the one on view */
     keepTrack() {
-        const viewHeight = window.innerHeight;
-        this.sections.forEach((section) => {
+        this.sections.forEach((section): void => {
             const element = document.getElementById(section);
             if (!element) {
                 return
             }
             const {top} = element.getBoundingClientRect();
-            if (top >= 0 && top < viewHeight / 2) {
+            if (top >= 0 && top < window.innerHeight / 2) {
                 this.currentSection.next(section);
             }
         })
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe()
     }
 }

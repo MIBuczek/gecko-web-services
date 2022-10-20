@@ -1,6 +1,6 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ModalCardDetailsComponent} from './modal-card-details.component';
-import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {TranslateTestingModule} from "ngx-translate-testing";
 import polishTranslation from "assets/i18n/pl.json";
 import englishTranslation from "assets/i18n/en.json";
