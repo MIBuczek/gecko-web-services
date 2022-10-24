@@ -1,16 +1,20 @@
 <ng-container *ngIf="(breadcrumbs$ | async) as breadcrumbs">
-  <div class="container" *ngIf="breadcrumbs.length > 1">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb py-3">
-        <ng-container *ngFor="let path of breadcrumbs; let last = last">
-          <li class="breadcrumb-item">
-            <a [routerLink]="convertToString(path.rout)" [ngClass]="{'disabled' : last}">
-              {{ 'breadcrumbs.' + path.rout | translate }}
-            </a>
-          </li>
-          <i  *ngIf="!last" class="fa-solid fa-chevron-right"></i>
-        </ng-container>
-      </ol>
-    </nav>
-  </div>
+    <div class="container" *ngIf="breadcrumbs.length > 1">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb py-3">
+                <ng-container *ngFor="let path of breadcrumbs; let last = last">
+                    <li class="breadcrumb-item">
+                        <a [routerLink]="convertToString(path.rout)" [ngClass]="{'disabled' : last}"
+                           *ngIf="availableRouts.includes(path.rout);else notRightRoot">
+                            {{ 'breadcrumbs.' + path.rout | translate }}
+                        </a>
+                        <ng-template #notRightRoot>
+                            <a [ngClass]="{'disabled' : last}">{{path.rout}}</a>
+                        </ng-template>
+                    </li>
+                    <i *ngIf="!last" class="fa-solid fa-chevron-right"></i>
+                </ng-container>
+            </ol>
+        </nav>
+    </div>
 </ng-container>
