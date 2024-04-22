@@ -17,7 +17,7 @@
       <h1>{{"main-page.service_header" | translate}}</h1>
       <h2>{{"main-page.service_intro" | translate}}</h2>
     </div>
-    <div class="row">
+    <div class="card-container row">
       <div
         class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch mt-4 mt-lg-0 "
         *ngFor="let card of 'main-page.cards' | translate ; let index = index">
@@ -33,10 +33,12 @@
     </div>
   </div>
 </section>
-<section class="technologies container-fluid py-md-5 py-sm-3">
-  <div class="container d-flex justify-content-evenly align-items-center flex-wrap">
-    <i *ngFor="let icon of tech_icons" class="fa-brands col-2 col-md-1 m-2" [ngClass]="icon"></i>
-  </div>
+<section class="technologies container-fluid px-2  py-sm-3 py-md-5">
+  <div class="container">
+    <div class="technologies-icons row d-flex justify-content-evenly align-items-center flex-wrap">
+      <i *ngFor="let icon of tech_icons; last as isLast" class="d-flex justify-content-center align-items-center fa-brands col-md-1 m-2" [class.col-2]="!isLast" [class.col-1]="isLast" [ngClass]="icon"></i>
+    </div>
+</div>
 </section>
 <app-footer></app-footer>
 

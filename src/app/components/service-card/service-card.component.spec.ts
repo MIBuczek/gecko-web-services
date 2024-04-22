@@ -1,10 +1,10 @@
-import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
-import {ServiceCardComponent} from './service-card.component';
-import {TranslateTestingModule} from "ngx-translate-testing";
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { ServiceCardComponent } from './service-card.component';
+import { TranslateTestingModule } from "ngx-translate-testing";
 import polishTranslation from "assets/i18n/pl.json";
 import englishTranslation from "assets/i18n/en.json";
-import {By} from "@angular/platform-browser";
-import {TranslateService} from "@ngx-translate/core";
+import { By } from "@angular/platform-browser";
+import { TranslateService } from "@ngx-translate/core";
 
 const TRANSLATION: any = {
     'pl': polishTranslation,
@@ -16,7 +16,7 @@ describe('ServiceCardComponent', () => {
     let fixture: ComponentFixture<ServiceCardComponent>;
 
     const getSelectedElementInnerText = (selector: string): string => {
-        return fixture.debugElement.query(By.css(selector)).nativeElement.innerText.trim()
+        return fixture.debugElement.query(By.css(selector)).nativeElement.textContent.trim()
     }
 
     beforeEach(async () => {
@@ -56,7 +56,8 @@ describe('ServiceCardComponent', () => {
     })
 
     it('is correct text content displayed', () => {
-        expect(getSelectedElementInnerText('h3')).toEqual(
+        fixture.detectChanges()
+        expect(getSelectedElementInnerText('.service-card-title')).toEqual(
             polishTranslation["main-page"].cards[0].card_header.trim())
         expect(getSelectedElementInnerText('p')).toEqual(
             polishTranslation["main-page"].cards[0].card_short_description.trim())
@@ -69,10 +70,8 @@ describe('ServiceCardComponent', () => {
             translateService.use('en')
             component.cardContent = translateService.translations['en']['main-page']['cards'][0]
             component.cardBtn = translateService.translations['en']['main-page']['btn']['more']
-
             fixture.detectChanges()
-
-            expect(getSelectedElementInnerText('h3')).toEqual(
+            expect(getSelectedElementInnerText('.service-card-title')).toEqual(
                 englishTranslation["main-page"].cards[0].card_header.trim())
             expect(getSelectedElementInnerText('p')).toEqual(
                 englishTranslation["main-page"].cards[0].card_short_description.trim())
@@ -80,12 +79,11 @@ describe('ServiceCardComponent', () => {
                 englishTranslation["main-page"].btn.more.trim())
         }))
 
-    it('it emmit card index after click', () => {
-        spyOn(component.emitIsOpen, 'emit')
+    it('it emit card index after click', () => {
+        jest.spyOn(component.emitIsOpen, 'emit')
         fixture.detectChanges()
         fixture.debugElement.query(By.css('button')).nativeElement.click()
         fixture.detectChanges()
-
         expect(component.emitIsOpen.emit).toHaveBeenCalled()
         expect(component.emitIsOpen.emit).toHaveBeenCalledWith(component.cardIndex)
     });

@@ -83,8 +83,6 @@ header {
 
 @media (max-width: 990px) {
   header {
-    height: 80vh;
-
     .h-title-shadow {
       span {
         display: none;
@@ -128,7 +126,6 @@ header {
 
 @media (max-width: 510px) {
   header {
-    height: 70vh;
     margin-top: 0;
 
     .h-title {

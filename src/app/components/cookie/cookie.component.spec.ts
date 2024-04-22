@@ -1,10 +1,10 @@
-import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
-import {CookieComponent} from './cookie.component';
-import {By} from "@angular/platform-browser";
-import {TranslateService} from "@ngx-translate/core";
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { CookieComponent } from './cookie.component';
+import { By } from "@angular/platform-browser";
+import { TranslateService } from "@ngx-translate/core";
 import polishTranslation from "assets/i18n/pl.json";
 import englishTranslation from "assets/i18n/en.json";
-import {TranslateTestingModule} from "ngx-translate-testing";
+import { TranslateTestingModule } from "ngx-translate-testing";
 
 
 const TRANSLATION: any = {
@@ -68,9 +68,8 @@ describe('CookieComponent', () => {
 
     it('is display header text correct after lang change', inject(
         [TranslateService], (translateService: TranslateService) => {
-            const header = fixture.debugElement.query(By.css('h1'))
+            const header = fixture.debugElement.query(By.css('.cookie-title'))
             expect(header.nativeElement['innerHTML'].trim()).toContain(polishTranslation.cookies.title.trim())
-
             translateService.use('en')
             fixture.detectChanges()
             expect(header.nativeElement['innerHTML'].trim()).toContain(englishTranslation.cookies.title.trim())

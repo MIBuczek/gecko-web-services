@@ -1,7 +1,7 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {ScrollTopComponent} from './scroll-top.component';
-import {By} from "@angular/platform-browser";
-import {SpyLocation} from "@angular/common/testing";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ScrollTopComponent } from './scroll-top.component';
+import { By } from "@angular/platform-browser";
+import { SpyLocation } from "@angular/common/testing";
 
 describe('ScrollTopComponent', () => {
     let component: ScrollTopComponent;
@@ -23,7 +23,7 @@ describe('ScrollTopComponent', () => {
 
     it('is scroll-top button not visible on top of the page', () => {
         const scroll_btn = fixture.debugElement.query(By.css('.scroll-top'))
-        spyOn(component, 'checkPosition').and.returnValue(false)
+        jest.spyOn(component, 'checkPosition').mockReturnValue(false)
         component.checkPosition()
         fixture.detectChanges()
         expect(scroll_btn.classes['visible']).toBeFalsy()
@@ -31,16 +31,16 @@ describe('ScrollTopComponent', () => {
 
     it('is scroll-top button visible if not on the top of page', () => {
         const scroll_btn = fixture.debugElement.query(By.css('.scroll-top'))
-        spyOn(component, 'checkPosition').and.returnValue(true)
+        jest.spyOn(component, 'checkPosition').mockReturnValue(true)
         component.checkPosition()
         fixture.detectChanges()
         expect(scroll_btn.classes['visible']).toBeTruthy()
     })
 
     it('is scrollTop method be called', () => {
-        const scroll_top_fun = spyOn(component, 'scrollTop')
+        const scroll_top_fun = jest.spyOn(component, 'scrollTop')
         fixture.debugElement.query(By.css('.scroll-top')).nativeElement.click()
         fixture.detectChanges()
-        expect(scroll_top_fun.calls.any()).toBeTruthy()
+        expect(scroll_top_fun).toHaveBeenCalled()
     })
 });

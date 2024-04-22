@@ -1,2 +1,2 @@
-### Officla page
+### Official page
 # Gecko Web Services
