@@ -1,5 +1,10 @@
 <section class="copy-rights">
-  <div class="container d-flex justify-content-end flex-md-row flex-sm-column">
+  <div class="container d-flex justify-content-between flex-md-row flex-sm-column">
+    <div>
+      <a class="redirect-policy" routerLink="/privacy-policy" >
+        {{'copy-rights.privacy-policy' | translate}}
+      </a>
+    </div>
     <div class="credits"> © {{currentYear}} {{'copy-rights.copy-right' | translate}}
       <a class="redirect" href="https://gecko-web-services.web.app/">
         Gecko Web Services.

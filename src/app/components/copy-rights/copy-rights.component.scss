@@ -7,23 +7,31 @@
   font-size: 0.8rem;
   color: $grey_color;
   min-height: 6vh;
+}
 
-  .copyright {
-    strong {
-      color: $dark_grey_color;
-    }
+.copyright {
+  strong {
+    color: $dark_grey_color;
   }
+}
 
-  .credits {
-    a {
-      color: $green_color;
-      text-decoration: none;
-      transition: $main_transition;
+.redirect {
+    color: $green_color;
+    text-decoration: none;
+    transition: $main_transition;
 
-      &:hover {
-        color: $hover_text_color;;
-      }
+    &:hover {
+      color: $hover_text_color;;
     }
-  }
+}
 
+.redirect-policy {
+  @extend .redirect;
+  color: $grey_color;
+  transition: none;
+
+  &:hover {
+    color: $dark_grey_color;
+    text-decoration: underline;
+  }
 }
