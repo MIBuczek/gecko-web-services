@@ -33,10 +33,12 @@
     </div>
   </div>
 </section>
-<section class="technologies container-fluid py-md-5 py-sm-3">
-  <div class="container d-flex justify-content-evenly align-items-center flex-wrap">
-    <i *ngFor="let icon of tech_icons" class="fa-brands col-2 col-md-1 m-2" [ngClass]="icon"></i>
-  </div>
+<section class="technologies container-fluid px-2  py-sm-3 py-md-5">
+  <div class="container">
+    <div class="technologies-icons row d-flex justify-content-evenly align-items-center flex-wrap">
+      <i *ngFor="let icon of tech_icons; last as isLast" class="d-flex justify-content-center align-items-center fa-brands col-md-1 m-2" [class.col-2]="!isLast" [class.col-1]="isLast" [ngClass]="icon"></i>
+    </div>
+</div>
 </section>
 <app-footer></app-footer>
 

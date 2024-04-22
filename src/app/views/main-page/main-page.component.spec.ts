@@ -127,7 +127,7 @@ describe('MainPageComponent', () => {
     )
 
     it('is correct number of technologies icons', () => {
-        const tech_container = fixture.debugElement.query(By.css('.technologies')).children[0]
+        const tech_container = fixture.debugElement.query(By.css('.technologies-icons'))
         expect(tech_container.children.length).toEqual(component.tech_icons.length)
     })
 
