@@ -1,7 +1,7 @@
-import {fakeAsync, TestBed, tick} from '@angular/core/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 
-import {BreadcrumbsService} from './breadcrumbs.service';
-import {BreadCrumbItem} from "../../classes/breadcrumbs-item.class";
+import { BreadcrumbsService } from './breadcrumbs.service';
+import { BreadCrumbItem } from "../../classes/breadcrumbs-item.class";
 
 describe('BreadcrumbsService', () => {
     let service: BreadcrumbsService;
@@ -23,7 +23,7 @@ describe('BreadcrumbsService', () => {
     })
 
     it('generateBreadcrumbs return Array of BreadCrumbItem type', fakeAsync(() => {
-        spyOn(service, 'generateBreadcrumbs').and.returnValue([new BreadCrumbItem('main-page', false)])
+        jest.spyOn(service, 'generateBreadcrumbs').mockReturnValue([new BreadCrumbItem('main-page', false)])
         const result = service.generateBreadcrumbs(['main-page'])
         tick(1000)
         expect(service.generateBreadcrumbs).toHaveBeenCalled()

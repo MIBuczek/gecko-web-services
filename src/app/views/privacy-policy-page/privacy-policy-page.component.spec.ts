@@ -1,15 +1,14 @@
-import {ComponentFixture, inject, TestBed} from '@angular/core/testing';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
 
-import {PrivacyPolicyPageComponent} from './privacy-policy-page.component';
-import {RouterTestingModule} from "@angular/router/testing";
-import {ActivatedRoute, Router} from "@angular/router";
-import {TranslateTestingModule} from "ngx-translate-testing";
+import { PrivacyPolicyPageComponent } from './privacy-policy-page.component';
+import { ActivatedRoute, Router, RouterModule } from "@angular/router";
+import { TranslateTestingModule } from "ngx-translate-testing";
 import polishTranslation from "assets/i18n/pl.json";
 import englishTranslation from "assets/i18n/en.json";
-import {By} from "@angular/platform-browser";
-import {Location} from "@angular/common";
-import {routes} from "../../app-routing.module";
-import {TranslateService} from "@ngx-translate/core";
+import { By } from "@angular/platform-browser";
+import { Location } from "@angular/common";
+import { routes } from "../../app-routing.module";
+import { TranslateService } from "@ngx-translate/core";
 
 const TRANSLATION: any = {
     'pl': polishTranslation,
@@ -31,13 +30,13 @@ describe('PrivacyPolicyPageComponent', () => {
             declarations: [PrivacyPolicyPageComponent],
             providers: [{
                 provide: ActivatedRoute,
-                useValue: {snapshot: {data: {breadcrumbs: ['main-page', 'privacy-policy']}}}
+                useValue: { snapshot: { data: { breadcrumbs: ['main-page', 'privacy-policy'] } } }
             }],
             imports: [
                 TranslateTestingModule
                     .withTranslations(TRANSLATION)
                     .withDefaultLanguage('pl'),
-                RouterTestingModule.withRoutes(routes)
+                RouterModule.forRoot(routes)
             ],
         }).compileComponents();
         /* Initialization */
@@ -54,8 +53,9 @@ describe('PrivacyPolicyPageComponent', () => {
     });
 
     it('is display correct initial text content', () => {
-        const header = convertString(fixture.debugElement.query(By.css('h1')).nativeElement['innerText'])
-        const description = convertString(fixture.debugElement.query(By.css('p')).nativeElement['innerText'])
+        fixture.detectChanges()
+        const header = convertString(fixture.debugElement.query(By.css('.policy-header')).nativeElement['textContent'])
+        const description = convertString(fixture.debugElement.query(By.css('p')).nativeElement['textContent'])
         expect(header).toEqual(convertString(polishTranslation["privacy-policy-page"].main_header))
         expect(description).toEqual(convertString(polishTranslation["privacy-policy-page"].main_description))
     });
@@ -64,11 +64,12 @@ describe('PrivacyPolicyPageComponent', () => {
         [TranslateService], (translateService: TranslateService) => {
             translateService.use('en')
             fixture.detectChanges()
-            const header = convertString(fixture.debugElement.query(By.css('h1')).nativeElement['innerText'])
-            const description = convertString(fixture.debugElement.query(By.css('p')).nativeElement['innerText'])
+            const header = convertString(fixture.debugElement.query(By.css('.policy-header')).nativeElement['textContent'])
+            const description = convertString(fixture.debugElement.query(By.css('p')).nativeElement['textContent'])
             expect(header).toEqual(convertString(englishTranslation["privacy-policy-page"].main_header))
             expect(description).toEqual(convertString(englishTranslation["privacy-policy-page"].main_description))
-        }));
+        })
+    );
 
     it('is display correct number of part policy content', () => {
         const part_container = fixture.debugElement.query(By.css('.row'))
@@ -76,13 +77,12 @@ describe('PrivacyPolicyPageComponent', () => {
     })
 
     it('is redirect link work correctly', () => {
+        fixture.detectChanges()
         const redirect_btn = fixture.debugElement.query(By.css('a'))
-        expect(convertString(redirect_btn.nativeElement['innerText'])).toEqual(convertString(polishTranslation["privacy-policy-page"].redirect))
+        expect(convertString(redirect_btn.nativeElement['textContent'])).toEqual(convertString(polishTranslation["privacy-policy-page"].redirect))
         expect(redirect_btn.nativeElement['href']).toEqual(`${window.location.origin}/main-page`)
-
         redirect_btn.nativeElement.click()
         fixture.detectChanges()
-
         expect(location.path()).toBe('/main-page')
     })
 });

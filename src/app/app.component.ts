@@ -1,5 +1,4 @@
-import {Component} from '@angular/core';
-import '../firebase.config'
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',

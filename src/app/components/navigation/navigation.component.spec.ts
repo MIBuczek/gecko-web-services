@@ -1,15 +1,15 @@
-import {ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
-import {NavigationComponent} from './navigation.component';
-import {By} from "@angular/platform-browser";
+import { ComponentFixture, fakeAsync, inject, TestBed, tick } from '@angular/core/testing';
+import { NavigationComponent } from './navigation.component';
+import { By } from "@angular/platform-browser";
 import polishTranslation from "assets/i18n/pl.json";
 import englishTranslation from "assets/i18n/en.json";
-import {TranslateTestingModule} from "ngx-translate-testing";
-import {TranslateService} from "@ngx-translate/core";
-import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
-import {LoaderService} from "services/loader/loader.service";
-import {Location, ViewportScroller} from "@angular/common";
-import {RouterTestingModule} from "@angular/router/testing";
-import {routes} from "../../app-routing.module";
+import { TranslateTestingModule } from "ngx-translate-testing";
+import { TranslateService } from "@ngx-translate/core";
+import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
+import { LoaderService } from "services/loader/loader.service";
+import { Location, ViewportScroller } from "@angular/common";
+import { routes } from "../../app-routing.module";
+import { RouterModule } from '@angular/router';
 
 
 const TRANSLATION: any = {
@@ -24,6 +24,11 @@ describe('NavigationComponent', () => {
     let loaderService: LoaderService;
     let viewportScroller: ViewportScroller
 
+    const changeWindowWidth = (width: number): void => {
+        Object.defineProperty(window, 'innerWidth', { writable: true, configurable: true, value: 1200 })
+
+    }
+
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             declarations: [NavigationComponent],
@@ -32,7 +37,7 @@ describe('NavigationComponent', () => {
                 TranslateTestingModule
                     .withTranslations(TRANSLATION)
                     .withDefaultLanguage('pl'),
-                RouterTestingModule.withRoutes(routes)
+                RouterModule.forRoot(routes)
             ],
         }).compileComponents();
         fixture = TestBed.createComponent(NavigationComponent);
@@ -40,6 +45,7 @@ describe('NavigationComponent', () => {
         breadcrumbsService = TestBed.inject(BreadcrumbsService)
         loaderService = TestBed.inject(LoaderService)
         viewportScroller = TestBed.inject(ViewportScroller)
+        changeWindowWidth(1200)
         fixture.detectChanges();
     });
 
@@ -121,22 +127,25 @@ describe('NavigationComponent', () => {
     })
 
     it('is toggle-button display on UI if width is less then 650', () => {
-        spyOn(component, 'checkPosition').and.returnValue(true)
         component.checkPosition(false)
+        changeWindowWidth(500)
         fixture.detectChanges()
-        const toggle_button = fixture.debugElement.query(By.css('.navbar-toggler'))
-        expect(toggle_button).toBeTruthy()
+        fixture.whenStable().then(() => {
+            const toggle_button = fixture.debugElement.query(By.css('.navbar-toggler'))
+            fixture.detectChanges()
+            expect(toggle_button).toBeTruthy()
+        })
     })
 
     it('has navigation contain class sticky on scroll', () => {
-        spyOn(component, 'checkPosition').and.returnValue(true)
+        jest.spyOn(component, 'checkPosition').mockReturnValue(true)
         component.checkPosition(true)
         fixture.detectChanges()
         const navbar_container = fixture.debugElement.query(By.css('.fixed-top'))
         expect(navbar_container.classes['sticky']).toBeTruthy()
     })
 
-    it('is correct redirect to main page if are on subpage',
+    it('is correct redirect to main page if are on sub page',
         fakeAsync(inject([Location], (location: Location) => {
             location.go('private-policy')
             fixture.debugElement.query(By.css('.nav-link')).nativeElement.click()

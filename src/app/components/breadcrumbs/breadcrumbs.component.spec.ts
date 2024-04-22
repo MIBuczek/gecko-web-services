@@ -1,15 +1,17 @@
-import {ComponentFixture, fakeAsync, inject, TestBed} from '@angular/core/testing';
-import {BreadcrumbsComponent} from './breadcrumbs.component';
-import {By} from "@angular/platform-browser";
-import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
-import {RouterTestingModule} from "@angular/router/testing";
-import {routes} from "../../app-routing.module";
-import {Router} from "@angular/router";
-import {Location} from "@angular/common";
+import { ComponentFixture, fakeAsync, inject, TestBed } from '@angular/core/testing';
+import { BreadcrumbsComponent } from './breadcrumbs.component';
+import { By } from "@angular/platform-browser";
+import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
+import { RouterTestingModule } from "@angular/router/testing";
+import { routes } from "../../app-routing.module";
+import { Router, RouterModule } from "@angular/router";
+import { Location } from "@angular/common";
 import polishTranslation from "assets/i18n/pl.json";
 import englishTranslation from "assets/i18n/en.json";
-import {TranslateTestingModule} from "ngx-translate-testing";
-import {TranslateService} from "@ngx-translate/core";
+import { TranslateTestingModule } from "ngx-translate-testing";
+import { TranslateService } from "@ngx-translate/core";
+import { describe, expect, it } from '@jest/globals';
+
 
 
 const TRANSLATION: any = {
@@ -33,7 +35,7 @@ describe('BreadcrumbsComponent', () => {
                 TranslateTestingModule
                     .withTranslations(TRANSLATION)
                     .withDefaultLanguage('pl'),
-                RouterTestingModule.withRoutes(routes)
+                RouterModule.forRoot(routes)
             ],
             providers: [BreadcrumbsService]
         }).compileComponents();
@@ -90,25 +92,27 @@ describe('BreadcrumbsComponent', () => {
         expect(bc_chevron_icon.length).toEqual(1)
     });
 
-    it('should router link redirect after click to main-page', fakeAsync(() => {
+    it('should router link redirect after click to main-page', () => {
         updatedBreadcrumbs()
         const bc_item = fixture.debugElement.query(By.css('.breadcrumb-item'))
         bc_item.children[0].nativeElement.click()
         fixture.detectChanges()
         expect(location.path()).toBe('/main-page')
-    }))
+    })
 
     it('is display right text content in breadcrumbs navigation', inject(
         [TranslateService], (translateService: TranslateService) => {
+            translateService.use('pl')
             updatedBreadcrumbs()
+            fixture.detectChanges()
             const bc_list_item = fixture.debugElement.query(By.css('.breadcrumb'))
             const bc_items = bc_list_item.children.filter((el) => el.classes['breadcrumb-item'])
-            expect(bc_items[0].nativeElement['innerText'].trim()).toEqual(polishTranslation.breadcrumbs["main-page"])
-            expect(bc_items[1].nativeElement['innerText'].trim()).toEqual(polishTranslation.breadcrumbs["privacy-policy"])
+            expect(bc_items[0].nativeElement.textContent.trim()).toEqual(polishTranslation.breadcrumbs["main-page"])
+            expect(bc_items[1].nativeElement.textContent.trim()).toEqual(polishTranslation.breadcrumbs["privacy-policy"])
 
             translateService.use('en')
             fixture.detectChanges()
-            expect(bc_items[0].nativeElement['innerText'].trim()).toEqual(englishTranslation.breadcrumbs["main-page"])
-            expect(bc_items[1].nativeElement['innerText'].trim()).toEqual(englishTranslation.breadcrumbs["privacy-policy"])
+            expect(bc_items[0].nativeElement.textContent.trim()).toEqual(englishTranslation.breadcrumbs["main-page"])
+            expect(bc_items[1].nativeElement.textContent.trim()).toEqual(englishTranslation.breadcrumbs["privacy-policy"])
         }))
 });
