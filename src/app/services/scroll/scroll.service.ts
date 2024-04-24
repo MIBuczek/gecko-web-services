@@ -1,5 +1,5 @@
-import {Injectable, OnDestroy} from '@angular/core';
-import {BehaviorSubject, fromEvent, Observable, Subscription} from "rxjs";
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, fromEvent, Observable, Subscription } from "rxjs";
 
 export type TypeContentId = 'start' | 'about' | 'service' | 'contact'
 
@@ -26,8 +26,8 @@ export class ScrollService implements OnDestroy {
             if (!element) {
                 return
             }
-            const {top} = element.getBoundingClientRect();
-            if (top >= 0 && top < window.innerHeight / 2) {
+            const { top } = element.getBoundingClientRect();
+            if (top >= 0 && top <= window.innerHeight / 2) {
                 this.currentSection.next(section);
             }
         })

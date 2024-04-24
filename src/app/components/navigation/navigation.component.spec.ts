@@ -8,7 +8,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
 import { LoaderService } from "services/loader/loader.service";
 import { Location, ViewportScroller } from "@angular/common";
-import { routes } from "../../app-routing.module";
+import { routes } from "app/app.module";
 import { RouterModule } from '@angular/router';
 
 
@@ -148,10 +148,10 @@ describe('NavigationComponent', () => {
     it('is correct redirect to main page if are on sub page',
         fakeAsync(inject([Location], (location: Location) => {
             location.go('private-policy')
+            component.isMainPage = false
+            fixture.detectChanges()
             fixture.debugElement.query(By.css('.nav-link')).nativeElement.click()
-            fixture.whenStable().then(() => {
-                expect(location.path()).toEqual('/main-page')
-            })
+            expect(location.path()).toEqual('')
         }))
     )
 });

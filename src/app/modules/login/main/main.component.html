@@ -1,0 +1,44 @@
+<main class="container-fluid d-flex">
+  <div class="container d-flex justify-content-center align-items-center">
+    <form
+      [formGroup]="logInForm"
+      class="d-flex flex-column justify-center align-items-center p-5"
+      (ngSubmit)="onSubmit()">
+      <span class="header-shadow">Panel Logowania</span>
+      <h1>Panel Logowania</h1>
+      <div class="w-50 mt-4">
+        <mat-form-field class="w-100">
+          <mat-label>email</mat-label>
+          <input
+            matInput
+            placeholder="name@example.com"
+            type="email"
+            name="email"
+            [formControl]="logInForm.controls.email"
+            ngDefaultControl
+          />
+        </mat-form-field>
+        <mat-form-field class="w-100">
+          <mat-label>Hasło</mat-label>
+          <input
+            matInput
+            placeholder="Hasło"
+            type="password"
+            name="password"
+            [formControl]="logInForm.controls.password"
+            ngDefaultControl
+          />
+        </mat-form-field>
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          class="w-100 mt-4"
+          [disabled]="logInForm.invalid"
+        >
+          Zaloguj
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

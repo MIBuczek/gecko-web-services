@@ -1,5 +1,5 @@
-@import "../../../styles/variables.scss";
-@import "../../../styles/general-styles.scss";
+@import "../../../../styles/variables.scss";
+@import "../../../../styles/general-styles.scss";
 
 .container {
   margin-top: 180px;
@@ -35,4 +35,3 @@ a {
   @include redirect;
 
 }
-

@@ -1,16 +1,7 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {RouterTestingModule} from '@angular/router/testing';
-import {AppComponent} from './app.component';
-
-const app_expected_components = [
-    "app-navigation",
-    "app-breadcrumbs",
-    "main",
-    "app-loader",
-    "app-cookie",
-    "app-scroll-top",
-    "app-copy-rights"
-]
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from './app.component';
+import { RouterModule } from '@angular/router';
 
 describe('AppComponent', () => {
     let fixture: ComponentFixture<AppComponent>;
@@ -18,7 +9,7 @@ describe('AppComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [
-                RouterTestingModule
+                RouterModule
             ],
             declarations: [
                 AppComponent
@@ -35,7 +26,7 @@ describe('AppComponent', () => {
 
     it('is all component loaded successfully ', () => {
         const app_components = fixture.debugElement.children.map((el) => el.nativeElement['localName'])
-        expect(app_components).toEqual(app_expected_components)
+        expect(app_components).toEqual(['router-outlet'])
     });
 
     // Navigation

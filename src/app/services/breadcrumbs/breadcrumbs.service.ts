@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
-import {BreadCrumbItem} from "classes/breadcrumbs-item.class";
-import {IAppRouts} from "models/general";
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from "rxjs";
+import { BreadCrumbItem } from "classes/breadcrumbs-item.class";
+import { IAppRouts } from "models/general";
 
 @Injectable({
   providedIn: 'root'

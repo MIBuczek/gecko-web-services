@@ -13,7 +13,7 @@ import { provideFirebaseApp } from '@angular/fire/app';
 import { provideDatabase } from '@angular/fire/database';
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
-import { environment } from '../../../environments/environment';
+import { environment } from 'environments/environment';
 
 
 const TRANSLATION: any = {

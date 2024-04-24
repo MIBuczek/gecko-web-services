@@ -2,8 +2,7 @@ import { ComponentFixture, fakeAsync, inject, TestBed } from '@angular/core/test
 import { BreadcrumbsComponent } from './breadcrumbs.component';
 import { By } from "@angular/platform-browser";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
-import { RouterTestingModule } from "@angular/router/testing";
-import { routes } from "../../app-routing.module";
+import { routes } from "app/app.module";
 import { Router, RouterModule } from "@angular/router";
 import { Location } from "@angular/common";
 import polishTranslation from "assets/i18n/pl.json";

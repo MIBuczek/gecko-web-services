@@ -1,0 +1,27 @@
+@import "../../../../styles/variables.scss";
+@import "../../../../styles/general-styles.scss";
+
+main {
+  height: 100vh;
+  display: flex;
+  margin: 0;
+
+  form {
+    min-width: 40rem;
+    width: fit-content;
+    text-align: center;
+    transform: translate(0, -25%);
+
+    span.header-shadow {
+      @include header-shadow;
+      top: 6rem;
+    }
+
+    h1 {
+      @include page-header;
+      @include under_line(20rem);
+      min-height: 50px;
+      overflow: visible;
+    }
+  }
+}

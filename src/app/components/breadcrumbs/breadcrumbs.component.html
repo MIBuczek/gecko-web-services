@@ -4,7 +4,7 @@
             <ol class="breadcrumb py-3">
                 <ng-container *ngFor="let path of breadcrumbs; let last = last">
                     <li class="breadcrumb-item">
-                        <a [routerLink]="convertToString(path.rout)" [ngClass]="{'disabled' : last}"
+                        <a [routerLink]="['',convertToString(path.rout)]" [ngClass]="{'disabled' : last}"
                            *ngIf="availableRouts.includes(path.rout);else notRightRoot">
                             {{ 'breadcrumbs.' + path.rout | translate }}
                         </a>

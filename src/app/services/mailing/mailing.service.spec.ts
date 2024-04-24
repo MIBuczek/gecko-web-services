@@ -3,14 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { DB_MESSAGE_ACTIONS, MailingService } from './mailing.service';
 import { EmailMessage } from "classes/email-message.class";
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-
 import { Database, getDatabase } from 'firebase/database';
-import { inject } from '@angular/core';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { provideDatabase } from '@angular/fire/database';
 import { initializeApp } from 'firebase/app';
-import { environment } from '../../../environments/environment';
-import { throwError } from 'rxjs';
+import { environment } from 'environments/environment';
 
 /* Mock function to overwrite possibility of emission value*/
 const mockSendEmail = (em: EmailMessage): Promise<DB_MESSAGE_ACTIONS> => {

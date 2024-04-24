@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
-import {BreadCrumbItem} from "classes/breadcrumbs-item.class";
-import {IAppRouts} from "models/general";
-import {Observable} from "rxjs";
+import { Component } from '@angular/core';
+import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
+import { BreadCrumbItem } from "classes/breadcrumbs-item.class";
+import { IAppRouts } from "models/general";
+import { Observable } from "rxjs";
 
 @Component({
     selector: 'app-breadcrumbs',
@@ -19,7 +19,6 @@ export class BreadcrumbsComponent {
 
     /* Method to convert any value to string to be accepted by routerLink*/
     public convertToString(path: keyof IAppRouts | string | number): string {
-        console.log(path)
         return String(path)
     }
 }

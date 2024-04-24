@@ -1,17 +1,16 @@
-import { ComponentFixture, fakeAsync, inject, TestBed } from '@angular/core/testing';
-
-import { MainPageComponent } from './main-page.component';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { MatDialog, MatDialogModule } from "@angular/material/dialog";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 import polishTranslation from "assets/i18n/pl.json";
 import englishTranslation from "assets/i18n/en.json";
 import { TranslateTestingModule } from "ngx-translate-testing";
-import { routes } from "../../app-routing.module";
 import { By } from "@angular/platform-browser";
 import { TranslateService } from "@ngx-translate/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ModalCardDetailsComponent } from 'components/modals/modal-card-details/modal-card-details.component';
+import { MainComponent } from 'modules/main/main/main.component';
+import { routes } from 'app/app.module';
 
 
 const TRANSLATION: any = {
@@ -19,9 +18,9 @@ const TRANSLATION: any = {
     'en': englishTranslation
 }
 
-describe('MainPageComponent', () => {
-    let component: MainPageComponent;
-    let fixture: ComponentFixture<MainPageComponent>;
+describe('MainComponent - Main Rout', () => {
+    let component: MainComponent;
+    let fixture: ComponentFixture<MainComponent>;
     let modalRef: MatDialog
 
     const convertString = (s: string): string => {
@@ -30,7 +29,7 @@ describe('MainPageComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [MainPageComponent, ModalCardDetailsComponent],
+            declarations: [MainComponent, ModalCardDetailsComponent],
             providers: [
                 {
                     provide: ActivatedRoute,
@@ -47,7 +46,7 @@ describe('MainPageComponent', () => {
             ],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
         }).compileComponents();
-        fixture = TestBed.createComponent(MainPageComponent);
+        fixture = TestBed.createComponent(MainComponent);
         modalRef = TestBed.inject(MatDialog)
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -98,7 +97,7 @@ describe('MainPageComponent', () => {
     );
 
     it('is display all sections necessary for [main-page]', () => {
-        expect(fixture.debugElement.children.length).toEqual(5)
+        expect(fixture.debugElement.children.length).toEqual(7)
     })
 
     it('is display correct number service cards', () => {

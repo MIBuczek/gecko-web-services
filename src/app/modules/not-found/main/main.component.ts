@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BreadcrumbsService } from 'services/breadcrumbs/breadcrumbs.service';
 
 @Component({
-  selector: 'app-not-found-page',
-  templateUrl: './not-found-page.component.html',
-  styleUrls: ['./not-found-page.component.scss']
+  selector: 'app-not-found-main',
+  templateUrl: `./main.component.html`,
+  styleUrl: './main.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotFoundPageComponent implements OnInit {
+export class MainComponent implements OnInit {
   private readonly wrongPath: string;
 
   constructor(

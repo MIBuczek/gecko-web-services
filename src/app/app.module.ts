@@ -1,52 +1,68 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { ComponentsModule } from "components/components.module";
-import { MainPageComponent } from 'views/main-page/main-page.component';
-import { PrivacyPolicyPageComponent } from 'views/privacy-policy-page/privacy-policy-page.component';
-import { NotFoundPageComponent } from 'views/not-found-page/not-found-page.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
+import { environment } from 'environments/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
-import { getDatabase, provideDatabase } from '@angular/fire/database';
+import { getDatabase, provideDatabase, } from '@angular/fire/database';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { RouterModule, Routes } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: 'main-page',
+    pathMatch: 'full',
+  },
+  {
+    path: 'main-page',
+    loadChildren: () => import('modules/main/main.module').then(m => m.MainModule),
+    data: { breadcrumbs: ['main-page'] },
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('modules/login/login.module').then(m => m.LoginModule),
+    data: { breadcrumbs: ['main-page', 'login'] },
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('modules/admin/admin.module').then(m => m.AdminModule),
+    data: { breadcrumbs: ['main-page', 'admin'] },
+  },
+  {
+    path: 'privacy-policy',
+    loadChildren: () => import('modules/privacy-policy/privacy-policy.module').then(m => m.PrivacyPolicyModule),
+    data: { breadcrumbs: ['main-page', 'privacy-policy'] },
+  },
+  {
+    path: '**',
+    loadChildren: () => import('modules/not-found/not-found.module').then(m => m.NotFoundModule),
+    data: { breadcrumbs: ['main-page'] },
+  }
+];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainPageComponent,
-    PrivacyPolicyPageComponent,
-    NotFoundPageComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    BrowserAnimationsModule,
     ComponentsModule,
     HttpClientModule,
+    RouterModule.forRoot(routes, {
+      useHash: true
+    }),
+    provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideDatabase(() => getDatabase()),
-    TranslateModule.forRoot({
-      defaultLanguage: 'pl',
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
-    })
+    provideDatabase(() => getDatabase())
   ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase }
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
-
-export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(http);
-}
+export class AppModule { }

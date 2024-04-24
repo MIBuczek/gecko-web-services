@@ -1,8 +1,8 @@
-import {Component, OnDestroy} from '@angular/core';
-import {AbstractControl, UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
-import {DB_MESSAGE_ACTIONS, MailingService} from "services/mailing/mailing.service";
-import {EmailMessage} from "classes/email-message.class";
-import {BehaviorSubject, bufferTime, filter, from, Observable, ReplaySubject, takeUntil} from "rxjs";
+import { Component, OnDestroy } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
+import { DB_MESSAGE_ACTIONS, MailingService } from "services/mailing/mailing.service";
+import { EmailMessage } from "classes/email-message.class";
+import { BehaviorSubject, bufferTime, filter, from, Observable, ReplaySubject, takeUntil } from "rxjs";
 
 @Component({
   selector: 'app-footer',
@@ -15,9 +15,9 @@ export class FooterComponent implements OnDestroy {
   private submitStateClear$ = new BehaviorSubject(true)
   private subscription$ = new ReplaySubject(0);
 
-  public formUserMessage = new UntypedFormGroup({
-    email: new UntypedFormControl('', [Validators.required, Validators.email, Validators.minLength(3)]),
-    message: new UntypedFormControl('', [Validators.required, Validators.minLength(3)])
+  public formUserMessage = new FormGroup<{ email: FormControl<string | null>, message: FormControl<string | null> }>({
+    email: new FormControl('', [Validators.required, Validators.email, Validators.minLength(3)]),
+    message: new FormControl('', [Validators.required, Validators.minLength(3)])
   })
 
   constructor(private ms: MailingService) {
@@ -36,10 +36,11 @@ export class FooterComponent implements OnDestroy {
 
   public submit(): void {
     if (this.formUserMessage.invalid) return
-    const {email, message} = this.formUserMessage.value
+    const { email, message } = this.formUserMessage.value
+    if (!email || !message) return
     this.submitStatus$ = from(this.ms.sendEmailMessage(new EmailMessage(email, message)))
     this.submitStateClear$.next(true);
-    this.formUserMessage.reset({email: '', message: ''})
+    this.formUserMessage.reset({ email: '', message: '' })
   }
 
   ngOnDestroy(): void {
