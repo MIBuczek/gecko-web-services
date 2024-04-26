@@ -15,9 +15,15 @@ export enum DB_MESSAGE_ACTIONS {
 export class MailingService {
   database: Database = inject(Database);
 
+  /**
+ * Asynchronously sends an email message.
+ *
+ * @param {EmailMessage} em - The email message to be sent.
+ * @return {Promise<DB_MESSAGE_ACTIONS>} The result of sending the email message.
+ */
   public async sendEmailMessage(em: EmailMessage): Promise<DB_MESSAGE_ACTIONS> {
     try {
-      await set(ref(this.database, `messages/${uuid()}`), { ...em, createdAt: new Date().toISOString() })
+      await set(ref(this.database, `messages/${uuid()}`), em)
       return DB_MESSAGE_ACTIONS.SUCCESS
     } catch (err) {
       console.error(err)

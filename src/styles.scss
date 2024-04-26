@@ -1,10 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @import "bootstrap/dist/css/bootstrap.css";
 @import './styles/variables.scss';
+@import "~@fortawesome/fontawesome-free/css/all.css";
 @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 /* General reset */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -13,13 +16,14 @@
   margin: 0;
 }
 
-html {
-  font-size: 16px;
-}
-
+html,
 body {
+  width: 100vw;
+  overflow-x: hidden;
+  min-height: 100vh;
+  height: auto;
   margin: 0;
   padding: 0;
   font-size: 1rem;
-  font-family: "Raleway", sans-serif;
+  font-family: 'Raleway', sans-serif;
 }

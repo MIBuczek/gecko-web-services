@@ -35,6 +35,9 @@
       "components/*": [
         "app/components/*"
       ],
+      "guards/*": [
+        "app/guards/*"
+      ],
       "services/*": [
         "app/services/*"
       ],

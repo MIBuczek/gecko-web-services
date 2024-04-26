@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
+import { bufferTime, take, timer } from 'rxjs';
 import { AuthService } from 'services/auth/auth.service';
 
 @Component({
@@ -28,8 +29,15 @@ export class MainComponent {
     ])
   });
 
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private auth: AuthService, private router: Router) {
+    this.auth.currentUser.pipe(take(1)).subscribe((user) => {
+      if (user) this.router.navigate(['admin'])
+    })
+  }
 
+  get loginError() {
+    return this.auth.authError$
+  }
   /**
    * A method that handles form submission.
    *
@@ -38,14 +46,7 @@ export class MainComponent {
   async onSubmit() {
     if (this.logInForm.invalid) return;
     const { email, password } = this.logInForm.value;
-    console.log(email, password)
     if (!email || !password) return
-    try {
-      const credentials = this.auth.login(email, password)
-      if (!credentials) return
-      await this.router.navigate(['/admin'])
-    } catch (err) {
-      console.error(err)
-    }
+    this.auth.login(email, password)
   }
 }

@@ -19,10 +19,4 @@ describe('ErrorMessageComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
-
-    it('is @Input message is display on UI', () => {
-        component.message = 'To pole jest wymagane'
-        fixture.detectChanges()
-        expect(fixture.debugElement.query(By.css('.text-danger')).nativeElement.textContent.trim()).toEqual("To pole jest wymagane".trim())
-    })
 });

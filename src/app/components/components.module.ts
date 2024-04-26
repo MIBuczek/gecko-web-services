@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from "./footer/footer.component";
-import { HeaderComponent } from "./header/header.component";
 import { NavigationComponent } from "./navigation/navigation.component";
 import { LoaderComponent } from "./loader/loader.component";
 import { CookieComponent } from './cookie/cookie.component';
@@ -11,18 +10,16 @@ import { CopyRightsComponent } from './copy-rights/copy-rights.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { ServiceCardComponent } from './service-card/service-card.component';
 import { ModalCardDetailsComponent } from './modals/modal-card-details/modal-card-details.component';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatNativeDateModule } from "@angular/material/core";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TranslateModule } from "@ngx-translate/core";
 import { ScrollTopComponent } from './scroll-top/scroll-top.component';
 import { RouterModule } from '@angular/router';
+import { FormErrorMessagePipe } from 'app/pipes/form-error-message.pipe';
+import { NotificationComponent } from './notification/notification.component';
 
 
 @NgModule({
   declarations: [
     FooterComponent,
-    HeaderComponent,
     NavigationComponent,
     LoaderComponent,
     CookieComponent,
@@ -32,10 +29,10 @@ import { RouterModule } from '@angular/router';
     ServiceCardComponent,
     ModalCardDetailsComponent,
     ScrollTopComponent,
+    NotificationComponent,
   ],
   exports: [
     FooterComponent,
-    HeaderComponent,
     NavigationComponent,
     LoaderComponent,
     CookieComponent,
@@ -43,15 +40,16 @@ import { RouterModule } from '@angular/router';
     BreadcrumbsComponent,
     ServiceCardComponent,
     ModalCardDetailsComponent,
-    ScrollTopComponent
+    ScrollTopComponent,
+    ErrorMessageComponent,
+    NotificationComponent,
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    MatDialogModule,
-    MatNativeDateModule,
-    TranslateModule
+    TranslateModule,
+    FormErrorMessagePipe
   ]
 })
 export class ComponentsModule {

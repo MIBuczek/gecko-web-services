@@ -2,7 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { DB_MESSAGE_ACTIONS, MailingService } from "services/mailing/mailing.service";
 import { EmailMessage } from "classes/email-message.class";
-import { BehaviorSubject, bufferTime, filter, from, Observable, ReplaySubject, takeUntil } from "rxjs";
+import { BehaviorSubject, bufferTime, filter, from, Observable, of, ReplaySubject, takeUntil } from "rxjs";
 
 @Component({
   selector: 'app-footer',
@@ -10,9 +10,9 @@ import { BehaviorSubject, bufferTime, filter, from, Observable, ReplaySubject, t
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnDestroy {
-  public dbMessageActions = DB_MESSAGE_ACTIONS
-  public submitStatus$?: Observable<DB_MESSAGE_ACTIONS>
-  private submitStateClear$ = new BehaviorSubject(true)
+  public dbMessageActions = DB_MESSAGE_ACTIONS;
+  public submitStatus$?: Observable<DB_MESSAGE_ACTIONS>;
+  private submitStateClear$ = new BehaviorSubject(true);
   private subscription$ = new ReplaySubject(0);
 
   public formUserMessage = new FormGroup<{ email: FormControl<string | null>, message: FormControl<string | null> }>({

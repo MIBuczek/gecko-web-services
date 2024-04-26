@@ -6,10 +6,14 @@ section {
   background: $white_color;
   transition: $main_transition;
 
+  &.fixed-top {
+    z-index: 1000;
+  }
+
   &.sticky {
     background: $primary_bg;
     box-shadow: 0px 2px 15px rgb(0 0 0 / 10%);
-    border-bottom: 1px solid  $green_color;
+    border-bottom: 1px solid $green_color;
     padding: 0;
   }
 
@@ -75,13 +79,17 @@ section {
   }
 
   @media (max-width: 650px) {
+    padding: 0;
+
     &.sticky {
       padding: 0;
+      border-bottom: none;
     }
 
     .navbar {
       width: 100%;
       border-top: 1px solid $green_color;
+       border-bottom: 1px solid $green_color;
 
       .navbar-nav {
         flex-direction: column;

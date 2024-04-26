@@ -2,6 +2,146 @@
 @import "../../../../styles/general-styles.scss";
 @import "../../../../styles/animation.scss";
 
+/* Header */
+section.header {
+  header {
+    display: block;
+    top: 10rem;
+    width: 100vw;
+    height: 70vh;
+    left: 0;
+    margin: 7.5rem 0 6rem;
+    position: relative;
+
+    .h-title-shadow {
+      span {
+        @include header-shadow;
+        top: -4rem;
+        font-size: 8rem;
+        text-align: center;
+      }
+    }
+
+    .h-title {
+      z-index: 10;
+      border-bottom: 5px solid $green_color;
+      background: transparent;
+
+      h1 {
+        font-size: 7.5rem;
+        font-weight: 700;
+        line-height: 5.65rem;
+        color: $dark_grey_color;
+        display: inline-block;
+      }
+
+      h3 {
+        display: inline-block;
+        color: $grey_color;
+        margin: 0.675rem 0 1.75rem 1rem;
+        font-size: 7.5rem;
+      }
+    }
+
+    .h-logo {
+      margin-top: 1.875rem;
+      width: 250px;
+      height: auto;
+      height: fit-content;
+
+      img {
+        width: 100%;
+        height: auto;
+        margin-right: 20px;
+        z-index: 10;
+        animation: pulse 3.5s infinite;
+      }
+    }
+  }
+
+  @media (max-width: 1400px) {
+    header {
+      height: 60vh;
+      margin: 3.75rem 0 4.375rem;
+
+      .h-title-shadow {
+        span {
+          font-size: 5rem;
+        }
+      }
+
+      .h-title {
+        h1,
+        h3 {
+          font-size: 4.125rem;
+        }
+      }
+
+      .h-logo {
+        width: 150px;
+      }
+    }
+  }
+
+  @media (max-width: 990px) {
+    header {
+      .h-title-shadow {
+        span {
+          display: none;
+        }
+      }
+
+      .h-title {
+        text-align: center;
+
+        h1 {
+          display: block;
+          font-size: 5.5rem;
+        }
+
+        h3 {
+          margin: 0.675rem;
+        }
+      }
+
+      .h-logo {
+        width: 180px;
+
+        img {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 778px) {
+    header {
+      .h-logo {
+        img {
+          width: 150px;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 510px) {
+    header {
+      margin-top: 0;
+
+      .h-title {
+        h1 {
+          font-size: 4.5rem;
+        }
+
+        h3 {
+          font-size: 3.25rem;
+        }
+      }
+    }
+  }
+}
+
+/* About */
 .about {
   height: 80vh;
 
@@ -44,6 +184,7 @@
   }
 }
 
+/* Service */
 .service {
   padding: 3.75rem 0 8rem;
 
@@ -68,10 +209,9 @@
 
   @media (max-width: 990px) {
     .service-title {
-
       span {
         font-size: 3.5rem;
-        top: -1rem
+        top: -1rem;
       }
 
       h1 {
@@ -84,9 +224,9 @@
       }
     }
   }
-
 }
 
+/* Technology */
 .technologies {
   background: $main_primary_color;
   margin-top: 8vh;
@@ -102,6 +242,5 @@
 
   @media (max-width: 600px) {
     font-size: 2.2rem;
-
   }
 }

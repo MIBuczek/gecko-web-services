@@ -5,3 +5,5 @@ export interface IAppRouts {
 }
 
 export type TypeLang = 'PL' | 'EN'
+
+export type NotificationType = 'info' | 'warning' | 'error' | 'success'

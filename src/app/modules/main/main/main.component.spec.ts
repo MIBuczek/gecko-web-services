@@ -59,6 +59,18 @@ describe('MainComponent - Main Rout', () => {
         expect(component).toBeTruthy();
     });
 
+    it('is logo alt display correctly', () => {
+        /* Check if logo has correct path */
+        const logo = fixture.debugElement.query(By.css('.h-logo')).children
+        expect(logo[0].attributes['src']).toEqual('./assets/images/logo-gws.png')
+    })
+
+    it('is logo alt display correctly', () => {
+        /* Check if logo display correct alt text */
+        const logo = fixture.debugElement.query(By.css('.h-logo')).children
+        expect(logo[0].nativeElement['alt']).toEqual('Logo Gecko Web Services')
+    })
+
     it('is display correct initial text content', () => {
         fixture.detectChanges()
         const about_section = fixture.debugElement.query(By.css('#about'))

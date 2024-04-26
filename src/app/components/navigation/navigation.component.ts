@@ -1,9 +1,9 @@
-import {Component, HostListener} from '@angular/core';
-import {TranslateService} from "@ngx-translate/core";
-import {ViewportScroller} from "@angular/common";
-import {BreadcrumbsService} from "services/breadcrumbs/breadcrumbs.service";
-import {LoaderService} from "services/loader/loader.service";
-import {ScrollService, TypeContentId} from "services/scroll/scroll.service";
+import { Component, HostListener } from '@angular/core';
+import { TranslateService } from "@ngx-translate/core";
+import { ViewportScroller } from "@angular/common";
+import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
+import { LoaderService } from "services/loader/loader.service";
+import { ScrollService, TypeContentId } from "services/scroll/scroll.service";
 
 type TypeLang = 'pl' | 'en'
 
@@ -15,7 +15,7 @@ type TypeLang = 'pl' | 'en'
 export class NavigationComponent {
     public selectedLang: TypeLang = 'pl';
     public isNavbarOpen: boolean = false
-    public selectedContentId: TypeContentId = 'start'
+    public selectedContentId: TypeContentId = 'header'
     public isMainPage = true;
 
     constructor(

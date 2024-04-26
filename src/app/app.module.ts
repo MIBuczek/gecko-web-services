@@ -10,6 +10,7 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { adminGuard } from 'guards/admin/admin.guard';
 
 
 export const routes: Routes = [
@@ -31,6 +32,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('modules/admin/admin.module').then(m => m.AdminModule),
+    canActivate: [adminGuard],
     data: { breadcrumbs: ['main-page', 'admin'] },
   },
   {

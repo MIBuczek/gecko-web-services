@@ -14,8 +14,8 @@
         *ngIf="isNavbarOpen || !checkPosition(false)">
         <ul class="navbar-nav">
           <ng-container *ngIf="isMainPage; else replacementNavigation">
-            <li class="nav-item" [class.active]="selectedContentId === 'start'">
-              <a class="nav-link" role="button" (click)="scrollToElement('start')">
+            <li class="nav-item" [class.active]="selectedContentId === 'header'">
+              <a class="nav-link" role="button" (click)="scrollToElement('header')">
                 {{'navigation.main' | translate}}
               </a>
             </li>

@@ -1,29 +1,45 @@
 import { inject, Injectable } from '@angular/core';
-import { Auth, GoogleAuthProvider, signInWithEmailAndPassword, user } from '@angular/fire/auth'
-import { OAuthCredential, signOut } from 'firebase/auth';
+import { Auth, signInWithEmailAndPassword, user } from '@angular/fire/auth'
+import { Router } from '@angular/router';
+import { signOut, User } from 'firebase/auth';
+import { Observable, of, ReplaySubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private auth: Auth = inject(Auth);
-  private provider = new GoogleAuthProvider();
-  readonly user$ = user(this.auth)
+  private readonly user$ = user(this.auth)
+  readonly authError$ = new ReplaySubject()
 
+
+  constructor(private router: Router) {
+  }
+
+  /**
+ * Get the current user.
+ *
+ * @return {Observable<User>} The current user.
+ */
+  get currentUser(): Observable<User | null> {
+    return this.user$
+  }
   /**
  * A function to login with the provided email and password.
  *
  * @param {string} email - The email of the user.
  * @param {string} password - The password of the user.
- * @return {Promise<any>} The credentials of the logged-in user.
+ * @return {Promise<any>} Redirect user do admin panel.
  */
-  async login(email: string, password: string): Promise<OAuthCredential | null> {
+  async login(email: string, password: string): Promise<void> {
     try {
       const resp = await signInWithEmailAndPassword(this.auth, email, password);
-      const credentials = GoogleAuthProvider.credentialFromResult(resp);
-      return credentials
+      if (resp) {
+        await this.router.navigate(['/admin'])
+      }
     } catch (err) {
+      this.authError$.next(err)
+      setTimeout(() => this.authError$.next(null), 10000)
       console.error(err)
-      return null
     }
   }
 
@@ -35,6 +51,7 @@ export class AuthService {
   async logout(): Promise<void> {
     try {
       await signOut(this.auth)
+
       console.log('logged out')
     } catch (err) {
       console.error(err)

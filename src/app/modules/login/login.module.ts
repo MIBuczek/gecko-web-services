@@ -1,11 +1,9 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
 import { MainComponent } from 'modules/login/main/main.component';
 import { CommonModule } from '@angular/common';
+import { ComponentsModule } from 'app/components/components.module';
 
 const routes: Route[] = [
   {
@@ -19,11 +17,10 @@ const routes: Route[] = [
   declarations: [MainComponent],
   imports: [
     CommonModule,
+    ComponentsModule,
     RouterModule.forChild(routes),
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-  ]
+    ReactiveFormsModule
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class LoginModule { }

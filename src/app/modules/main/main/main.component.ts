@@ -5,7 +5,7 @@ import { ModalCardDetailsComponent } from 'components/modals/modal-card-details/
 import { IAppRouts } from 'models/general';
 import { ISingleCard } from 'models/text-content';
 import { BreadcrumbsService } from 'services/breadcrumbs/breadcrumbs.service';
-import { tech_icons } from 'utilities/variables/tech-icon';
+import { tech_icons } from 'utilities/variables/tech-icon.const';
 
 @Component({
   selector: 'app-main',
