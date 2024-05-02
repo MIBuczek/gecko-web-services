@@ -8,6 +8,11 @@ import { provideFirebaseApp, initializeApp } from "@angular/fire/app";
 import { getDatabase, provideDatabase } from "@angular/fire/database";
 import { provideAuth, getAuth } from "@angular/fire/auth";
 import { FIREBASE_OPTIONS } from "@angular/fire/compat";
+import {
+  provideAppCheck,
+  initializeAppCheck,
+  ReCaptchaV3Provider,
+} from "@angular/fire/app-check";
 import { RouterModule, Routes } from "@angular/router";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { adminGuard } from "guards/admin/admin.guard";
@@ -67,6 +72,11 @@ export const routes: Routes = [
     }),
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAppCheck(() =>
+      initializeAppCheck(initializeApp(environment.firebase), {
+        provider: new ReCaptchaV3Provider(environment.recaptcha.siteKey),
+      })
+    ),
     provideDatabase(() => getDatabase()),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

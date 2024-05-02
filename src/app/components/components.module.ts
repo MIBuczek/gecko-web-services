@@ -16,6 +16,7 @@ import { RouterModule } from "@angular/router";
 import { FormErrorMessagePipe } from "app/pipes/form-error-message.pipe";
 import { NotificationComponent } from "./notification/notification.component";
 import { ModalEmailDetailsComponent } from "./modals/modal-email-details/modal-email-details.component";
+import { RecaptchaModule } from "ng-recaptcha";
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ModalEmailDetailsComponent } from "./modals/modal-email-details/modal-e
     RouterModule,
     TranslateModule,
     FormErrorMessagePipe,
+    RecaptchaModule,
   ],
 })
 export class ComponentsModule {}

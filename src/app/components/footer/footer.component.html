@@ -70,10 +70,16 @@
             <input
               type="submit"
               [value]="'footer.submit-btn' | translate"
-              [disabled]="!formUserMessage.touched"
+              [disabled]="formUserMessage.invalid || !getRecaptchaToken"
             />
           </div>
         </form>
+        <div>
+          <re-captcha
+            (resolved)="resolvedRecaptcha($event)"
+            [siteKey]="siteKey"
+          ></re-captcha>
+        </div>
         <div *ngIf="!!submitStatus$ && (submitClearStatus | async)">
           <ng-container
             *ngIf="(submitStatus$ | async) === dbMessageActions.SUCCESS"

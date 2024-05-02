@@ -3,8 +3,6 @@ import {
   AbstractControl,
   FormControl,
   FormGroup,
-  UntypedFormControl,
-  UntypedFormGroup,
   Validators,
 } from "@angular/forms";
 import {
@@ -18,10 +16,10 @@ import {
   filter,
   from,
   Observable,
-  of,
   ReplaySubject,
   takeUntil,
 } from "rxjs";
+import { environment } from "environments/environment";
 
 @Component({
   selector: "app-footer",
@@ -33,6 +31,8 @@ export class FooterComponent implements OnDestroy {
   public submitStatus$?: Observable<DB_MESSAGE_ACTIONS>;
   private submitStateClear$ = new BehaviorSubject(true);
   private subscription$ = new ReplaySubject(0);
+  readonly siteKey = environment.recaptcha.siteKey;
+  private token: string | null = null;
 
   public formUserMessage = new FormGroup<{
     email: FormControl<string | null>;
@@ -56,16 +56,38 @@ export class FooterComponent implements OnDestroy {
       .subscribe(() => this.submitStateClear$.next(false));
   }
 
+  /**
+   * Returns an observable of the current clear status after submission.
+   *
+   * @return {Observable<boolean>} An observable of the current clear status after submission.
+   */
   get submitClearStatus(): Observable<boolean> {
     return this.submitStateClear$.asObservable();
   }
 
+  /**
+   * Returns the form controls of the formUserMessage.
+   *
+   * @return { { [x: string]: AbstractControl } } The form controls of formUserMessage.
+   */
   get formControls(): { [x: string]: AbstractControl } {
     return this.formUserMessage.controls;
   }
 
+  /**
+   * Returns the reCAPTCHA token.
+   *
+   * @return {string | null} The reCAPTCHA token or null if not available.
+   */
+  get getRecaptchaToken(): string | null {
+    return this.token;
+  }
+
+  /**
+   * Submits the form data if valid and sets the email message status based on the response.
+   */
   public submit(): void {
-    if (this.formUserMessage.invalid) return;
+    if (this.formUserMessage.invalid || !this.token) return;
     const { email, message } = this.formUserMessage.value;
     if (!email || !message) return;
     this.submitStatus$ = from(
@@ -75,6 +97,22 @@ export class FooterComponent implements OnDestroy {
     this.formUserMessage.reset({ email: "", message: "" });
   }
 
+  /**
+   * Sets the resolved reCAPTCHA token.
+   *
+   * @param {string | null} token - The resolved reCAPTCHA token.
+   * @return {void}
+   */
+  resolvedRecaptcha(token: string | null): void {
+    this.token = token;
+  }
+
+  /**
+   * A description of the entire function.
+   *
+   * @param {void} - No parameters
+   * @return {void} - No return value
+   */
   ngOnDestroy(): void {
     this.subscription$.next(1);
     this.subscription$.complete();
