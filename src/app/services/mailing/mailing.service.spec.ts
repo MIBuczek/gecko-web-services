@@ -8,6 +8,7 @@ import { provideFirebaseApp } from "@angular/fire/app";
 import { provideDatabase } from "@angular/fire/database";
 import { initializeApp } from "firebase/app";
 import { environment } from "environments/environment";
+import { of } from "rxjs";
 
 /* Mock function to overwrite possibility of emission value*/
 const mockSendEmail = (em: EmailMessage): Promise<DB_MESSAGE_ACTIONS> => {
@@ -20,7 +21,6 @@ const mockSendEmail = (em: EmailMessage): Promise<DB_MESSAGE_ACTIONS> => {
 
 describe("MailingService", () => {
   let service: MailingService;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -43,12 +43,9 @@ describe("MailingService", () => {
       .spyOn(service, "sendEmailMessage")
       .mockReturnValue(Promise.resolve(DB_MESSAGE_ACTIONS.SUCCESS));
     try {
-      const resp = await service.sendEmailMessage({
-        email: "michal@test.pl",
-        message: "test message",
-        createdAt: new Date().toISOString(),
-        replay: false,
-      });
+      const resp = await service.sendEmailMessage(
+        new EmailMessage("test@example.com", "test message")
+      );
       expect(resp).toEqual(DB_MESSAGE_ACTIONS.SUCCESS);
     } catch (err) {
       expect(err).toBeUndefined();
@@ -60,12 +57,7 @@ describe("MailingService", () => {
       .spyOn(service, "sendEmailMessage")
       .mockReturnValue(Promise.reject(DB_MESSAGE_ACTIONS.ERROR));
     try {
-      await service.sendEmailMessage({
-        email: "",
-        message: "test message",
-        createdAt: new Date().toISOString(),
-        replay: false,
-      });
+      await service.sendEmailMessage(new EmailMessage("", "test message"));
     } catch (err) {
       expect(err).toEqual(DB_MESSAGE_ACTIONS.ERROR);
     }
