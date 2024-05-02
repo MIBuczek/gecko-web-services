@@ -1,20 +1,32 @@
 <app-navigation></app-navigation>
 <app-breadcrumbs></app-breadcrumbs>
-<main class="container d-flex flex-column align-items-center justify-content-center">
-    <span id="header-shadow">{{"privacy-policy-page.main_header" | translate}}</span>
-    <h1 class="policy-header pb-5 mb-5">{{"privacy-policy-page.main_header" | translate}}</h1>
-    <p>{{"privacy-policy-page.main_description" | translate}}</p>
-    <div class="row">
-        <div class="col-lg-12 py-4" *ngFor="let part of 'privacy-policy-page.parts' | translate; let i = index">
-            <h2>{{part['inner_header']}}</h2>
-            <p>{{part['inner_description']}}</p>
-        </div>
+<main
+  class="container d-flex flex-column align-items-center justify-content-center"
+>
+  <span id="header-shadow">{{
+    "privacy-policy-page.main_header" | translate
+  }}</span>
+  <h1 class="policy-header pb-5 mb-5">
+    {{ "privacy-policy-page.main_header" | translate }}
+  </h1>
+  <p>{{ "privacy-policy-page.main_description" | translate }}</p>
+  <div class="row">
+    <div
+      class="col-lg-12 py-4"
+      *ngFor="
+        let part of 'privacy-policy-page.parts' | translate;
+        let i = index
+      "
+    >
+      <h2>{{ part["inner_header"] }}</h2>
+      <p>{{ part["inner_description"] }}</p>
     </div>
-    <div class="row">
-        <a routerLink="/main-page">
-            {{"privacy-policy-page.redirect" | translate}}
-        </a>
-    </div>
+  </div>
+  <div class="row">
+    <a routerLink="/main-page">
+      {{ "privacy-policy-page.redirect" | translate }}
+    </a>
+  </div>
 </main>
 <app-cookie></app-cookie>
 <app-scroll-top></app-scroll-top>

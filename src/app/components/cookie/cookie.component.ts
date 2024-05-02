@@ -1,21 +1,28 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-cookie',
-  templateUrl: './cookie.component.html',
-  styleUrls: ['./cookie.component.scss']
+  selector: "app-cookie",
+  templateUrl: "./cookie.component.html",
+  styleUrls: ["./cookie.component.scss"],
 })
 export class CookieComponent implements OnInit {
-  public isCookiesAccepted: boolean = false
+  public isCookiesAccepted: boolean = false;
 
-  constructor() {
-  }
-  acceptCookies(): void {
-    window.localStorage.setItem('cookies', String(true))
+  /**
+   * Sets the "cookies" value in the local storage to "true" and sets the `isCookiesAccepted` flag to `true`.
+   *
+   * @return {void} This function does not return anything.
+   */ acceptCookies(): void {
+    window.localStorage.setItem("cookies", String(true));
     this.isCookiesAccepted = true;
   }
 
+  /**
+   * Initializes the component by checking if cookies have been accepted and updating the `isCookiesAccepted` flag accordingly.
+   *
+   * @return {void} This function does not return anything.
+   */
   ngOnInit(): void {
-    this.isCookiesAccepted = !!window.localStorage.getItem('cookies')
+    this.isCookiesAccepted = !!window.localStorage.getItem("cookies");
   }
 }

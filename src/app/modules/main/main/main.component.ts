@@ -1,40 +1,50 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { ModalCardDetailsComponent } from 'components/modals/modal-card-details/modal-card-details.component';
-import { IAppRouts } from 'models/general';
-import { ISingleCard } from 'models/text-content';
-import { BreadcrumbsService } from 'services/breadcrumbs/breadcrumbs.service';
-import { tech_icons } from 'utilities/variables/tech-icon.const';
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
+import { ActivatedRoute } from "@angular/router";
+import { ModalCardDetailsComponent } from "components/modals/modal-card-details/modal-card-details.component";
+import { IAppRouts } from "models/general";
+import { ISingleCard } from "models/text-content";
+import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
+import { tech_icons } from "utilities/variables/tech-icon.const";
 
 @Component({
-  selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrl: './main.component.scss',
+  selector: "app-main",
+  templateUrl: "./main.component.html",
+  styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent implements OnInit {
-  readonly tech_icons = tech_icons
+  readonly tech_icons = tech_icons;
 
   constructor(
     private modalRef: MatDialog,
     private bc: BreadcrumbsService,
-    private route: ActivatedRoute,
-  ) {
-  }
+    private route: ActivatedRoute
+  ) {}
 
+  /**
+   * Sets the status of the card.
+   *
+   * @param {ISingleCard | null} card - The card to set the status for.
+   */
   public setCardStatus(card: ISingleCard | null) {
     if (card) {
       this.modalRef.open(ModalCardDetailsComponent, {
-        data: { card }
-      })
+        data: { card },
+      });
     } else {
-      this.modalRef.closeAll()
+      this.modalRef.closeAll();
     }
   }
 
+  /**
+   * Initializes the component and updates the breadcrumbs path based on the data received from the route snapshot.
+   *
+   * @return {void} No return value
+   */
   ngOnInit() {
-    this.bc.updateBreadcrumbsPath =
-      this.bc.generateBreadcrumbs(this.route.snapshot.data['breadcrumbs'] as Array<keyof IAppRouts>)
+    this.bc.updateBreadcrumbsPath = this.bc.generateBreadcrumbs(
+      this.route.snapshot.data["breadcrumbs"] as Array<keyof IAppRouts>
+    );
   }
 }

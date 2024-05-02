@@ -7,15 +7,21 @@ import { TranslateModule } from "@ngx-translate/core";
 import { TranslateLangModule } from "modules/translate-lang/translate-lang.module";
 
 const routes: Route[] = [
-    {
-        path: '',
-        pathMatch: 'full',
-        component: MainComponent
-    }
+  {
+    path: "",
+    pathMatch: "full",
+    component: MainComponent,
+  },
 ];
 
 @NgModule({
-    declarations: [MainComponent],
-    imports: [CommonModule, ComponentsModule, TranslateModule, TranslateLangModule, RouterModule.forChild(routes)]
+  declarations: [MainComponent],
+  imports: [
+    CommonModule,
+    ComponentsModule,
+    TranslateModule,
+    TranslateLangModule,
+    RouterModule.forChild(routes),
+  ],
 })
-export class PrivacyPolicyModule { }
+export class PrivacyPolicyModule {}

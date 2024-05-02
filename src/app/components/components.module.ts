@@ -1,21 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { FooterComponent } from "./footer/footer.component";
 import { NavigationComponent } from "./navigation/navigation.component";
 import { LoaderComponent } from "./loader/loader.component";
-import { CookieComponent } from './cookie/cookie.component';
-import { ErrorMessageComponent } from './error-message/error-message.component';
+import { CookieComponent } from "./cookie/cookie.component";
+import { ErrorMessageComponent } from "./error-message/error-message.component";
 import { ReactiveFormsModule } from "@angular/forms";
-import { CopyRightsComponent } from './copy-rights/copy-rights.component';
-import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
-import { ServiceCardComponent } from './service-card/service-card.component';
-import { ModalCardDetailsComponent } from './modals/modal-card-details/modal-card-details.component';
+import { CopyRightsComponent } from "./copy-rights/copy-rights.component";
+import { BreadcrumbsComponent } from "./breadcrumbs/breadcrumbs.component";
+import { ServiceCardComponent } from "./service-card/service-card.component";
+import { ModalCardDetailsComponent } from "./modals/modal-card-details/modal-card-details.component";
 import { TranslateModule } from "@ngx-translate/core";
-import { ScrollTopComponent } from './scroll-top/scroll-top.component';
-import { RouterModule } from '@angular/router';
-import { FormErrorMessagePipe } from 'app/pipes/form-error-message.pipe';
-import { NotificationComponent } from './notification/notification.component';
-
+import { ScrollTopComponent } from "./scroll-top/scroll-top.component";
+import { RouterModule } from "@angular/router";
+import { FormErrorMessagePipe } from "app/pipes/form-error-message.pipe";
+import { NotificationComponent } from "./notification/notification.component";
+import { ModalEmailDetailsComponent } from "./modals/modal-email-details/modal-email-details.component";
 
 @NgModule({
   declarations: [
@@ -28,6 +28,7 @@ import { NotificationComponent } from './notification/notification.component';
     BreadcrumbsComponent,
     ServiceCardComponent,
     ModalCardDetailsComponent,
+    ModalEmailDetailsComponent,
     ScrollTopComponent,
     NotificationComponent,
   ],
@@ -40,6 +41,7 @@ import { NotificationComponent } from './notification/notification.component';
     BreadcrumbsComponent,
     ServiceCardComponent,
     ModalCardDetailsComponent,
+    ModalEmailDetailsComponent,
     ScrollTopComponent,
     ErrorMessageComponent,
     NotificationComponent,
@@ -49,8 +51,7 @@ import { NotificationComponent } from './notification/notification.component';
     ReactiveFormsModule,
     RouterModule,
     TranslateModule,
-    FormErrorMessagePipe
-  ]
+    FormErrorMessagePipe,
+  ],
 })
-export class ComponentsModule {
-}
+export class ComponentsModule {}

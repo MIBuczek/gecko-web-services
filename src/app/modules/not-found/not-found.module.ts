@@ -7,14 +7,20 @@ import { CommonModule } from "@angular/common";
 import { ComponentsModule } from "components/components.module";
 
 const routes: Route[] = [
-    {
-        path: '',
-        component: MainComponent
-    }
+  {
+    path: "",
+    component: MainComponent,
+  },
 ];
 
 @NgModule({
-    declarations: [MainComponent],
-    imports: [CommonModule, ComponentsModule, TranslateModule, TranslateLangModule, RouterModule.forChild(routes)]
+  declarations: [MainComponent],
+  imports: [
+    CommonModule,
+    ComponentsModule,
+    TranslateModule,
+    TranslateLangModule,
+    RouterModule.forChild(routes),
+  ],
 })
-export class NotFoundModule { }
+export class NotFoundModule {}

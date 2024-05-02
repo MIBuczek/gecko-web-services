@@ -7,23 +7,21 @@ import { MainComponent } from "modules/main/main/main.component";
 import { TranslateLangModule } from "modules/translate-lang/translate-lang.module";
 
 export const routes: Routes = [
-    {
-        path: '',
-        component: MainComponent,
-    }
+  {
+    path: "",
+    component: MainComponent,
+  },
 ];
 
 @NgModule({
-    declarations: [
-        MainComponent
-    ],
-    imports: [
-        CommonModule,
-        ComponentsModule,
-        RouterModule.forChild(routes),
-        ComponentsModule,
-        TranslateModule,
-        TranslateLangModule,
-    ]
+  declarations: [MainComponent],
+  imports: [
+    CommonModule,
+    ComponentsModule,
+    RouterModule.forChild(routes),
+    ComponentsModule,
+    TranslateModule,
+    TranslateLangModule,
+  ],
 })
-export class MainModule { }
+export class MainModule {}

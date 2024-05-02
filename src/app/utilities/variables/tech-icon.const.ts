@@ -7,5 +7,5 @@ export const tech_icons = [
   "fa-bootstrap",
   "fa-google",
   "fa-github",
-  "fa-microsoft"
-]
+  "fa-microsoft",
+];

@@ -32,7 +32,7 @@ footer {
       text-align: left;
       font-size: 1rem;
 
-      input[type='email'],
+      input[type="email"],
       textarea {
         background: $secondary-bg;
         padding: 0.25rem 0.5rem;
@@ -45,7 +45,7 @@ footer {
         height: 6.25rem;
       }
 
-      input[type='submit'] {
+      input[type="submit"] {
         @include modal_btn;
         font-size: 1rem;
         padding: 0 1.25rem;
@@ -92,7 +92,7 @@ footer {
       &-header {
         span {
           font-size: 3.5rem;
-          top: -1rem
+          top: -1rem;
         }
 
         h1 {
@@ -120,8 +120,8 @@ footer {
       &-form {
         text-align: center;
 
-        input[type='email'],
-        input[type='submit'],
+        input[type="email"],
+        input[type="submit"],
         error-message,
         textarea {
           width: 90%;
@@ -131,7 +131,7 @@ footer {
           text-align: left;
         }
 
-        input[type='submit'] {
+        input[type="submit"] {
           min-height: 50px;
           border-radius: 4px;
           margin-top: 10px;
@@ -146,13 +146,13 @@ footer {
       overflow: hidden;
 
       &-form {
-        input[type='email'],
-        input[type='submit'],
+        input[type="email"],
+        input[type="submit"],
         textarea {
           width: 90%;
         }
 
-        input[type='submit'] {
+        input[type="submit"] {
           min-height: 50px;
           border-radius: 4px;
           margin-top: 10px;
@@ -161,6 +161,3 @@ footer {
     }
   }
 }
-
-
-

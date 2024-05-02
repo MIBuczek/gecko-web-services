@@ -3,27 +3,33 @@
     <div class="row justify-content-center">
       <div class="col-lg-6 contact-header text-center my-5">
         <span>
-          {{ 'footer.title' | translate }}
+          {{ "footer.title" | translate }}
         </span>
         <h1>
-          {{'footer.title' | translate }}
+          {{ "footer.title" | translate }}
         </h1>
       </div>
     </div>
     <div class="row justify-content-center">
       <div class="col-lg-6">
         <p class="fs-m-6 text-center text-md-start">
-          {{'footer.description' | translate}}
+          {{ "footer.description" | translate }}
         </p>
-        <div class="contact-links d-flex flex-column flex-md-row align-items-center">
+        <div
+          class="contact-links d-flex flex-column flex-md-row align-items-center"
+        >
           <p class="d-inline">
-            <span class="d-inline-flex justify-content-center align-items-center">
+            <span
+              class="d-inline-flex justify-content-center align-items-center"
+            >
               <i class="fa-solid fa-mobile"></i>
             </span>
             509-312-832
           </p>
           <p class="d-inline">
-            <span class="d-inline-flex justify-content-center align-items-center">
+            <span
+              class="d-inline-flex justify-content-center align-items-center"
+            >
               <i class="fa-solid fa-envelope"></i>
             </span>
             gecko.web.services&#64;gmail.com
@@ -31,31 +37,59 @@
         </div>
       </div>
       <div class="col-lg-6 contact-form">
-        <form class="row flex-md-row flex-column" [formGroup]="formUserMessage" (submit)="submit()">
-          <div class="col-12 col-md-10 d-flex flex-column align-items-md-stretch align-items-center">
+        <form
+          class="row flex-md-row flex-column"
+          [formGroup]="formUserMessage"
+          (submit)="submit()"
+        >
+          <div
+            class="col-12 col-md-10 d-flex flex-column align-items-md-stretch align-items-center"
+          >
             <input
               type="email"
               name="email"
               formControlName="email"
-              [placeholder]="'footer.input-email' | translate">
-              <app-error-message [form]="formUserMessage" [fieldName]="'email'"></app-error-message>
+              [placeholder]="'footer.input-email' | translate"
+            />
+            <app-error-message
+              [form]="formUserMessage"
+              [fieldName]="'email'"
+            ></app-error-message>
             <textarea
               name="message"
               formControlName="message"
-              [placeholder]="'footer.input-message' | translate">
+              [placeholder]="'footer.input-message' | translate"
+            >
             </textarea>
-            <app-error-message [form]="formUserMessage" [fieldName]="'message'"></app-error-message>
+            <app-error-message
+              [form]="formUserMessage"
+              [fieldName]="'message'"
+            ></app-error-message>
           </div>
           <div class="col-md-2 col-12">
-            <input type="submit" [value]="'footer.submit-btn' | translate" [disabled]="!formUserMessage.touched">
+            <input
+              type="submit"
+              [value]="'footer.submit-btn' | translate"
+              [disabled]="!formUserMessage.touched"
+            />
           </div>
         </form>
         <div *ngIf="!!submitStatus$ && (submitClearStatus | async)">
-          <ng-container *ngIf="(submitStatus$ | async) === dbMessageActions.SUCCESS">
-              <app-notification [title]="'footer.submit-success' | translate " [variant]="'success'"/>
+          <ng-container
+            *ngIf="(submitStatus$ | async) === dbMessageActions.SUCCESS"
+          >
+            <app-notification
+              [title]="'footer.submit-success' | translate"
+              [variant]="'success'"
+            />
           </ng-container>
-          <ng-container *ngIf="(submitStatus$ | async) === dbMessageActions.ERROR">
-              <app-notification [title]="'footer.submit-error' | translate" [variant]="'error'"/>
+          <ng-container
+            *ngIf="(submitStatus$ | async) === dbMessageActions.ERROR"
+          >
+            <app-notification
+              [title]="'footer.submit-error' | translate"
+              [variant]="'error'"
+            />
           </ng-container>
         </div>
       </div>

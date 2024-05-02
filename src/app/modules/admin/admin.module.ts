@@ -6,20 +6,20 @@ import { MainComponent } from "modules/admin/main/main.component";
 import { TranslateLangModule } from "../translate-lang/translate-lang.module";
 
 const routes: Route[] = [
-    {
-        path: '',
-        pathMatch: 'full',
-        component: MainComponent
-    }
+  {
+    path: "",
+    pathMatch: "full",
+    component: MainComponent,
+  },
 ];
 
 @NgModule({
-    declarations: [MainComponent],
-    imports: [
-        CommonModule,
-        ComponentsModule,
-        TranslateLangModule,
-        RouterModule.forChild(routes),
-    ]
+  declarations: [MainComponent],
+  imports: [
+    CommonModule,
+    ComponentsModule,
+    TranslateLangModule,
+    RouterModule.forChild(routes),
+  ],
 })
-export class AdminModule { }
+export class AdminModule {}

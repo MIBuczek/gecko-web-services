@@ -1,98 +1,105 @@
 @import "../../../../styles/variables.scss";
 @import "../../../../styles/general-styles.scss";
 
-main {
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+  height: auto;
   background: $primary_bg;
-  min-height: 100vh;
-  display: flex;
-  margin: 0;
 
-  span.header-shadow {
-    @include header-shadow;
-    top: 12rem;
-  }
-
-  h1 {
-    @include page-header;
-    @include under_line(20rem);
-    margin-bottom: 5rem;
-    min-height: 50px;
-    overflow: visible;
-  }
-
-  form {
-    min-width: 40rem;
-    width: fit-content;
-    text-align: center;
-    transform: translate(0, -25%);
-    padding: 0.375rem 0.625rem;
-    border-radius: 4px;
-
-    input.form-control {
-      background: $secondary-bg;
-      padding: 0.25rem 0.5rem;
-      border: 1px solid $tertiary_border;
-      outline: none;
-      height: 42px;
-    }
-
-    button[type="submit"] {
-      @include modal_btn;
-      margin-top: 0.875rem;
-
-      &:hover {
-        border-radius: 1.25rem;
-      }
-
-      &:disabled {
-        border-radius: 0;
-        background: $grey_color;
-      }
-    }
-  }
-
-  .login-redirect {
-    a {
-      @include redirect;
-    }
-  }
-
-  @media (max-width: 1000px) {
+  header {
     span.header-shadow {
-      display: none;
+      @include header-shadow;
+      top: 8rem;
     }
-  }
 
-  @media (max-width: 640px) {
-    form {
-      min-width: 100%;
-      padding: 0.375rem 0;
-    }
-  }
-
-  @media (max-width: 570px) {
     h1 {
-      @include under_line(100%);
-      position: absolute;
-      top: 15%;
-      margin-bottom: 0;
-      font-size: 2.5rem;
+      @include page-header;
+      @include under_line(20rem);
+      margin-bottom: 5rem;
+      min-height: 50px;
+      overflow: visible;
+    }
+  }
+
+  main {
+    background: $primary_bg;
+    min-height: 100vh;
+    display: flex;
+    margin: 0;
+
+    form {
+      min-width: 20rem;
       text-align: center;
+      padding: 0.375rem 0.625rem;
+      border-radius: 4px;
+
+      input.form-control {
+        background: $secondary-bg;
+        padding: 0.25rem 0.5rem;
+        border: 1px solid $tertiary_border;
+        text-align: center;
+        outline: none;
+        height: 42px;
+      }
+
+      button[type="submit"] {
+        @include modal_btn;
+        margin-top: 0.875rem;
+
+        &:hover {
+          border-radius: 1.25rem;
+        }
+
+        &:disabled {
+          border-radius: 0;
+          background: $grey_color;
+        }
+      }
     }
 
     .login-redirect {
-      font-size: 14px;
-
       a {
-        display: block;
+        @include redirect;
       }
     }
-  }
 
-  @media (max-width: 460px) {
-    h1 {
-      width: 80%;
-      top: 5%;
+    @media (max-width: 1000px) {
+      span.header-shadow {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      form {
+        min-width: 100%;
+        padding: 0.375rem 0;
+      }
+    }
+
+    @media (max-width: 570px) {
+      h1 {
+        @include under_line(100%);
+        margin-bottom: 3rem;
+        font-size: 2.5rem;
+        text-align: center;
+      }
+
+      .login-redirect {
+        font-size: 14px;
+
+        a {
+          display: block;
+        }
+      }
+    }
+
+    @media (max-width: 460px) {
+      h1 {
+        width: 80%;
+        top: 5%;
+      }
     }
   }
 }
