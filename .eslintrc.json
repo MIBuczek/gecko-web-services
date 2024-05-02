@@ -13,10 +13,7 @@
           "tsconfig.json"
         ],
         "createDefaultProgram": true,
-        "include" : [
-          "setup-jest.ts",
-          "jest.config.ts"
-        ]
+        "include" : []
       },
       "extends": [
         "plugin:@angular-eslint/recommended",

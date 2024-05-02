@@ -1,0 +1,168 @@
+@import "../../../../styles/variables.scss";
+@import "../../../../styles/general-styles.scss";
+
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+  height: auto;
+  background: $primary_bg;
+
+  nav {
+    border-bottom: 1px solid $green_color;
+    background: $white_color;
+    z-index: 100;
+
+    .user-details {
+      width: 95%;
+      font-size: 14px;
+
+      @media (max-width: 1000px) {
+        width: 90%;
+      }
+
+      @media (max-width: 600px) {
+        font-size: 12px;
+      }
+
+      @media (max-width: 450px) {
+        width: 80%;
+      }
+    }
+
+    .logout {
+      color: $green_color;
+
+      :hover {
+        transition: $main_transition;
+        color: $dark_grey_color;
+      }
+    }
+  }
+
+  main {
+    display: block;
+    margin-top: 54px;
+    min-height: calc(100vh - 54px);
+    height: auto;
+
+    h1 {
+      @include under_line(60%);
+      @include page-header;
+      margin-bottom: 0;
+      overflow: visible;
+
+      h3 {
+        color: $grey_color;
+      }
+
+      @media (max-width: 600px) {
+        font-size: 2rem;
+
+        &::after {
+          bottom: 0;
+        }
+      }
+    }
+
+    .emails {
+      padding: 0 1rem;
+      border-top: 2px solid $tertiary-bg;
+      border-bottom: 2px solid $tertiary-bg;
+
+      .list-group {
+        display: block;
+        overflow: hidden;
+
+        .list-group-item {
+          background: transparent;
+          padding: 0.5rem 0.25rem;
+          color: $grey_color;
+
+          &:hover {
+            transition: $main_transition;
+            background: $tertiary-bg;
+
+            &:first-child {
+              background: transparent;
+            }
+          }
+
+          i {
+            font-size: 12px;
+            background: $green_color;
+            border-radius: 3px;
+            padding: 3px;
+            color: $white_color;
+            margin-left: auto !important;
+
+            &.fa-envelope {
+              background: transparent;
+              color: $grey_color;
+              font-size: 1.125rem;
+            }
+          }
+
+          @media (max-width: 600px) {
+            font-size: 12px;
+          }
+        }
+      }
+
+      .pagination {
+        padding: 0.5rem 1rem;
+        border-top: 1px solid $tertiary-bg;
+
+        .paging-item {
+          min-width: 30px;
+          height: 30px;
+          font-size: 0.8rem;
+          font-weight: 300;
+          color: #3c3c3c;
+          background: none;
+          border: 1px solid $white_color;
+          border-radius: 5px;
+          padding: 3px 5px;
+          transition: $main_transition;
+
+          &:hover {
+            border-left: 1px solid $light_color;
+            border-right: 1px solid $light_color;
+          }
+
+          &.active,
+          &:focus {
+            border-left: 1px solid $green_color;
+            border-right: 1px solid $green_color;
+            outline: none;
+            font-weight: 800;
+          }
+
+          &.active {
+            color: $green_color;
+            border-color: $green_color;
+          }
+
+          &:disabled {
+            cursor: not-allowed;
+            border: 1px solid $white_color;
+
+            &.active {
+              border-color: $green_color;
+            }
+          }
+        }
+      }
+    }
+
+    .http-error {
+      padding: 2rem;
+      margin: 0 auto;
+    }
+  }
+
+  footer {
+    background: $white_color;
+    border-top: 1px solid $green_color;
+  }
+}

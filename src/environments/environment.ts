@@ -11,7 +11,11 @@ export const environment = {
     storageBucket: "gecko-web-services.appspot.com",
     messagingSenderId: "406375635773",
     appId: "1:406375635773:web:b1e839df699078db770354",
-    databaseURL: 'https://gecko-web-services-default-rtdb.europe-west1.firebasedatabase.app/'
+    databaseURL:
+      "https://gecko-web-services-default-rtdb.europe-west1.firebasedatabase.app/",
+  },
+  recaptcha: {
+    siteKey: "6LfKNi0cAAAAACeYwFRY9_d_qjGhpiwYUo5gNW5-",
   }
 };
 

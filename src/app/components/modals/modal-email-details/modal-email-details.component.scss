@@ -1,0 +1,64 @@
+@import "../../../../styles/variables.scss";
+@import "../../../../styles/general-styles.scss";
+
+:host {
+  display: block;
+
+  .modal {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #aaaaaab3;
+    animation: fadeIn 0.5s ease-in-out;
+
+    .email-details {
+      width: 600px;
+      text-align: center;
+      border: 1px solid $white_color;
+      padding: 1.5rem 2rem;
+      background: $primary_bg;
+      border-radius: 0.625rem;
+
+      h3 {
+        @include header_card;
+        margin-bottom: 0;
+
+        i {
+          background: $green_color;
+          border-radius: 50px;
+          padding: 5px;
+          color: $white_color;
+        }
+      }
+
+      h5 {
+        color: $grey_color;
+      }
+
+      p {
+        color: #6f6f6f;
+        font-size: 14px;
+      }
+
+      hr {
+        width: 100%;
+        height: 3px;
+        color: $main_primary_color;
+      }
+
+      .modal_btn-secondary {
+        @include modal_btn;
+        background: transparent;
+        color: $green_color;
+        border: 1px solid $green_color;
+        margin-right: 0.5rem;
+      }
+
+      .modal_btn {
+        @include modal_btn;
+      }
+    }
+  }
+}

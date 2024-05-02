@@ -29,17 +29,23 @@
       "dom"
     ],
     "paths": {
-      "views/*": [
-        "app/views/*"
+      "app/*": [
+        "app/*"
       ],
       "components/*": [
         "app/components/*"
+      ],
+      "guards/*": [
+        "app/guards/*"
       ],
       "services/*": [
         "app/services/*"
       ],
       "models/*": [
         "app/models/*"
+      ],
+      "modules/*": [
+        "app/modules/*"
       ],
       "utilities/*": [
         "app/utilities/*"
@@ -55,6 +61,9 @@
       ],
       "assets/*": [
         "assets/*"
+      ],
+      "environments/*": [
+        "environments/*"
       ]
     }
   },
@@ -69,6 +78,6 @@
   ],
   "include": [
     "src/**/*",    
-    "**/*.spec.ts",
+    "**/*.spec.ts", 
   ]
 }

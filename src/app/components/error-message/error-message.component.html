@@ -1,5 +1,9 @@
-<p class="p-2 m-0 text-danger">
-  {{message}}
-  <i class="fa-solid fa-exclamation"></i>
-</p>
-
+<ng-container *ngIf="form && form.controls[fieldName].dirty">
+  <div
+    class="d-flex justify-content-center align-items-center invalid-feedback py-2"
+    *ngFor="let msg of form | formErrorMessage : fieldName : currentLang"
+  >
+    {{ msg }}
+    <i class="fa-solid fa-circle-exclamation p-1"></i>
+  </div>
+</ng-container>

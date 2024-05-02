@@ -130,4 +130,11 @@
   &:hover {
     border-radius: 1.25rem;
   }
+
+  &:disabled{
+    border-radius: 0;
+    color: $white_color;
+    background: $light_color;
+    cursor: not-allowed;
+  }
 }

@@ -17,13 +17,13 @@
 }
 
 .redirect {
-    color: $green_color;
-    text-decoration: none;
-    transition: $main_transition;
+  color: $green_color;
+  text-decoration: none;
+  transition: $main_transition;
 
-    &:hover {
-      color: $hover_text_color;;
-    }
+  &:hover {
+    color: $hover_text_color;
+  }
 }
 
 .redirect-policy {

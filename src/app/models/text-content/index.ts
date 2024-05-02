@@ -1,26 +1,26 @@
 export interface IFooterTexts {
-  title: string,
-  description: string,
-  formEmail: string,
-  formMessage: string,
-  formBtn: string,
+  title: string;
+  description: string;
+  formEmail: string;
+  formMessage: string;
+  formBtn: string;
   formSuccessSubmit: string;
   formErrorSubmit: string;
 }
 
 export interface IFooterTextContent {
   PL: IFooterTexts;
-  EN: IFooterTexts
+  EN: IFooterTexts;
 }
 
 export interface ICopyRightsText {
-  copyright: string,
-  rightReserved: string,
+  copyright: string;
+  rightReserved: string;
 }
 
 export interface ICopyRightsTextContent {
   PL: ICopyRightsText;
-  EN: ICopyRightsText
+  EN: ICopyRightsText;
 }
 
 export interface INotFoundText {
@@ -31,44 +31,43 @@ export interface INotFoundText {
 
 export interface INotFoundTextContent {
   PL: INotFoundText;
-  EN: INotFoundText
+  EN: INotFoundText;
 }
 
-type ICookiesText = Pick<IFooterTexts, 'title' | 'description'> & {
-  redirect: string,
-  btn: string
+type ICookiesText = Pick<IFooterTexts, "title" | "description"> & {
+  redirect: string;
+  btn: string;
 };
 
 export interface ICookiesTextContent {
-  PL: ICookiesText,
-  EN: ICookiesText
+  PL: ICookiesText;
+  EN: ICookiesText;
 }
 
 export interface IErrorContent {
-  required: string,
-  email: string,
-  minlength: string,
+  required: string;
+  email: string;
+  minlength: string;
 }
 
 export interface IErrorTextContent {
-  PL: IErrorContent,
-  EN: IErrorContent
+  PL: IErrorContent;
+  EN: IErrorContent;
 }
-
 
 export interface IPrivacyPolicy {
   main_header: string;
   main_description: string[];
   parts: Array<{
     inner_header: string;
-    inner_description: string
+    inner_description: string;
   }>;
   redirect: string;
 }
 
 export interface IPrivacyPolicyTextContent {
   PL: IPrivacyPolicy;
-  EN: IPrivacyPolicy
+  EN: IPrivacyPolicy;
 }
 
 export interface ISingleCard {
@@ -88,7 +87,7 @@ export interface IServiceCard {
   main_header: string;
   intro: string;
   cards: Array<ISingleCard>;
-  btn: ISingleCardBtn
+  btn: ISingleCardBtn;
 }
 
 export interface IServiceCardsTextContent {
