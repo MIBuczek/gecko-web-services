@@ -10,6 +10,6 @@ export const environment = {
     databaseURL: 'https://gecko-web-services-default-rtdb.europe-west1.firebasedatabase.app/'
   },
   recaptcha: {
-    siteKey: "6LfmGNUgAAAAAFvT9q-LE94fGb49GL2_6tpONlpN"
+    siteKey: "6LfKNi0cAAAAACeYwFRY9_d_qjGhpiwYUo5gNW5-"
   },
 };
