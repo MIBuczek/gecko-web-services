@@ -84,9 +84,13 @@
         </li>
       </ng-container>
       <ng-template #noEmails>
-        <div class="row">
-          <span class="col-12 text-center">No emails on data base</span>
-        </div>
+        <li
+          class="list-group-item d-flex h-100 justify-content-center align-items-center no-emails"
+        >
+          <div class="row">
+            <span class="col-12 text-center">No emails on data base</span>
+          </div>
+        </li>
       </ng-template>
     </ul>
     <div
@@ -95,7 +99,7 @@
       <button
         class="paging-item"
         (click)="changePage(selectedPage() - 1)"
-        [disabled]="selectedPage() === 1"
+        [disabled]="selectedPage() === 1 || !displayedEmails().length"
       >
         <i class="fa-solid fa-arrow-left"></i>
       </button>
@@ -114,14 +118,14 @@
       <button
         class="paging-item"
         (click)="changePage(selectedPage() + 1)"
-        [disabled]="selectedPage() === lastPage"
+        [disabled]="selectedPage() === lastPage || !displayedEmails().length"
       >
         <i class="fa-solid fa-arrow-right"></i>
       </button>
     </div>
   </section>
 </main>
-<footer class="container-fluid fixed-bottom">
+<footer class="container-fluid fixed-bottom z-0">
   <div class="container d-flex justify-content-end align-items-center">
     {{ appName + " " + appVersion }}
   </div>
