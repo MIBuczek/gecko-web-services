@@ -1,34 +1,36 @@
 @import "../../../../styles/variables.scss";
 @import "../../../../styles/general-styles.scss";
 
-.container {
+main.container {
   margin-top: 180px;
   margin-bottom: 50px;
   position: relative;
-}
+  min-height: 65vh;
 
-span {
-  @include header-shadow;
-}
+  span {
+    @include header-shadow;
+  }
 
-h1 {
-  @include page-header;
-}
+  h1 {
+    @include page-header;
+  }
 
-h2 {
-  font-weight: 700;
-  color: $dark_grey_color;
-  text-transform: uppercase;
-  z-index: 10;
-  font-size: 20px;
-  margin: 10px 0 10px 15px;
-  line-height: 26px;
-}
+  h2 {
+    font-weight: 700;
+    color: $dark_grey_color;
+    text-transform: uppercase;
+    z-index: 10;
+    font-size: 1rem;
+    margin: 10px 0 10px 15px;
+    line-height: 26px;
+  }
 
-p {
-  @include paragraph-content;
-}
+  p {
+    @include paragraph-content;
+    font-size: 14px;
+  }
 
-a {
-  @include redirect;
+  a {
+    @include redirect;
+  }
 }
