@@ -10,13 +10,13 @@ import { CopyRightsComponent } from "./copy-rights/copy-rights.component";
 import { BreadcrumbsComponent } from "./breadcrumbs/breadcrumbs.component";
 import { ServiceCardComponent } from "./service-card/service-card.component";
 import { ModalCardDetailsComponent } from "./modals/modal-card-details/modal-card-details.component";
-import { TranslateModule } from "@ngx-translate/core";
 import { ScrollTopComponent } from "./scroll-top/scroll-top.component";
 import { RouterModule } from "@angular/router";
 import { FormErrorMessagePipe } from "app/pipes/form-error-message.pipe";
 import { NotificationComponent } from "./notification/notification.component";
 import { ModalEmailDetailsComponent } from "./modals/modal-email-details/modal-email-details.component";
-import { RecaptchaModule } from "ng-recaptcha";
+import { TranslateLangModule } from "app/modules/translate-lang/translate-lang.module";
+import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
   declarations: [
@@ -52,8 +52,8 @@ import { RecaptchaModule } from "ng-recaptcha";
     ReactiveFormsModule,
     RouterModule,
     TranslateModule,
+    TranslateLangModule,
     FormErrorMessagePipe,
-    RecaptchaModule,
   ],
 })
 export class ComponentsModule {}

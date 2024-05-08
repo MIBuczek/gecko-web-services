@@ -1,7 +1,10 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Route, Router } from "@angular/router";
-import { bufferTime, take, timer } from "rxjs";
+import { AppCheckService } from "app/services/app-check/app-check.service";
+import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
+import { environment } from "environments/environment";
+import { take } from "rxjs";
 import { AuthService } from "services/auth/auth.service";
 
 @Component({
@@ -11,6 +14,7 @@ import { AuthService } from "services/auth/auth.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent {
+  readonly siteKey = environment.recaptcha.siteKey;
   /**
    * @readonly Login Form
    */
@@ -31,7 +35,11 @@ export class MainComponent {
     ]),
   });
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private recaptchaService: RecaptchaService
+  ) {
     this.auth.currentUser.pipe(take(1)).subscribe((user) => {
       if (user) this.router.navigate(["admin"]);
     });
@@ -45,10 +53,15 @@ export class MainComponent {
    *
    * @return void
    */
-  async onSubmit() {
-    if (this.logInForm.invalid) return;
-    const { email, password } = this.logInForm.value;
-    if (!email || !password) return;
-    this.auth.login(email, password);
+  onSubmit(): void {
+    this.recaptchaService
+      .getToken("loginAction")
+      .pipe(take(1))
+      .subscribe((token) => {
+        if (this.logInForm.invalid || !token) return;
+        const { email, password } = this.logInForm.value;
+        if (!email || !password) return;
+        this.auth.login(email, password);
+      });
   }
 }

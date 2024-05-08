@@ -8,14 +8,14 @@ import { provideFirebaseApp, initializeApp } from "@angular/fire/app";
 import { getDatabase, provideDatabase } from "@angular/fire/database";
 import { provideAuth, getAuth } from "@angular/fire/auth";
 import { FIREBASE_OPTIONS } from "@angular/fire/compat";
-import {
-  provideAppCheck,
-  initializeAppCheck,
-  ReCaptchaV3Provider,
-} from "@angular/fire/app-check";
 import { RouterModule, Routes } from "@angular/router";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { adminGuard } from "guards/admin/admin.guard";
+import {
+  RECAPTCHA_SETTINGS,
+  RECAPTCHA_V3_SITE_KEY,
+  RecaptchaV3Module,
+} from "ng-recaptcha";
 
 export const routes: Routes = [
   {
@@ -67,20 +67,26 @@ export const routes: Routes = [
     BrowserAnimationsModule,
     ComponentsModule,
     HttpClientModule,
+
+    RecaptchaV3Module,
     RouterModule.forRoot(routes, {
       useHash: true,
     }),
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideAppCheck(() =>
-      initializeAppCheck(initializeApp(environment.firebase), {
-        provider: new ReCaptchaV3Provider(environment.recaptcha.siteKey),
-      })
-    ),
     provideDatabase(() => getDatabase()),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebase }],
+  providers: [
+    {
+      provide: FIREBASE_OPTIONS,
+      useValue: environment.firebase,
+    },
+    {
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: environment.recaptcha.siteKey,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
