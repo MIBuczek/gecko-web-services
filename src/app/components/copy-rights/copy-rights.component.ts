@@ -7,4 +7,5 @@ import { Component } from "@angular/core";
 })
 export class CopyRightsComponent {
   public currentYear = new Date().getFullYear();
+  readonly isPrivacyPolicy: boolean = window.location.href.includes("privacy-policy");
 }

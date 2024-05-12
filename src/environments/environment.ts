@@ -15,8 +15,8 @@ export const environment = {
       "https://gecko-web-services-default-rtdb.europe-west1.firebasedatabase.app/",
   },
   recaptcha: {
-    siteKey: "6LfKNi0cAAAAACeYwFRY9_d_qjGhpiwYUo5gNW5-",
-  }
+    siteKey: "6LcwLNUpAAAAADwZ9D7gXouzktX_JGuq4UaOfT7o",
+  },
 };
 
 /*

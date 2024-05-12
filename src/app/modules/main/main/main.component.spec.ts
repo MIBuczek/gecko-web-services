@@ -151,7 +151,7 @@ describe("MainComponent - Main Rout", () => {
   ));
 
   it("is display all sections necessary for [main-page]", () => {
-    expect(fixture.debugElement.children.length).toEqual(7);
+    expect(fixture.debugElement.children.length).toEqual(8);
   });
 
   it("is display correct number service cards", () => {

@@ -3,14 +3,16 @@
 
 main {
   width: 100%;
-  min-height: calc(100vh - 14vh);
+  height: calc(100vh - 14vh);
   background-color: $secondary-bg;
 
   .container {
     position: relative;
 
-    span {
+    span.header_shadow {
       @include header-shadow;
+      translate: none;
+      text-align: center;
     }
 
     h1 {
@@ -19,6 +21,7 @@ main {
 
     p {
       @include paragraph-content;
+      text-align: center;
 
       a {
         @include redirect;
@@ -26,12 +29,31 @@ main {
     }
   }
 
-  @media (max-width: 600px) {
-    p {
-      font-size: 14px;
+  @media (max-width: 1000px) {
+    height: calc(100vh - 15vh);
 
-      a.redirect {
-        display: block;
+    .container {
+      p {
+        margin: 20px;
+        font-size: 1rem;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    height: calc(100vh - 22vh);
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      span.header_shadow {
+        width: 70%;
+      }
+
+      p {
+        a.redirect {
+          display: block;
+        }
       }
     }
   }

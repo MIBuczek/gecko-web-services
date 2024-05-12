@@ -19,6 +19,7 @@ import {
   ReplaySubject,
   takeUntil,
 } from "rxjs";
+import { RecaptchaService } from "services/recaptcha/recaptcha.service";
 import { environment } from "environments/environment";
 
 @Component({
@@ -31,8 +32,7 @@ export class FooterComponent implements OnDestroy {
   public submitStatus$?: Observable<DB_MESSAGE_ACTIONS>;
   private submitStateClear$ = new BehaviorSubject(true);
   private subscription$ = new ReplaySubject(0);
-  readonly siteKey = environment.recaptcha.siteKey;
-  private token: string | null = null;
+  readonly SITE_KEY = environment.recaptcha.siteKey;
 
   public formUserMessage = new FormGroup<{
     email: FormControl<string | null>;
@@ -49,7 +49,10 @@ export class FooterComponent implements OnDestroy {
     ]),
   });
 
-  constructor(private ms: MailingService) {
+  constructor(
+    private mailingService: MailingService,
+    private recaptchaService: RecaptchaService
+  ) {
     /* Observable to clear state after submit the message */
     this.submitStateClear$
       .pipe(filter(Boolean), bufferTime(10000), takeUntil(this.subscription$))
@@ -75,36 +78,22 @@ export class FooterComponent implements OnDestroy {
   }
 
   /**
-   * Returns the reCAPTCHA token.
-   *
-   * @return {string | null} The reCAPTCHA token or null if not available.
-   */
-  get getRecaptchaToken(): string | null {
-    return this.token;
-  }
-
-  /**
    * Submits the form data if valid and sets the email message status based on the response.
    */
   public submit(): void {
-    if (this.formUserMessage.invalid || !this.token) return;
-    const { email, message } = this.formUserMessage.value;
-    if (!email || !message) return;
-    this.submitStatus$ = from(
-      this.ms.sendEmailMessage(new EmailMessage(email, message))
-    );
-    this.submitStateClear$.next(true);
-    this.formUserMessage.reset({ email: "", message: "" });
-  }
-
-  /**
-   * Sets the resolved reCAPTCHA token.
-   *
-   * @param {string | null} token - The resolved reCAPTCHA token.
-   * @return {void}
-   */
-  resolvedRecaptcha(token: string | null): void {
-    this.token = token;
+    this.recaptchaService
+      .getToken("sendEmailMessage")
+      .pipe(takeUntil(this.subscription$))
+      .subscribe((token) => {
+        if (this.formUserMessage.invalid || !token) return;
+        const { email, message } = this.formUserMessage.value;
+        if (!email || !message) return;
+        this.submitStatus$ = from(
+          this.mailingService.sendEmailMessage(new EmailMessage(email, message))
+        );
+        this.submitStateClear$.next(true);
+        this.formUserMessage.reset({ email: "", message: "" });
+      });
   }
 
   /**

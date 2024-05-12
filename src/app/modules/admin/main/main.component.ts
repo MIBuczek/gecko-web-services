@@ -3,7 +3,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
-  CreateComputedOptions,
   HostListener,
   OnInit,
   signal,
@@ -14,10 +13,11 @@ import { EmailActionAdmin, IAdminEmail } from "app/models/email-message";
 import { AuthService } from "app/services/auth/auth.service";
 import { MailingService } from "app/services/mailing/mailing.service";
 import { User } from "firebase/auth";
-import { Observable } from "rxjs";
+import { map, Observable, switchMap, take } from "rxjs";
 import packageInfo from "../../../../../package.json";
 import { MatDialog } from "@angular/material/dialog";
 import { ModalEmailDetailsComponent } from "app/components/modals/modal-email-details/modal-email-details.component";
+import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
 
 @Component({
   selector: "app-admin-main",
@@ -41,11 +41,21 @@ export class MainComponent implements OnInit {
     return this._emailList().slice(indexOfFirstPost, indexOfLastPost);
   });
 
+  /**
+   * Constructs a new instance of the class.
+   *
+   * @param {AuthService} auth - The authentication service.
+   * @param {Router} router - The router service.
+   * @param {MailingService} ms - The mailing service.
+   * @param {MatDialog} modalRef - The modal reference.
+   * @param {RecaptchaService} recaptchaService - The reCAPTCHA service.
+   */
   constructor(
     private auth: AuthService,
     private router: Router,
     private ms: MailingService,
-    private modalRef: MatDialog
+    private modalRef: MatDialog,
+    private recaptchaService: RecaptchaService
   ) {}
 
   /* Listener to tract vertical and horizontal pixels */
@@ -142,22 +152,28 @@ export class MainComponent implements OnInit {
   /**
    * Asynchronously loads emails from the mail service and updates the email list.
    *
-   * @return {Promise<void>} Promise that resolves when the emails are loaded and the email list is updated.
+   * @return {void} Promise that resolves when the emails are loaded and the email list is updated.
    */
-  private async loadEmails(): Promise<void> {
-    const resp = await this.ms.getAllEmails();
-    if (resp instanceof HttpErrorResponse) {
-      this.handleError(resp);
-    } else {
-      const mappedResp = Object.keys(resp).map((key) => ({
-        id: key,
-        ...resp[key],
-      }));
-      this.allPages.set(
-        this.paginationItems(mappedResp.length, this._postPerPage)
-      );
-      this._emailList.update((prev) => [...prev, ...mappedResp]);
-    }
+  private loadEmails(): void {
+    this.recaptchaService
+      .getToken("loadEmails")
+      .pipe(take(1))
+      .subscribe(async (token) => {
+        if (!token) return;
+        const resp = await this.ms.getAllEmails();
+        if (resp instanceof HttpErrorResponse) {
+          this.handleError(resp);
+        } else {
+          const mappedResp = Object.keys(resp).map((key) => ({
+            id: key,
+            ...resp[key],
+          }));
+          this.allPages.set(
+            this.paginationItems(mappedResp.length, this._postPerPage)
+          );
+          this._emailList.update((prev) => [...prev, ...mappedResp]);
+        }
+      });
   }
 
   /**
@@ -172,7 +188,16 @@ export class MainComponent implements OnInit {
         data: email,
       })
       .afterClosed()
-      .subscribe(({ id, action }) => {
+      .pipe(
+        switchMap(({ id, action }) => {
+          return this.recaptchaService.getToken(action).pipe(
+            take(1),
+            map((token) => ({ id, action, token }))
+          );
+        })
+      )
+      .subscribe(({ id, action, token }) => {
+        if (!token) return;
         switch (action) {
           case EmailActionAdmin.ANSWERED:
             const respUpdate = this.ms.updateEmail(id);
@@ -217,9 +242,15 @@ export class MainComponent implements OnInit {
    * @return {Promise<void>} A promise that resolves when the user is successfully logged out.
    */
 
-  async logOut(): Promise<void> {
-    this.auth.logout();
-    await this.router.navigate(["main-page"]);
+  logOut(): void {
+    this.recaptchaService
+      .getToken("logOut")
+      .pipe(take(1))
+      .subscribe(async (token) => {
+        if (!token) return;
+        await this.auth.logout();
+        this.router.navigate(["main-page"]);
+      });
   }
 
   /**
