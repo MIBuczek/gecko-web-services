@@ -19,8 +19,7 @@ import {
   ReplaySubject,
   takeUntil,
 } from "rxjs";
-import { ReCaptchaV3Service } from "ng-recaptcha";
-import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
+import { RecaptchaService } from "services/recaptcha/recaptcha.service";
 import { environment } from "environments/environment";
 
 @Component({
@@ -76,10 +75,6 @@ export class FooterComponent implements OnDestroy {
    */
   get formControls(): { [x: string]: AbstractControl } {
     return this.formUserMessage.controls;
-  }
-
-  public resolved(captchaResponse: string | null): void {
-    console.log(`Resolved captcha with response: ${captchaResponse}`);
   }
 
   /**
