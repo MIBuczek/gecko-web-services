@@ -157,6 +157,10 @@ it does not cover.
   explicit `ref`, so it tests the merge of the PR into its base branch rather than the PR head.
   Test totals in CI can therefore differ from a local run on the branch tip. Compare against
   the merged tree before assuming a discrepancy.
+- The default branch is `main`, but feature work targets `develop`. GitHub only auto-closes
+  issues from a `Closes #n` / `Fixes #n` keyword when the PR merges into the **default**
+  branch. A PR based on `develop` will merge without closing its issue, so close the issue by
+  hand. Do not treat the keyword as a guarantee.
 - The Firebase Hosting preview workflow fails at its deploy step for a permissions reason
   unrelated to code changes; `npm run build` and `npm test` pass in the same run.
 
