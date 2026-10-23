@@ -65,7 +65,11 @@ const buildComponent = async (
   const dialog = {
     open: jest.fn().mockReturnValue({
       afterClosed: () =>
-        of({ id: emails[0]?.id ?? "mail-1", action: options.action }),
+        of(
+          options.action === null
+            ? undefined
+            : { id: emails[0]?.id ?? "mail-1", action: options.action }
+        ),
     }),
   };
   const recaptcha = {
@@ -236,6 +240,18 @@ describe("AdminMainComponent - email actions", () => {
     expect(
       component.displayedEmails().some((email) => email.id === "mail-1")
     ).toBeFalsy();
+  });
+
+  it("is no action performed when the modal is dismissed without a result", async () => {
+    const { component, mailing, recaptcha } = await buildComponent(
+      [buildEmail(1)],
+      { action: null }
+    );
+    component.openEmailModal(buildEmail(1));
+    await flushPromises();
+    expect(recaptcha.getToken).not.toHaveBeenCalledWith(EmailActionAdmin.DELETE);
+    expect(mailing.updateEmail).not.toHaveBeenCalled();
+    expect(mailing.deleteEmail).not.toHaveBeenCalled();
   });
 
   it("is no action performed when no recaptcha token is returned", async () => {

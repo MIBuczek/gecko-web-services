@@ -9,11 +9,15 @@ import {
   WritableSignal,
 } from "@angular/core";
 import { Router } from "@angular/router";
-import { EmailActionAdmin, IAdminEmail } from "app/models/email-message";
+import {
+  EmailActionAdmin,
+  IAdminEmail,
+  IAdminEmailActionResult,
+} from "app/models/email-message";
 import { AuthService } from "app/services/auth/auth.service";
 import { MailingService } from "app/services/mailing/mailing.service";
 import { User } from "firebase/auth";
-import { map, Observable, switchMap, take } from "rxjs";
+import { EMPTY, map, Observable, switchMap, take } from "rxjs";
 import packageInfo from "../../../../../package.json";
 import { MatDialog } from "@angular/material/dialog";
 import { ModalEmailDetailsComponent } from "app/components/modals/modal-email-details/modal-email-details.component";
@@ -189,10 +193,11 @@ export class MainComponent implements OnInit {
       })
       .afterClosed()
       .pipe(
-        switchMap(({ id, action }) => {
-          return this.recaptchaService.getToken(action).pipe(
+        switchMap((result: IAdminEmailActionResult | undefined) => {
+          if (!result) return EMPTY;
+          return this.recaptchaService.getToken(result.action).pipe(
             take(1),
-            map((token) => ({ id, action, token }))
+            map((token) => ({ ...result, token }))
           );
         })
       )
