@@ -34,7 +34,6 @@
     "bootstrap": "^5.3.3",
     "firebase": "^10.11.1",
     "lodash": "^4.17.21",
-    "ng-recaptcha": "^13.2.1",
     "ngx-translate-testing": "^7.0.0",
     "npm-check-updates": "^16.14.20",
     "rxjs": "~7.8.1",
