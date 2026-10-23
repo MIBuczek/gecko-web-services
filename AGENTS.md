@@ -132,8 +132,9 @@ Work spec-first. The suite is the specification, so a change starts as a failing
 5. **Commit.** Follow the subject format below. State what changed and why; reference the
    issue.
 
-Run the full suite, not a single file, before committing. A change that passes in isolation
-can still break a spec that shares the same `TestBed` setup.
+Run the full suite, not a single file, before committing. Jest gives each spec file its own
+`TestBed`, so the risk is not cross-file leakage: it is that changing shared code breaks a spec
+you were not looking at. A component's spec can also be declared in more than one file.
 
 ## Commits
 
