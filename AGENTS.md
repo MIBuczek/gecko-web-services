@@ -115,8 +115,25 @@ test. See `src/app/modules/admin/main/main.component.spec.ts`.
 `TestBed` cannot be reconfigured mid-test, so tests that need a different provider setup go
 in their own `describe` block with their own `beforeEach`.
 
-Workflow for a change: write the spec first, then the implementation, then run `npm test`
-and `npm run lint` before committing.
+## Workflow for a change
+
+Work spec-first. The suite is the specification, so a change starts as a failing test.
+
+1. **Write the spec.** Add or extend the `<name>.spec.ts` beside the unit. Describe the
+   behaviour you are about to add, not the implementation: assert on observable output,
+   emitted events, or rendered DOM.
+2. **Write the test.** Run `npm test` and confirm the new test fails for the expected reason.
+   A test that passes before the implementation is written is not testing the change.
+3. **Implement.** Make the smallest change that turns the test green. Keep the diff scoped to
+   the issue; note anything you find but do not fix rather than widening the change.
+4. **Verify.** Run `npm test` and `npm run lint`. Run `npm run build` when the change touches
+   templates, styles, or dependencies, since `strictTemplates` and the size budgets only
+   surface there.
+5. **Commit.** Follow the subject format below. State what changed and why; reference the
+   issue.
+
+Run the full suite, not a single file, before committing. A change that passes in isolation
+can still break a spec that shares the same `TestBed` setup.
 
 ## Commits
 
