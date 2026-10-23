@@ -153,6 +153,10 @@ it does not cover.
 - `npm run docker:serve` invokes `docker-compose`, the Compose v1 binary, which is no longer
   present on current Docker installs (they ship `docker compose`). Use `docker compose up`
   directly, or update the script.
+- The `build_and_preview` workflow runs on `pull_request` with `actions/checkout@v2` and no
+  explicit `ref`, so it tests the merge of the PR into its base branch rather than the PR head.
+  Test totals in CI can therefore differ from a local run on the branch tip. Compare against
+  the merged tree before assuming a discrepancy.
 - The Firebase Hosting preview workflow fails at its deploy step for a permissions reason
   unrelated to code changes; `npm run build` and `npm test` pass in the same run.
 
