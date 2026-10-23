@@ -143,6 +143,11 @@ it does not cover.
   component stylesheet). A build that prints these warnings still succeeds.
 - `npm run build` also reports two CSS selector warnings from Bootstrap's
   `.form-floating>~label`. These are pre-existing and unrelated to application code.
+- The test run logs `TypeError: this.modalRef.close is not a function` from
+  `ModalCardDetailsComponent.hideCard`. The `modal-card-details` spec stubs `MatDialogRef` as
+  `{ card: ... }` with no `close` method, so clicking the button hits it. The suite still
+  passes; the error surfaces through Angular's error handler. It is pre-existing, not a
+  symptom of your change.
 - `Dockerfile` pins `node:16.17.0-alpine` and exposes port 3000 while the dev server listens
   on 4200. The repository declares no `engines` field.
 - `npm run docker:serve` invokes `docker-compose`, the Compose v1 binary, which is no longer
