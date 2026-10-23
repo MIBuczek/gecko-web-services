@@ -11,11 +11,6 @@ import { FIREBASE_OPTIONS } from "@angular/fire/compat";
 import { RouterModule, Routes } from "@angular/router";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { adminGuard } from "guards/admin/admin.guard";
-import {
-  RECAPTCHA_SETTINGS,
-  RECAPTCHA_V3_SITE_KEY,
-  RecaptchaV3Module,
-} from "ng-recaptcha";
 
 export const routes: Routes = [
   {
@@ -68,7 +63,6 @@ export const routes: Routes = [
     ComponentsModule,
     HttpClientModule,
 
-    RecaptchaV3Module,
     RouterModule.forRoot(routes, {
       useHash: true,
     }),
@@ -81,10 +75,6 @@ export const routes: Routes = [
     {
       provide: FIREBASE_OPTIONS,
       useValue: environment.firebase,
-    },
-    {
-      provide: RECAPTCHA_V3_SITE_KEY,
-      useValue: environment.recaptcha.siteKey,
     },
   ],
   bootstrap: [AppComponent],

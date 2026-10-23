@@ -21,7 +21,6 @@ import { environment } from "environments/environment";
 import { RecaptchaService } from "services/recaptcha/recaptcha.service";
 import { NotificationComponent } from "../notification/notification.component";
 import { ErrorMessageComponent } from "../error-message/error-message.component";
-import { RecaptchaLoaderService, ReCaptchaV3Service } from "ng-recaptcha";
 import { of } from "rxjs";
 
 const TRANSLATION: any = {
