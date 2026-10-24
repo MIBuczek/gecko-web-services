@@ -4,6 +4,7 @@ import { FormGroup } from "@angular/forms";
 @Component({
   selector: "app-error-message",
   templateUrl: "./error-message.component.html",
+  standalone: false
 })
 export class ErrorMessageComponent {
   @Input({ required: true }) form: FormGroup | undefined;

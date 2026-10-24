@@ -6,6 +6,7 @@ import { NotificationType } from "models/general";
   templateUrl: "./notification.component.html",
   styleUrl: "./notification.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class NotificationComponent {
   @Input({ required: true }) variant: NotificationType = "info";

@@ -9,7 +9,8 @@ interface IModalData {
 @Component({
   selector: 'app-modal-card-details',
   templateUrl: './modal-card-details.component.html',
-  styleUrls: ['./modal-card-details.component.scss']
+  styleUrls: ['./modal-card-details.component.scss'],
+  standalone: false
 })
 export class ModalCardDetailsComponent {
 

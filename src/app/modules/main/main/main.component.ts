@@ -12,6 +12,7 @@ import { tech_icons } from "utilities/variables/tech-icon.const";
   templateUrl: "./main.component.html",
   styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class MainComponent implements OnInit {
   readonly tech_icons = tech_icons;

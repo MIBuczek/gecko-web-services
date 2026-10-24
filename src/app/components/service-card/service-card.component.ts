@@ -4,7 +4,8 @@ import {ISingleCard} from "models/text-content";
 @Component({
   selector: 'app-service-card',
   templateUrl: './service-card.component.html',
-  styleUrls: ['./service-card.component.scss']
+  styleUrls: ['./service-card.component.scss'],
+  standalone: false
 })
 export class ServiceCardComponent {
   @Input() cardContent: ISingleCard | undefined;
