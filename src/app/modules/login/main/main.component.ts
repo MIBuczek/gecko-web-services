@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Route, Router } from "@angular/router";
 import { AppCheckService } from "app/services/app-check/app-check.service";
 import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
-import { environment } from "environments/environment";
 import { take } from "rxjs";
 import { AuthService } from "services/auth/auth.service";
 
@@ -14,7 +13,6 @@ import { AuthService } from "services/auth/auth.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainComponent {
-  readonly siteKey = environment.recaptcha.siteKey;
   /**
    * @readonly Login Form
    */

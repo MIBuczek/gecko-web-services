@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
-import { environment } from "environments/environment";
 import { of, ReplaySubject } from "rxjs";
 import { AuthService } from "services/auth/auth.service";
 import { MainComponent } from "./main.component";
@@ -54,10 +53,6 @@ describe("LoginMainComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy();
-  });
-
-  it("is the recaptcha site key taken from the environment", () => {
-    expect(component.siteKey).toEqual(environment.recaptcha.siteKey);
   });
 
   it("is the form invalid when empty", () => {

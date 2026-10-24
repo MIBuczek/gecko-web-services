@@ -26,7 +26,10 @@ describe("RecaptchaService", () => {
   afterEach(() => {
     delete (globalThis as unknown as { grecaptcha?: unknown }).grecaptcha;
     document
-      .querySelectorAll("#recaptcha-v3-script")
+      .querySelectorAll("#recaptcha-enterprise-script")
+      .forEach((el) => el.remove());
+    document
+      .querySelectorAll('script[src*="recaptcha"]')
       .forEach((el) => el.remove());
   });
 
@@ -122,6 +125,44 @@ describe("RecaptchaService", () => {
         expect(appendChild).not.toHaveBeenCalled();
         done();
       });
+    });
+  });
+
+  it("loads the enterprise build, matching what App Check uses", (done) => {
+    const appendChild = jest
+      .spyOn(document.head, "appendChild")
+      .mockImplementation((node) => {
+        const script = node as HTMLScriptElement;
+        expect(script.src).toContain("recaptcha/enterprise.js");
+        expect(script.src).toContain(`render=${SITE_KEY}`);
+        // Fail the load so the flow completes; the URL assertions above are
+        // what this test is about.
+        script.onerror?.(new Event("error"));
+        return node;
+      });
+
+    service.getToken("loginAction").subscribe((token) => {
+      expect(token).toBeNull();
+      expect(appendChild).toHaveBeenCalled();
+      done();
+    });
+  });
+
+  it("waits for an in-flight recaptcha script instead of duplicating it", (done) => {
+    // Simulate App Check having already injected the script.
+    const existing = document.createElement("script");
+    existing.src = "https://www.google.com/recaptcha/enterprise.js";
+    document.head.appendChild(existing);
+    const appendChild = jest.spyOn(document.head, "appendChild");
+
+    setTimeout(() => {
+      stubGrecaptcha(readyApi(jest.fn().mockResolvedValue("late-token")));
+    }, 150);
+
+    service.getToken("loginAction").subscribe((token) => {
+      expect(token).toBe("late-token");
+      expect(appendChild).not.toHaveBeenCalled();
+      done();
     });
   });
 });

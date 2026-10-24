@@ -17,17 +17,22 @@ type GrecaptchaGlobal = Partial<RecaptchaApi> & {
   enterprise?: Partial<RecaptchaApi>;
 };
 
-const SCRIPT_ID = "recaptcha-v3-script";
-const SCRIPT_SRC = "https://www.google.com/recaptcha/api.js";
+const SCRIPT_ID = "recaptcha-enterprise-script";
+const SCRIPT_SRC = "https://www.google.com/recaptcha/enterprise.js";
 
 const getGrecaptcha = (): GrecaptchaGlobal | undefined =>
   (globalThis as unknown as { grecaptcha?: GrecaptchaGlobal }).grecaptcha;
 
 /**
- * Loads the reCAPTCHA v3 script once and exposes the v3 API.
+ * Loads the reCAPTCHA Enterprise script once and exposes the v3 API.
  *
  * Replaces `ng-recaptcha`, whose last release predates Angular 18 and therefore
  * blocks the framework upgrade. Only `execute` is used by this project.
+ *
+ * The Enterprise build is loaded deliberately: Firebase App Check initialises
+ * its provider with `grecaptcha.enterprise`, and the non-Enterprise `api.js`
+ * overwrites `window.grecaptcha` with an object that has no `.enterprise`
+ * property. Using one script type for both consumers keeps them consistent.
  */
 @Injectable({
   providedIn: "root",
@@ -96,24 +101,24 @@ export class RecaptchaService {
   private loadScript(): Promise<void> {
     if (RecaptchaService.scriptPromise) return RecaptchaService.scriptPromise;
 
-    RecaptchaService.scriptPromise = new Promise<void>((resolve, reject) => {
-      if (typeof document === "undefined") {
-        resolve();
-        return;
-      }
-      // If the API is already present there is nothing to load. `index.html`
-      // loads the Enterprise build and Firebase App Check may load one too, so
-      // this is the common path in the browser.
-      if (getGrecaptcha()) {
-        resolve();
-        return;
-      }
-      // Guard against a second injection; the static promise already makes this
-      // once-per-app.
-      if (document.getElementById(SCRIPT_ID)) {
-        resolve();
-        return;
-      }
+    RecaptchaService.scriptPromise = this.createScriptPromise();
+
+    return RecaptchaService.scriptPromise;
+  }
+
+  private createScriptPromise(): Promise<void> {
+    if (typeof document === "undefined") return Promise.resolve();
+
+    // Already available (App Check, or a previous load): nothing to do.
+    if (getGrecaptcha()) return Promise.resolve();
+
+    // App Check injects this same script itself, and it may still be in flight.
+    // Wait for the global instead of adding a duplicate copy.
+    if (document.querySelector('script[src*="recaptcha"]')) {
+      return this.waitForGrecaptcha();
+    }
+
+    return new Promise<void>((resolve, reject) => {
       const script = document.createElement("script");
       script.id = SCRIPT_ID;
       script.src = `${SCRIPT_SRC}?render=${this.siteKey}`;
@@ -124,7 +129,23 @@ export class RecaptchaService {
         reject(new Error("reCAPTCHA script failed to load"));
       document.head.appendChild(script);
     });
+  }
 
-    return RecaptchaService.scriptPromise;
+  private waitForGrecaptcha(timeoutMs = 10000): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const startedAt = Date.now();
+      const poll = (): void => {
+        if (getGrecaptcha()) {
+          resolve();
+          return;
+        }
+        if (Date.now() - startedAt > timeoutMs) {
+          reject(new Error("reCAPTCHA script did not initialise"));
+          return;
+        }
+        setTimeout(poll, 100);
+      };
+      poll();
+    });
   }
 }
