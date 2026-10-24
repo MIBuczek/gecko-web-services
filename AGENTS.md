@@ -187,6 +187,19 @@ it does not cover.
   hand. Do not treat the keyword as a guarantee.
 - The Firebase Hosting preview workflow fails at its deploy step for a permissions reason
   unrelated to code changes; `npm run build` and `npm test` pass in the same run.
+- `@ngx-translate/core` must stay on **15.x** while `ngx-translate-testing` is 7.0.0. Core 16
+  and 17 removed `TranslateFakeCompiler` and `FakeMissingTranslationHandler`; core 18 removed
+  `TranslateModule` as well, replacing it with `provideTranslateService`. `ngx-translate-testing`
+  7.0.0 imports all three at module load and declares `imports: [TranslateModule]`, so on core
+  >=16 the 10 specs that use it fail with `Cannot read properties of undefined (reading
+  'ngModule')` or `TranslateFakeCompiler is not a constructor`. Core 15 still satisfies
+  Angular 18's peer range (`>=16.0.0`), so it is the correct version until the translate stack
+  is migrated to the provider API as its own change. The issue's version table lists core 18
+  for this step; that is not installable alongside the current test tooling.
+- Angular 18 removed `HttpClientModule` in favour of `provideHttpClient()`. The `ng update`
+  schematic rewrites both call sites (`app.module.ts`, `translate-lang.module.ts`) and emits
+  poorly formatted output; reformat by hand. The app has no `HTTP_INTERCEPTORS`, so
+  `withInterceptorsFromDi()` is a no-op today but preserves behaviour if one is added.
 
 ## Scope of this document
 
