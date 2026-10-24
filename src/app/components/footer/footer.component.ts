@@ -25,6 +25,7 @@ import { RecaptchaService } from "services/recaptcha/recaptcha.service";
   selector: "app-footer",
   templateUrl: "./footer.component.html",
   styleUrls: ["./footer.component.scss"],
+  standalone: false
 })
 export class FooterComponent implements OnDestroy {
   public dbMessageActions = DB_MESSAGE_ACTIONS;

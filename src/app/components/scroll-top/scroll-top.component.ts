@@ -5,6 +5,7 @@ import { ViewportScroller } from "@angular/common";
   selector: "app-scroll-top",
   templateUrl: "./scroll-top.component.html",
   styleUrls: ["./scroll-top.component.scss"],
+  standalone: false
 })
 export class ScrollTopComponent {
   constructor(private viewportScroller: ViewportScroller) {}

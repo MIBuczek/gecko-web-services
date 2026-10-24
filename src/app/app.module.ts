@@ -7,7 +7,6 @@ import { environment } from "environments/environment";
 import { provideFirebaseApp, initializeApp } from "@angular/fire/app";
 import { getDatabase, provideDatabase } from "@angular/fire/database";
 import { provideAuth, getAuth } from "@angular/fire/auth";
-import { FIREBASE_OPTIONS } from "@angular/fire/compat";
 import { RouterModule, Routes } from "@angular/router";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { adminGuard } from "guards/admin/admin.guard";
@@ -70,10 +69,6 @@ export const routes: Routes = [
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideDatabase(() => getDatabase()),
-    {
-      provide: FIREBASE_OPTIONS,
-      useValue: environment.firebase,
-    },
     provideHttpClient(withInterceptorsFromDi()),
   ],
   bootstrap: [AppComponent],

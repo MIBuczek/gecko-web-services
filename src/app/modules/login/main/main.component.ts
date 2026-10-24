@@ -11,6 +11,7 @@ import { AuthService } from "services/auth/auth.service";
   templateUrl: "./main.component.html",
   styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class MainComponent {
   /**

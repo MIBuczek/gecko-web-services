@@ -7,6 +7,7 @@ import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
   templateUrl: `./main.component.html`,
   styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class MainComponent implements OnInit {
   private readonly wrongPath: string;

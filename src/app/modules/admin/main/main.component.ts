@@ -28,6 +28,7 @@ import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
   templateUrl: "./main.component.html",
   styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class MainComponent implements OnInit {
   private readonly _postPerPage = 10;

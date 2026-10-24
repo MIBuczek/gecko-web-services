@@ -4,6 +4,7 @@ import { Component, OnInit } from "@angular/core";
   selector: "app-cookie",
   templateUrl: "./cookie.component.html",
   styleUrls: ["./cookie.component.scss"],
+  standalone: false
 })
 export class CookieComponent implements OnInit {
   public isCookiesAccepted: boolean = false;

@@ -195,7 +195,47 @@ it does not cover.
   'ngModule')` or `TranslateFakeCompiler is not a constructor`. Core 15 still satisfies
   Angular 18's peer range (`>=16.0.0`), so it is the correct version until the translate stack
   is migrated to the provider API as its own change. The issue's version table lists core 18
-  for this step; that is not installable alongside the current test tooling.
+  for this step; that is not installable alongside the current test tooling. Confirmed again at
+  Angular 19: installing core 18 fails all 10 specs with `Cannot read properties of undefined
+  (reading 'forRoot')` / `(reading 'ngModule')`.
+- Angular 19's `ng update` migration adds `standalone: false` to every NgModule-declared
+  component, but it also reindents the whole `@Component({...})` block to 4 spaces. This repo
+  uses 2 spaces and has no Prettier config, so the raw migration output produces a large
+  whitespace-only diff. Re-apply the `standalone: false` line by hand at the existing
+  indentation instead of accepting the schematic's formatting.
+- `@angular-eslint` 19 enables `@angular-eslint/prefer-standalone` at error level in
+  `plugin:@angular-eslint/recommended`. Every NgModule-declared component now fails lint with
+  "Components, Directives and Pipes should not opt out of standalone". The rule is turned off in
+  `.eslintrc.json`; the app is still NgModule-based and the standalone migration is a separate
+  change (see the issue's "Code migrations" section). Re-enable it in the same PR that performs
+  that migration.
+- Angular 19 declares a `zone.js ~0.15.0` peer (Angular 18 declared `~0.14.10`) and
+  `build-angular@19` requires TypeScript `>=5.5 <5.9`. The issue's table places both in Step 4,
+  but they move here: `ng update` bumped zone.js to 0.15.1 and TypeScript to 5.8.3.
+- `@typescript-eslint` must be on **8.x** from Step 3 onward. `@angular-eslint` 19.8.1 accepts
+  `utils ^7.11.0 || ^8.0.0`, but TypeScript moves to 5.8.3 at this step and the 7.x line
+  officially supports only `<5.6`, so lint prints "You are currently running a version of
+  TypeScript which is not officially supported". Version 8.72.0 supports `>=4.8.4 <6.1.0` and
+  removes the warning. The plugin, parser and the transitive `utils` are all pinned to 8.72.0.
+- The initial-bundle budget was raised to `maximumWarning: 1.05mb` / `maximumError: 1.2mb`
+  (from 500kb / 1mb) in Step 3. Angular 19 pushed the initial bundle to ~1015 kB, over the old
+  1 MB error threshold. Before raising it, two reductions were applied: the unused
+  `FIREBASE_OPTIONS` provider from `@angular/fire/compat` was removed from `app.module.ts`
+  (nothing injects it, but it pulled the compat layer into the initial bundle, ~8 kB), and
+  FontAwesome's `all.css` was measured. FontAwesome's `all.css` accounts for ~76 kB of the
+  302 kB `styles` bundle and only ~20 icons are used; switching to the tree-shaken
+  `FontAwesomeModule` API is the largest remaining win and is not yet done.
+- `FIREBASE_OPTIONS` from `@angular/fire/compat` was a leftover from the pre-`provideX`
+  API. Nothing in `src/` injects it and no `AngularFire*` service is used, so it was removed.
+  If a future change needs the compat API, add it back together with the provider.
+- `package-lock.json` must be written by **npm 10**, not npm 11, while CI does not pin Node. The
+  workflows (`.github/workflows/firebase-hosting-*.yml`) use `actions/checkout` + `npm ci` with
+  no `setup-node`, so they run on the runner's default npm (10.x), while a local Node 24
+  provides npm 11. npm 11 rewrites the nested `chokidar`/`readdirp` entries under each Angular
+  package, and npm 10 then rejects the lockfile with `Missing: chokidar@4.0.3 from lock file` /
+  `Missing: readdirp@4.1.2 from lock file` — a `npm ci` failure in CI that passes locally. After
+  any dependency change, regenerate with `npx npm@10 install --package-lock-only` and confirm
+  `npx npm@10 ci --dry-run` succeeds. The durable fix is to pin Node in the workflows.
 - Angular 18 removed `HttpClientModule` in favour of `provideHttpClient()`. The `ng update`
   schematic rewrites both call sites (`app.module.ts`, `translate-lang.module.ts`) and emits
   poorly formatted output; reformat by hand. The app has no `HTTP_INTERCEPTORS`, so

@@ -7,6 +7,7 @@ import { EmailActionAdmin, IAdminEmail } from "app/models/email-message";
   templateUrl: "./modal-email-details.component.html",
   styleUrl: "./modal-email-details.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false
 })
 export class ModalEmailDetailsComponent {
   constructor(

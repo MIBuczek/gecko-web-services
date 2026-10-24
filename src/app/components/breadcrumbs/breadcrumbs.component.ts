@@ -8,6 +8,7 @@ import { Observable } from "rxjs";
   selector: "app-breadcrumbs",
   templateUrl: "./breadcrumbs.component.html",
   styleUrls: ["./breadcrumbs.component.scss"],
+  standalone: false
 })
 export class BreadcrumbsComponent {
   readonly availableRouts: Array<keyof IAppRouts> = [
