@@ -20,7 +20,6 @@ import {
   takeUntil,
 } from "rxjs";
 import { RecaptchaService } from "services/recaptcha/recaptcha.service";
-import { environment } from "environments/environment";
 
 @Component({
   selector: "app-footer",
@@ -32,7 +31,6 @@ export class FooterComponent implements OnDestroy {
   public submitStatus$?: Observable<DB_MESSAGE_ACTIONS>;
   private submitStateClear$ = new BehaviorSubject(true);
   private subscription$ = new ReplaySubject(0);
-  readonly SITE_KEY = environment.recaptcha.siteKey;
 
   public formUserMessage = new FormGroup<{
     email: FormControl<string | null>;
