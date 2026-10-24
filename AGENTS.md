@@ -166,12 +166,18 @@ it does not cover.
   `{ card: ... }` with no `close` method, so clicking the button hits it. The suite still
   passes; the error surfaces through Angular's error handler. It is pre-existing, not a
   symptom of your change.
-- `Dockerfile` pins `node:16.17.0-alpine` and exposes port 3000 while the dev server listens
-  on 4200. The repository declares no `engines` field.
+- `Dockerfile` builds on `node:22-alpine`, exposes 4200 to match the dev server, and installs
+  with `npm ci` against the committed lockfile. `.nvmrc` and an `engines` field pin Node to
+  `^20.19.0 || ^22.12.0 || >=24.0.0` (the range Angular 20 supports).
+- `@angular/fire` 17.1.0 changed `provideFirebaseApp` / `provideDatabase` / `provideAuth` from
+  returning `ModuleWithProviders` to `EnvironmentProviders`. They must therefore sit in
+  `providers:`, not `imports:`; Angular throws `TypeError: ... is not assignable to type
+  'any[] | Type<any> | ModuleWithProviders<{}>'` at compile time otherwise. The `^17.0.1` range
+  in `package.json` permits the bump, so this surfaces on any `npm update`.
 - `npm run docker:serve` invokes `docker-compose`, the Compose v1 binary, which is no longer
   present on current Docker installs (they ship `docker compose`). Use `docker compose up`
   directly, or update the script.
-- The `build_and_preview` workflow runs on `pull_request` with `actions/checkout@v2` and no
+- The `build_and_preview` workflow runs on `pull_request` with `actions/checkout@v4` and no
   explicit `ref`, so it tests the merge of the PR into its base branch rather than the PR head.
   Test totals in CI can therefore differ from a local run on the branch tip. Compare against
   the merged tree before assuming a discrepancy.

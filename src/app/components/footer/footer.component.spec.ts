@@ -36,8 +36,6 @@ describe("FooterComponent", () => {
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
-        provideFirebaseApp(() => initializeApp(environment.firebase)),
-        provideDatabase(() => getDatabase()),
         ReactiveFormsModule,
         TranslateTestingModule.withTranslations(
           TRANSLATION
@@ -49,6 +47,8 @@ describe("FooterComponent", () => {
         ErrorMessageComponent,
       ],
       providers: [
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideDatabase(() => getDatabase()),
         MailingService,
         {
           provide: RecaptchaService,
