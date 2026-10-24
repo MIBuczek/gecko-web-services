@@ -2,7 +2,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AppComponent } from "./app.component";
 import { ComponentsModule } from "components/components.module";
-import { HttpClientModule } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { environment } from "environments/environment";
 import { provideFirebaseApp, initializeApp } from "@angular/fire/app";
 import { getDatabase, provideDatabase } from "@angular/fire/database";
@@ -61,8 +61,6 @@ export const routes: Routes = [
     BrowserModule,
     BrowserAnimationsModule,
     ComponentsModule,
-    HttpClientModule,
-
     RouterModule.forRoot(routes, {
       useHash: true,
     }),
@@ -76,6 +74,7 @@ export const routes: Routes = [
       provide: FIREBASE_OPTIONS,
       useValue: environment.firebase,
     },
+    provideHttpClient(withInterceptorsFromDi()),
   ],
   bootstrap: [AppComponent],
 })
