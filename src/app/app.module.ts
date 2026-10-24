@@ -66,12 +66,12 @@ export const routes: Routes = [
     RouterModule.forRoot(routes, {
       useHash: true,
     }),
-    provideAuth(() => getAuth()),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideDatabase(() => getDatabase()),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    provideAuth(() => getAuth()),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideDatabase(() => getDatabase()),
     {
       provide: FIREBASE_OPTIONS,
       useValue: environment.firebase,

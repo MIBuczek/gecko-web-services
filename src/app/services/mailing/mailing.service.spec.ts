@@ -23,12 +23,12 @@ describe("MailingService", () => {
   let service: MailingService;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
+      imports: [HttpClientTestingModule],
+      providers: [
+        { provide: Database, useValue: {} },
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideDatabase(() => getDatabase()),
       ],
-      providers: [{ provide: Database, useValue: {} }],
     });
     service = TestBed.inject(MailingService);
     service.sendEmailMessage = mockSendEmail;
