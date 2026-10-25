@@ -24,6 +24,8 @@ small admin area and a login panel. Stack:
 | `npm run test:watch` | Jest in watch mode. |
 | `npm run lint` | `ng lint` over the Angular ESLint config. |
 | `npm run build` | Production build into `dist/gecko-web-services`. |
+| `npm run measure` | Compare the built payload against `scripts/payload-baseline.json`. Run after `npm run build`. |
+| `npm run measure:update` | Rewrite the baseline from the current `dist/`. Use when a size change is intended. |
 | `npm run isready` | Lint, build, then deploy to Firebase Hosting. Requires Firebase credentials; do not run it to validate a change. |
 
 The `pre-commit` hook runs `npm run lint`, so lint must pass before a commit lands.
@@ -177,6 +179,14 @@ it does not cover.
 
 - The production build has size budgets that currently warn (initial bundle and the main
   component stylesheet). A build that prints these warnings still succeeds.
+- **Angular's size budgets do not count fonts.** `budgets` sums chunk assets, and webfonts are
+  emitted as assets, so no budget type (`all`, `any`, `initial`, …) can fail the build when the
+  font payload grows. The FontAwesome webfonts are the largest category in `dist` (1,022,976 B
+  of 2,405,328 B at the Phase 0 baseline). `npm run measure` covers them; `angular.json` cannot.
+  See `docs/css-payload.md`.
+- The stylesheet has its own budget, `{ "type": "bundle", "name": "styles" }` in `angular.json`.
+  It was verified by temporarily setting a 1 kB limit and observing the build fail — a budget
+  that does not match a chunk name is silently ignored, so check that it fires before trusting it.
 - `npm run build` also reports two CSS selector warnings from Bootstrap's
   `.form-floating>~label`. These are pre-existing and unrelated to application code.
 - The test run logs `TypeError: this.modalRef.close is not a function` from

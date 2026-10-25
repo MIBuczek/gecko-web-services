@@ -11,6 +11,7 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm ci
       - run: npm run build
+      - run: npm run measure
       - run: npm run test -- --watch=false
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
