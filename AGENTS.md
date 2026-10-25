@@ -149,6 +149,24 @@ doc : update project dependencies
 
 Types in use: `feat`, `bug`, `fix`, `test`, `doc`. Lowercase subject, no trailing period.
 
+## Versioning
+
+The `version` field in `package.json` is bumped in **every** pull request, by one **minor**
+release. It is part of the change, not a separate chore: bump it in the same commit as the
+work, so the version that ships is always visible in the diff.
+
+```
+2.0.0  ->  2.1.0  ->  2.2.0  ->  ...
+```
+
+Use `npm version <x.y.0> --no-git-tag-version` so `package.json` and both `version` fields in
+`package-lock.json` stay in step. Do not hand-edit either file, and do not let npm 11 rewrite
+the lockfile — see the npm 10 constraint below. The version is displayed in the admin view
+(`main.component.ts` reads it from `package.json`).
+
+Patch and major bumps are reserved for releases cut from `develop` into `main`, which are the
+only place a tag is created.
+
 ## Formatting
 
 There is no Prettier configuration, so follow `.editorconfig`: 2-space indentation, a final
