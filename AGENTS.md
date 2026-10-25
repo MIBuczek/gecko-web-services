@@ -9,9 +9,9 @@ them.
 `gecko-web-services` is an Angular single-page application: the public marketing site plus a
 small admin area and a login panel. Stack:
 
-- Angular 17.3 with NgModules (not standalone components)
-- TypeScript 5.4, Firebase (`@angular/fire`), `ng-recaptcha`
-- Jest 29 with `jest-preset-angular` 14 for tests
+- Angular 20.3 with NgModules (not standalone components)
+- TypeScript 5.8, Firebase (`@angular/fire`), a self-hosted reCAPTCHA loader
+- Jest 30 with `jest-preset-angular` 17 for tests
 - SCSS for styles
 
 ## Commands
@@ -219,7 +219,8 @@ it does not cover.
   removes the warning. The plugin, parser and the transitive `utils` are all pinned to 8.72.0.
 - The initial-bundle budget was raised to `maximumWarning: 1.05mb` / `maximumError: 1.2mb`
   (from 500kb / 1mb) in Step 3. Angular 19 pushed the initial bundle to ~1015 kB, over the old
-  1 MB error threshold. Before raising it, two reductions were applied: the unused
+  1 MB error threshold; Angular 20 is ~1.13 MB raw (~246 kB transfer) and still passes. Before
+  raising it, two reductions were applied: the unused
   `FIREBASE_OPTIONS` provider from `@angular/fire/compat` was removed from `app.module.ts`
   (nothing injects it, but it pulled the compat layer into the initial bundle, ~8 kB), and
   FontAwesome's `all.css` was measured. FontAwesome's `all.css` accounts for ~76 kB of the
@@ -240,6 +241,34 @@ it does not cover.
   schematic rewrites both call sites (`app.module.ts`, `translate-lang.module.ts`) and emits
   poorly formatted output; reformat by hand. The app has no `HTTP_INTERCEPTORS`, so
   `withInterceptorsFromDi()` is a no-op today but preserves behaviour if one is added.
+- Angular 20 uses the `@angular/build:application` builder. The `use-application-builder`
+  migration changes the emitted layout to `<base>/browser/`, but `firebase.json` publishes
+  `dist/gecko-web-services` directly. `outputPath` is therefore pinned to
+  `{ "base": "dist/gecko-web-services", "browser": "" }` so `index.html` stays at the root
+  `firebase.json` expects. Changing the builder without this pin silently deploys nothing.
+- Jest 30 hardcodes `node` into the CommonJS export conditions
+  (`['require','module-sync','node','default', ...envConditions]`), and jest runs the
+  TypeScript sources through CommonJS. `@firebase/auth` lists `node` before `browser` in its
+  export map, so it resolves to `dist/node/index.js`, which calls the global `fetch` that jsdom
+  does not provide: 9 suites fail with `ReferenceError: fetch is not defined`.
+  `testEnvironmentOptions.customExportConditions` cannot override the hardcoded `node`, so
+  `resolver.js` re-resolves only `firebase`, `@firebase/*` and `rxfire/*` with
+  `conditions: ['browser', 'require', 'default']` and defers everything else to Jest's default
+  resolver. Keep `require` before any `import` condition: `rxfire/*` ships ESM under `import`
+  and CJS under `require`, and picking the ESM entry fails with "Must use import to load ES
+  Module".
+- Angular 20 stopped emitting the deprecated `ng-reflect-*` debug attributes unless
+  `provideNgReflectAttributes()` is provided. `setup-jest.ts` registers it globally in a
+  `beforeEach`. The import must come *after* `setupZoneTestEnv()` so `zone.js/testing` is
+  registered before `@angular/core/testing` loads; importing it at the top of the file breaks
+  `fakeAsync()` with "zone-testing.js is needed for the fakeAsync() test helper".
+- `jest-preset-angular` 17 removed the `jest-preset-angular/setup-jest` entry point. The setup
+  file now imports `setupZoneTestEnv` from `jest-preset-angular/setup-env/zone` and calls it.
+- `@angular-eslint` 20 enables `@angular-eslint/prefer-inject` at error level in
+  `plugin:@angular-eslint/recommended`, so all 31 constructor-injected dependencies fail lint.
+  It is turned off in `.eslintrc.json` alongside `prefer-standalone`; the `inject()` migration
+  is a separate change (see the issue's "Code migrations" section). Re-enable both in the PR
+  that performs those migrations.
 
 ## Scope of this document
 

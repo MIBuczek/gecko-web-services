@@ -8,6 +8,7 @@ import type { Config } from "jest";
 const config: Config = {
   preset: "jest-preset-angular",
   setupFilesAfterEnv: ["<rootDir>/setup-jest.ts"],
+  resolver: "<rootDir>/resolver.js",
 
   // Automatically clear mock calls, instances, contexts and results before every test
   clearMocks: true,
