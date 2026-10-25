@@ -1,11 +1,13 @@
 {
   "name": "gecko-web-services",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --poll 500",
     "docker:serve": "docker-compose up",
     "build": "ng build",
+    "measure": "node scripts/measure-payload.js",
+    "measure:update": "node scripts/measure-payload.js --update",
     "isready": "npm run lint && npm run build && firebase deploy --only hosting",
     "watch": "ng build --watch --configuration production",
     "update": "npx npm-check-updates -u",

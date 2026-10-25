@@ -1,0 +1,38 @@
+{
+  "totals": {
+    "other": {
+      "raw": 81091,
+      "gzip": 16287,
+      "transfer": 16287,
+      "files": 5
+    },
+    "images": {
+      "raw": 125146,
+      "gzip": 66477,
+      "transfer": 125146,
+      "files": 5
+    },
+    "js": {
+      "raw": 845661,
+      "gzip": 248373,
+      "transfer": 248373,
+      "files": 9
+    },
+    "fonts": {
+      "raw": 1022976,
+      "gzip": 634981,
+      "transfer": 1022976,
+      "files": 8
+    },
+    "css": {
+      "raw": 330454,
+      "gzip": 52996,
+      "transfer": 52996,
+      "files": 1
+    }
+  },
+  "cssGzip": 52996,
+  "fonts": 1022976,
+  "totalGzip": 1465778,
+  "rawTotal": 2405328
+}
