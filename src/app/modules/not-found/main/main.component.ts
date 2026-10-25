@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router, RouterLink } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
 import { BreadcrumbsComponent } from "components/breadcrumbs/breadcrumbs.component";
@@ -21,13 +21,13 @@ import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
   ],
 })
 export class MainComponent implements OnInit {
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private bc = inject(BreadcrumbsService);
+
   private readonly wrongPath: string;
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private bc: BreadcrumbsService
-  ) {
+  constructor() {
     /* Save wrong path to display it */
     this.wrongPath = this.router.url.replace("/", "");
   }

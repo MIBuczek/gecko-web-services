@@ -1,5 +1,5 @@
 import { NgFor } from "@angular/common";
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
 import { BreadcrumbsComponent } from "components/breadcrumbs/breadcrumbs.component";
@@ -28,7 +28,8 @@ import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
   ],
 })
 export class MainComponent implements OnInit {
-  constructor(private bc: BreadcrumbsService, private route: ActivatedRoute) {}
+  private bc = inject(BreadcrumbsService);
+  private route = inject(ActivatedRoute);
 
   /**
    * A lifecycle hook that is called after Angular has initialized all data-bound properties of a directive.

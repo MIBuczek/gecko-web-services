@@ -1,5 +1,5 @@
 import { AsyncPipe, NgIf } from "@angular/common";
-import { Component, OnDestroy } from "@angular/core";
+import { Component, inject, OnDestroy } from "@angular/core";
 import {
   AbstractControl,
   FormControl,
@@ -41,6 +41,9 @@ import { NotificationComponent } from "components/notification/notification.comp
   ],
 })
 export class FooterComponent implements OnDestroy {
+  private mailingService = inject(MailingService);
+  private recaptchaService = inject(RecaptchaService);
+
   public dbMessageActions = DB_MESSAGE_ACTIONS;
   public submitStatus$?: Observable<DB_MESSAGE_ACTIONS>;
   private submitStateClear$ = new BehaviorSubject(true);
@@ -61,10 +64,7 @@ export class FooterComponent implements OnDestroy {
     ]),
   });
 
-  constructor(
-    private mailingService: MailingService,
-    private recaptchaService: RecaptchaService
-  ) {
+  constructor() {
     /* Observable to clear state after submit the message */
     this.submitStateClear$
       .pipe(filter(Boolean), bufferTime(10000), takeUntil(this.subscription$))

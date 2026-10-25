@@ -1,5 +1,5 @@
 import { NgFor } from "@angular/common";
-import { Component, Inject } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { TranslateModule } from "@ngx-translate/core";
 import { ISingleCard } from "models/text-content";
@@ -16,10 +16,8 @@ interface IModalData {
   imports: [NgFor, TranslateModule],
 })
 export class ModalCardDetailsComponent {
-  constructor(
-    private modalRef: MatDialogRef<ModalCardDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IModalData
-  ) {}
+  private modalRef = inject<MatDialogRef<ModalCardDetailsComponent>>(MatDialogRef);
+  data = inject<IModalData>(MAT_DIALOG_DATA);
 
   /**
    * Closes the modal by calling the `close` method on the `modalRef` object.

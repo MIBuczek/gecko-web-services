@@ -7,11 +7,11 @@ import { Observable, of, ReplaySubject } from "rxjs";
   providedIn: "root",
 })
 export class AuthService {
+  private router = inject(Router);
+
   private auth: Auth = inject(Auth);
   private readonly user$ = user(this.auth);
   readonly authError$ = new ReplaySubject();
-
-  constructor(private router: Router) {}
 
   /**
    * Get the current user.

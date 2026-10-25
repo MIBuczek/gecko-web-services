@@ -1,5 +1,5 @@
 import { NgClass, NgIf } from "@angular/common";
-import { Component, HostListener } from "@angular/core";
+import { Component, HostListener, inject } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { ViewportScroller } from "@angular/common";
@@ -17,18 +17,18 @@ type TypeLang = "pl" | "en";
   imports: [NgClass, NgIf, RouterLink, TranslateModule],
 })
 export class NavigationComponent {
+  private translate = inject(TranslateService);
+  private viewportScroller = inject(ViewportScroller);
+  private bc = inject(BreadcrumbsService);
+  private ls = inject(LoaderService);
+  private ss = inject(ScrollService);
+
   public selectedLang: TypeLang = "pl";
   public isNavbarOpen: boolean = false;
   public selectedContentId: TypeContentId = "header";
   public isMainPage = true;
 
-  constructor(
-    private translate: TranslateService,
-    private viewportScroller: ViewportScroller,
-    private bc: BreadcrumbsService,
-    private ls: LoaderService,
-    private ss: ScrollService
-  ) {
+  constructor() {
     /* Logic to check are we on main page to display full or replacement navigation */
     this.bc.getBreadcrumbsItems.subscribe(
       (bci) =>

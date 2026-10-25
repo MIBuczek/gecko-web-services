@@ -5,6 +5,7 @@ import {
   Component,
   computed,
   HostListener,
+  inject,
   OnInit,
   signal,
   WritableSignal,
@@ -34,6 +35,12 @@ import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
   imports: [AsyncPipe, DatePipe, NgClass, NgFor, NgIf, NotificationComponent],
 })
 export class MainComponent implements OnInit {
+  private auth = inject(AuthService);
+  private router = inject(Router);
+  private ms = inject(MailingService);
+  private modalRef = inject(MatDialog);
+  private recaptchaService = inject(RecaptchaService);
+
   private readonly _postPerPage = 10;
   private _emailList = signal<IAdminEmail[]>([]);
   private _httpError = signal<HttpErrorResponse | null>(null);
@@ -48,23 +55,6 @@ export class MainComponent implements OnInit {
     const indexOfFirstPost = indexOfLastPost - this._postPerPage;
     return this._emailList().slice(indexOfFirstPost, indexOfLastPost);
   });
-
-  /**
-   * Constructs a new instance of the class.
-   *
-   * @param {AuthService} auth - The authentication service.
-   * @param {Router} router - The router service.
-   * @param {MailingService} ms - The mailing service.
-   * @param {MatDialog} modalRef - The modal reference.
-   * @param {RecaptchaService} recaptchaService - The reCAPTCHA service.
-   */
-  constructor(
-    private auth: AuthService,
-    private router: Router,
-    private ms: MailingService,
-    private modalRef: MatDialog,
-    private recaptchaService: RecaptchaService
-  ) {}
 
   /* Listener to tract vertical and horizontal pixels */
   @HostListener("window:scroll", ["$event"])
