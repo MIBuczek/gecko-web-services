@@ -1,9 +1,9 @@
 {
   "totals": {
     "other": {
-      "raw": 81091,
-      "gzip": 16289,
-      "transfer": 16289,
+      "raw": 80908,
+      "gzip": 16236,
+      "transfer": 16236,
       "files": 5
     },
     "images": {
@@ -13,26 +13,26 @@
       "files": 5
     },
     "js": {
-      "raw": 845393,
-      "gzip": 248339,
-      "transfer": 248339,
+      "raw": 845402,
+      "gzip": 248351,
+      "transfer": 248351,
       "files": 9
     },
     "fonts": {
-      "raw": 1022976,
-      "gzip": 634981,
-      "transfer": 1022976,
-      "files": 8
+      "raw": 307172,
+      "gzip": 307344,
+      "transfer": 307172,
+      "files": 4
     },
     "css": {
-      "raw": 58081,
-      "gzip": 8879,
-      "transfer": 8879,
+      "raw": 57466,
+      "gzip": 8804,
+      "transfer": 8804,
       "files": 1
     }
   },
-  "cssGzip": 8879,
-  "fonts": 1022976,
-  "totalGzip": 1421629,
-  "rawTotal": 2132687
+  "cssGzip": 8804,
+  "fonts": 307172,
+  "totalGzip": 705709,
+  "rawTotal": 1416094
 }
