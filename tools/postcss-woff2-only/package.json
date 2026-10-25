@@ -1,0 +1,7 @@
+{
+  "name": "postcss-woff2-only",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Drop non-woff2 sources from @font-face when a woff2 source exists.",
+  "main": "index.cjs"
+}

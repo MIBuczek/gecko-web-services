@@ -181,9 +181,9 @@ it does not cover.
   component stylesheet). A build that prints these warnings still succeeds.
 - **Angular's size budgets do not count fonts.** `budgets` sums chunk assets, and webfonts are
   emitted as assets, so no budget type (`all`, `any`, `initial`, …) can fail the build when the
-  font payload grows. The FontAwesome webfonts are the largest category in `dist` (1,022,976 B
-  of 2,405,328 B at the Phase 0 baseline). `npm run measure` covers them; `angular.json` cannot.
-  See `docs/css-payload.md`.
+  font payload grows. Fonts were the largest category in `dist` at the Phase 0 baseline
+  (1,022,976 B of 2,405,328 B); Phase 2 cut them to 307,172 B, leaving JavaScript largest.
+  `npm run measure` covers them; `angular.json` cannot. See `docs/css-payload.md`.
 - The stylesheet has its own budget, `{ "type": "bundle", "name": "styles" }` in `angular.json`.
   It was verified by temporarily setting a 1 kB limit and observing the build fail — a budget
   that does not match a chunk name is silently ignored, so check that it fires before trusting it.
@@ -328,6 +328,29 @@ it does not cover.
   values were large enough that re-adding all of Bootstrap would have passed unnoticed. A
   `bundle` budget matches on chunk name; one that does not match is silently ignored, so
   confirm it fires before trusting it.
+- **PostCSS runs before esbuild resolves `url()`.** This is what lets a plugin suppress an
+  emitted asset: remove a `url()` from a declaration and the file is never written to `dist`.
+  Phase 2 uses it to drop the FontAwesome `.ttf` sources (`tools/postcss-woff2-only`), taking
+  the font payload from 1,022,976 B to 307,172 B with no `dist` rewriting and no post-build
+  step. If you ever need to stop an asset being emitted, do it here rather than deleting from
+  `dist` afterwards.
+- **Angular resolves PostCSS plugins by bare specifier only.** It calls `require(pluginName)`
+  with no relative-path handling, so `"./tools/my-plugin.cjs"` in `.postcssrc.json` fails with
+  `Cannot find module`. A local plugin must be a `file:` dev dependency so its name resolves
+  through `node_modules`. `npm ci` recreates that symlink, so CI is fine — but a plugin that
+  works from a warm `node_modules` can still fail on a clean checkout if it is not declared.
+- **Angular cannot filter font formats, and its budgets cannot see fonts.** No build option
+  drops a `truetype` source, and webfonts are emitted as assets, not chunks, so no `budgets`
+  entry fails the build when the font payload grows. That is why `scripts/measure-payload.js`
+  exists. Fonts are the second-largest category in `dist` after JavaScript.
+- **The `.ttf` files are dead weight, but `fa-brands` is not droppable.** Every FontAwesome
+  `@font-face` lists `woff2` before `truetype` and every supported browser takes the `woff2`, so
+  the TTFs were never fetched. But #28's "only one icon uses each family" is wrong for brands:
+  nine brand icons (`fa-angular`, `fa-react`, `fa-node`, `fa-git-alt`, `fa-figma`,
+  `fa-bootstrap`, `fa-google`, `fa-github`, `fa-microsoft`) render through
+  `tech_icon.const.ts`, and none has a solid equivalent. Only `fa-regular` (one icon,
+  `fa-square-check`) is reducible, and doing so visibly changes the success notification.
+  Check the icon maps (`$fa-icons` vs `$fa-brand-icons`) before assuming a family is unused.
 
 ## Scope of this document
 

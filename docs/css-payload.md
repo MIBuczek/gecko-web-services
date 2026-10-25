@@ -5,7 +5,7 @@ they actually saved instead of estimating it.
 
 - **Phase 0** recorded the baseline and added the regression guard.
 - **Phase 1** purged Bootstrap and trimmed the stylesheet. See [Phase 1](#phase-1--purge-bootstrap).
-- **Phase 2** (fonts) is not started.
+- **Phase 2** dropped the TTF fonts. See [Phase 2](#phase-2--trim-fontawesome-webfonts).
 
 ## How to measure
 
@@ -79,6 +79,10 @@ The targets are reported by `npm run measure` but not enforced: a phase cannot p
 goal before it lands. Each phase lowers the baseline to its measured result, which is what
 makes the win permanent.
 
+After Phase 2 the CSS goal and the font goal are both met. Total transfer sits at
+**705,709 B**, 0.8% over the 700,000 B goal — the remaining gap and what would close it are
+in [the note below](#the-remaining-1).
+
 ## Phase 1 — Purge Bootstrap
 
 PurgeCSS runs over the **global** stylesheet only. Angular applies `postcss.config.json` /
@@ -148,6 +152,103 @@ turned on, `variables: [/^--bs-/]` must be added in the same commit. That note i
 Verified in Chromium, not by reading CSS: the three notification banners resolve to identical
 colours before and after, and all 186 classes the templates actually use produce **zero**
 computed-style differences across 47 properties.
+
+## Phase 2 — Trim FontAwesome webfonts
+
+The whole win is one idea: **the TTF files are never fetched, but esbuild still emits them.**
+Every FontAwesome `@font-face` lists `woff2` first and `truetype` second. Every browser in the
+support range (`.browserslistrc`: Chrome, Firefox, Edge, Safari, iOS Safari, Firefox ESR) takes
+the `woff2` entry, so the `.ttf` is dead weight — 708,152 B of the 1,022,976 B font payload.
+Removing the `truetype` source from the declaration stops esbuild from resolving that `url()`,
+so the file is never written to `dist`. Nothing needs deleting afterwards.
+
+Result: **1,022,976 B → 307,172 B**, against a 320,000 B target. The goal is met.
+
+### Configuration
+
+A second PostCSS plugin, `postcss-woff2-only`, sits alongside PurgeCSS in `.postcssrc.json`:
+
+```json
+{
+  "plugins": {
+    "postcss-woff2-only": {},
+    "@fullhuman/postcss-purgecss": { "content": ["src/**/*.html", "src/**/*.ts"] }
+  }
+}
+```
+
+It lives in `tools/postcss-woff2-only/` and is wired in as a `file:` dev dependency. For any
+`@font-face` whose `src` offers both `woff2` and something else, it keeps the `woff2` sources
+and drops the rest; a face with no `woff2` source is left untouched.
+
+**Why PostCSS and not a build step.** Angular runs PostCSS *before* esbuild resolves `url()`
+(`stylesheet-plugin-factory.js` calls the processor, then returns the result as a `css` loader
+result). So editing the declaration is enough to suppress the asset — no `dist` rewriting, no
+`assets` exclusion, no post-build script.
+
+**Why a `file:` dependency.** Angular loads plugins with
+`require(pluginName)` against the plugin name from the config, with no relative-path handling.
+`"./tools/postcss-woff2-only/index.cjs"` fails with `Cannot find module`. A bare specifier
+resolves normally, and `file:tools/postcss-woff2-only` makes it resolvable while keeping the
+source in the repo. Verified that `npm ci` recreates the `node_modules` symlink from a clean
+tree, which is what CI does.
+
+### Verification
+
+The change is provably surgical, checked four ways:
+
+- **CSS diff.** Removing the ten `truetype` sources from the pre-change stylesheet produces a
+  byte-identical match to the post-change stylesheet. Nothing else moved.
+- **No stale references.** No `truetype` or `.ttf` string remains anywhere in `dist`.
+- **Rendering.** All 25 icons the app uses (16 solid, 1 regular, 9 brands, driven off the real
+  template classes and `tech_icon.const.ts`) render in Chromium with non-zero width and the
+  expected `content` glyph.
+- **What the browser actually fetches.** A request log over a real page load shows exactly
+  three font files requested — `fa-solid-900`, `fa-regular-400`, `fa-brands-400`, all
+  `.woff2` — and **zero** `.ttf` requests. The `.woff2` content hashes are unchanged from
+  before the change, so the bytes served are the same bytes.
+
+### The corrections to #28's second bullet
+
+#28's next bullet — *"Consider dropping `fa-regular` and `fa-brands`. Only one icon uses each.
+Converting both to solid variants removes those two families entirely and lands near 156 kB.
+This needs two template edits and touches two spec assertions."* — does not hold up. Each claim
+was checked against the tree:
+
+- **`fa-regular`: one icon, yes.** `notification.component.html` uses `fa-regular fa-square-check`
+  for the success variant, and nothing else uses the family.
+- **`fa-brands`: nine icons, not one.** `tech_icon.const.ts` renders `fa-angular`, `fa-react`,
+  `fa-node`, `fa-git-alt`, `fa-figma`, `fa-bootstrap`, `fa-google`, `fa-github` and
+  `fa-microsoft` through one `*ngFor`. There is no single brand icon.
+- **"Converting both to solid variants" is impossible for brands.** None of those nine names
+  exists in `$fa-icons`; they are all in `$fa-brand-icons` only. There is no solid glyph to
+  convert to. Brand marks are also *supposed* to be brand marks — a solid `fa-github` would be
+  a different picture, not a cheaper one.
+- **No spec assertion touches either family.** Searching the specs for `fa-regular`,
+  `fa-brands` and `fa-square-check` returns nothing. The notification spec asserts the icon
+  element exists and that the default case carries `fa-circle-info`; it never names the success
+  icon. So "touches two spec assertions" is not accurate either.
+
+### The remaining 1%
+
+Total transfer is **705,709 B** against the 700,000 B goal, 0.8% over. The CSS and font goals
+are both met; this one is not, and the shortfall is small enough to state precisely.
+
+`fa-square-check` *does* exist in solid (`styles: [solid, regular]` in FA's own metadata), so
+the `fa-regular` family can genuinely be dropped: change the one class in
+`notification.component.html`, remove the family, and save 25,472 B. That lands the total at
+~680 kB and meets the goal.
+
+It is not done here because it is a **visible change** — the success notification's outline
+tick becomes a filled tick — and #28 presents it as a costless mechanical swap. That is a
+product decision, not a payload decision, and it should be made deliberately rather than
+folded into a "drop the TTF files" commit. Everything needed to decide is above; the edit
+itself is one line plus a rebuild.
+
+One further 4,796 B is available: `fa-v4compatibility.woff2` is emitted but never requested
+(only the unused `FontAwesome` v4 family references it). PurgeCSS keeps `@font-face` rules, so
+it survives. Not worth special-casing for 4.7 kB, and recorded here only so the number is not
+mysterious.
 
 ## Known warnings
 
