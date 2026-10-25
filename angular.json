@@ -56,8 +56,8 @@
                 {
                   "type": "bundle",
                   "name": "styles",
-                  "maximumWarning": "345kb",
-                  "maximumError": "360kb"
+                  "maximumWarning": "65kb",
+                  "maximumError": "100kb"
                 }
               ],
               "fileReplacements": [

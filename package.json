@@ -1,6 +1,6 @@
 {
   "name": "gecko-web-services",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --poll 500",
@@ -52,6 +52,7 @@
     "@angular/build": "^20.3.41",
     "@angular/cli": "^20.3.41",
     "@angular/compiler-cli": "^20.3.34",
+    "@fullhuman/postcss-purgecss": "^8.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.12.11",
     "@types/uuid": "^9.0.8",
@@ -64,6 +65,7 @@
     "jest-preset-angular": "^17.0.3",
     "ngx-translate-testing": "^7.0.0",
     "npm-check-updates": "^16.14.20",
+    "postcss": "^8.5.31",
     "ts-node": "^10.9.2",
     "typescript": "~5.8.3"
   }

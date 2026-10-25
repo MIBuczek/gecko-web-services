@@ -297,6 +297,37 @@ it does not cover.
   It is turned off in `.eslintrc.json` alongside `prefer-standalone`; the `inject()` migration
   is a separate change (see the issue's "Code migrations" section). Re-enable both in the PR
   that performs those migrations.
+- **PostCSS runs over the global stylesheet only.** Angular reads `postcss.config.json` /
+  `.postcssrc.json` in `global-styles.js`; component styles go through
+  `component-stylesheets.js` and are never passed to PostCSS. PurgeCSS therefore cannot touch
+  a component's `:host` rules, and `--bs-*` variables read from
+  `notification.component.scss` are safe by construction. Do not expect a PostCSS plugin to
+  apply to `*.component.scss`.
+- **A PurgeCSS safelist entry must be a real `RegExp`.** A string is compared with `===`, so
+  `{ "standard": ["/^fa-/"] }` matches the literal selector `/^fa-/` and safelists nothing —
+  silently, with no warning. `.postcssrc.json` is JSON and cannot express a `RegExp`, so
+  pattern safelists live in `purgecss.config.js`. Only its **named-export** form
+  (`exports.safelist = ...`) reaches the plugin; `module.exports = {...}` is swallowed by the
+  ESM/CJS interop. The plugin package is `@fullhuman/postcss-purgecss` (`postcss-purgecss` is a
+  different, deprecated package), and Angular rejects any plugin where `plugin.postcss !== true`.
+- **PurgeCSS keeps custom properties unless `variables: true`.** The option defaults to off and
+  is off here, so every `--bs-*` definition survives. Turning it on would drop 168 definitions
+  and break the notification banners silently — `var(--bs-x, fallback)` hides the loss — so add
+  `variables: [/^--bs-/]` in the same commit if it is ever enabled. Note that
+  `--bs-*-100` / `--bs-*-300` do not exist in Bootstrap 5.3; the fallbacks that reference them
+  were already dead code.
+- **Do not safelist `/^fa-/`.** All 28 FontAwesome names appear as string literals, so the
+  default extractor finds every one. The pattern re-admits all 2,541 icon rules and takes the
+  stylesheet from ~8.9 kB to ~28.8 kB gzip. `purgecss.config.js` explains this in place.
+- **Phase 1's failure mode is visual, not test-visible.** The suite passed while the stylesheet
+  changed by 82%, so green tests prove nothing here. Verify by comparing rendered output —
+  `docs/css-payload.md` records the Chromium comparison that was used (186 template classes ×
+  47 computed properties, plus the three notification banners).
+- The `styles` bundle budget in `angular.json` was lowered to `65kb` warning / `100kb` error in
+  Phase 1 (from `345kb` / `360kb`), matching the ~58 kB the purged stylesheet reports. The old
+  values were large enough that re-adding all of Bootstrap would have passed unnoticed. A
+  `bundle` budget matches on chunk name; one that does not match is silently ignored, so
+  confirm it fires before trusting it.
 
 ## Scope of this document
 

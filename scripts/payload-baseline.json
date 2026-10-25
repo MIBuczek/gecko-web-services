@@ -2,8 +2,8 @@
   "totals": {
     "other": {
       "raw": 81091,
-      "gzip": 16287,
-      "transfer": 16287,
+      "gzip": 16289,
+      "transfer": 16289,
       "files": 5
     },
     "images": {
@@ -13,9 +13,9 @@
       "files": 5
     },
     "js": {
-      "raw": 845661,
-      "gzip": 248373,
-      "transfer": 248373,
+      "raw": 845393,
+      "gzip": 248339,
+      "transfer": 248339,
       "files": 9
     },
     "fonts": {
@@ -25,14 +25,14 @@
       "files": 8
     },
     "css": {
-      "raw": 330454,
-      "gzip": 52996,
-      "transfer": 52996,
+      "raw": 58081,
+      "gzip": 8879,
+      "transfer": 8879,
       "files": 1
     }
   },
-  "cssGzip": 52996,
+  "cssGzip": 8879,
   "fonts": 1022976,
-  "totalGzip": 1465778,
-  "rawTotal": 2405328
+  "totalGzip": 1421629,
+  "rawTotal": 2132687
 }
