@@ -8,7 +8,6 @@ import { provideFirebaseApp } from "@angular/fire/app";
 import { provideDatabase } from "@angular/fire/database";
 import { initializeApp } from "firebase/app";
 import { environment } from "environments/environment";
-import { of } from "rxjs";
 
 /* Mock function to overwrite possibility of emission value*/
 const mockSendEmail = (em: EmailMessage): Promise<DB_MESSAGE_ACTIONS> => {

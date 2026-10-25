@@ -1,27 +1,24 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Injectable, signal } from "@angular/core";
 
 @Injectable({
   providedIn: "root",
 })
 export class LoaderService {
-  private loadingState = new BehaviorSubject(false);
+  private readonly _loaderStatus = signal(false);
 
   /**
-   * Returns an observable of the current loading state.
+   * The current loading state.
    *
-   * @return {Observable<boolean>} An observable of the current loading state.
+   * @return {Signal<boolean>} The current loading state.
    */
-  get loaderStatus(): Observable<boolean> {
-    return this.loadingState.asObservable();
-  }
+  readonly loaderStatus = this._loaderStatus.asReadonly();
 
   /**
-   * A description of the entire function.
+   * Sets the new loading status.
    *
    * @param {boolean} new_status - the new loading status to set
    */
   set changeLoadingStatus(new_status: boolean) {
-    this.loadingState.next(new_status);
+    this._loaderStatus.set(new_status);
   }
 }

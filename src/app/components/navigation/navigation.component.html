@@ -18,10 +18,10 @@
         *ngIf="isNavbarOpen || !checkPosition(false)"
       >
         <ul class="navbar-nav">
-          <ng-container *ngIf="isMainPage; else replacementNavigation">
+          <ng-container *ngIf="isMainPage(); else replacementNavigation">
             <li
               class="nav-item"
-              [class.active]="selectedContentId === 'header'"
+              [class.active]="selectedContentId() === 'header'"
             >
               <a
                 class="nav-link"
@@ -31,7 +31,7 @@
                 {{ "navigation.main" | translate }}
               </a>
             </li>
-            <li class="nav-item" [class.active]="selectedContentId === 'about'">
+            <li class="nav-item" [class.active]="selectedContentId() === 'about'">
               <a
                 class="nav-link"
                 role="button"
@@ -42,7 +42,7 @@
             </li>
             <li
               class="nav-item"
-              [class.active]="selectedContentId === 'service'"
+              [class.active]="selectedContentId() === 'service'"
             >
               <a
                 class="nav-link"
@@ -54,7 +54,7 @@
             </li>
             <li
               class="nav-item"
-              [class.active]="selectedContentId === 'contact'"
+              [class.active]="selectedContentId() === 'contact'"
             >
               <a
                 class="nav-link"

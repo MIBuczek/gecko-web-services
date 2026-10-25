@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { environment } from "environments/environment";
-import { Observable, Subject } from "rxjs";
 
 /**
  * Minimal ambient shape of the reCAPTCHA globals used here.
@@ -44,28 +43,17 @@ export class RecaptchaService {
    * Retrieves a token for the specified action.
    *
    * @param {string} action - The action for which to retrieve the token.
-   * @return {Observable<string | null>} An observable that emits the token, or
-   * null if token retrieval fails.
+   * @return {Promise<string | null>} The token, or null if retrieval fails.
    */
-  public getToken(action: string): Observable<string | null> {
-    const subject = new Subject<string | null>();
-
-    this.loadScript()
-      .then(() => this.execute(action))
-      .then(
-        (token) => {
-          subject.next(token);
-          subject.complete();
-        },
-        () => {
-          // A blocked or failed reCAPTCHA must not break the caller's flow;
-          // callers treat a null token as "do not proceed".
-          subject.next(null);
-          subject.complete();
-        }
-      );
-
-    return subject.asObservable();
+  public async getToken(action: string): Promise<string | null> {
+    try {
+      await this.loadScript();
+      return await this.execute(action);
+    } catch {
+      // A blocked or failed reCAPTCHA must not break the caller's flow;
+      // callers treat a null token as "do not proceed".
+      return null;
+    }
   }
 
   private get siteKey(): string {

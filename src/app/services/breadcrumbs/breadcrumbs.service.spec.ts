@@ -15,11 +15,8 @@ describe("BreadcrumbsService", () => {
     expect(service).toBeTruthy();
   });
 
-  it("service should emit empty array when is no value", (done) => {
-    service.getBreadcrumbsItems.subscribe((bc) => {
-      expect(bc.length).toEqual(0);
-      done();
-    });
+  it("service should emit empty array when is no value", () => {
+    expect(service.breadcrumbsItems().length).toEqual(0);
   });
 
   it("generateBreadcrumbs return Array of BreadCrumbItem type", fakeAsync(() => {
@@ -33,11 +30,8 @@ describe("BreadcrumbsService", () => {
     expect(result[0]).toBeInstanceOf(BreadCrumbItem);
   }));
 
-  it("service should emit empty array when is no value", (done) => {
+  it("service should expose the updated breadcrumbs", () => {
     service.updateBreadcrumbsPath = service.generateBreadcrumbs(["main-page"]);
-    service.getBreadcrumbsItems.subscribe((bc) => {
-      expect(bc.length).toEqual(1);
-      done();
-    });
+    expect(service.breadcrumbsItems().length).toEqual(1);
   });
 });

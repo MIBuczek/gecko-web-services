@@ -54,7 +54,6 @@ describe("BreadcrumbsComponent", () => {
   const updatedBreadcrumbs = () => {
     breadcrumbsService.updateBreadcrumbsPath =
       breadcrumbsService.generateBreadcrumbs(mock_bc_items);
-    component.breadcrumbs$ = breadcrumbsService.getBreadcrumbsItems;
     fixture.detectChanges();
   };
   it("should create", () => {
@@ -64,7 +63,6 @@ describe("BreadcrumbsComponent", () => {
   it("should not display breadcrumbs  when breadcrumbs items are less then 1", () => {
     breadcrumbsService.updateBreadcrumbsPath =
       breadcrumbsService.generateBreadcrumbs([mock_bc_items[0]]);
-    component.breadcrumbs$ = breadcrumbsService.getBreadcrumbsItems;
     const bc_container = fixture.debugElement.query(By.css(".container"));
     expect(bc_container).toBeNull();
   });

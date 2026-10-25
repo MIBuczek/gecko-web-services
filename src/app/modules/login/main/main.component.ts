@@ -1,12 +1,15 @@
-import { AsyncPipe, JsonPipe, NgIf } from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { JsonPipe, NgIf } from "@angular/common";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+} from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
 import { ErrorMessageComponent } from "components/error-message/error-message.component";
 import { NotificationComponent } from "components/notification/notification.component";
-import { AppCheckService } from "app/services/app-check/app-check.service";
 import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
-import { take } from "rxjs";
 import { AuthService } from "services/auth/auth.service";
 
 @Component({
@@ -16,7 +19,6 @@ import { AuthService } from "services/auth/auth.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    AsyncPipe,
     JsonPipe,
     NgIf,
     ReactiveFormsModule,
@@ -51,28 +53,26 @@ export class MainComponent {
   });
 
   constructor() {
-    this.auth.currentUser.pipe(take(1)).subscribe((user) => {
-      if (user) this.router.navigate(["admin"]);
+    /* Send an already authenticated user straight to the admin panel. */
+    effect(() => {
+      if (this.auth.currentUser()) this.router.navigate(["admin"]);
     });
   }
 
   get loginError() {
-    return this.auth.authError$;
+    return this.auth.authError;
   }
+
   /**
    * A method that handles form submission.
    *
-   * @return void
+   * @return {Promise<void>}
    */
-  onSubmit(): void {
-    this.recaptchaService
-      .getToken("loginAction")
-      .pipe(take(1))
-      .subscribe((token) => {
-        if (this.logInForm.invalid || !token) return;
-        const { email, password } = this.logInForm.value;
-        if (!email || !password) return;
-        this.auth.login(email, password);
-      });
+  async onSubmit(): Promise<void> {
+    const token = await this.recaptchaService.getToken("loginAction");
+    if (this.logInForm.invalid || !token) return;
+    const { email, password } = this.logInForm.value;
+    if (!email || !password) return;
+    await this.auth.login(email, password);
   }
 }

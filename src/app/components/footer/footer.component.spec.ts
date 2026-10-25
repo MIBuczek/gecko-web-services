@@ -21,7 +21,6 @@ import { environment } from "environments/environment";
 import { RecaptchaService } from "services/recaptcha/recaptcha.service";
 import { NotificationComponent } from "../notification/notification.component";
 import { ErrorMessageComponent } from "../error-message/error-message.component";
-import { of } from "rxjs";
 
 const TRANSLATION: any = {
   pl: polishTranslation,
@@ -51,9 +50,7 @@ describe("FooterComponent", () => {
         {
           provide: RecaptchaService,
           useValue: {
-            getToken: () => {
-              return of("Test_Token");
-            },
+            getToken: () => Promise.resolve("Test_Token"),
           },
         },
       ],

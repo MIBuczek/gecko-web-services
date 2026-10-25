@@ -5,9 +5,9 @@
     >
       <span
         >Last login :
-        {{ (currentUser | async)?.metadata?.lastSignInTime | date }}</span
+        {{ currentUser()?.metadata?.lastSignInTime | date }}</span
       >
-      <span>{{ (currentUser | async)?.email }}</span>
+      <span>{{ currentUser()?.email }}</span>
     </div>
     <button class="btn logout" (click)="logOut()">
       <i class="fa-solid fa-power-off"></i>

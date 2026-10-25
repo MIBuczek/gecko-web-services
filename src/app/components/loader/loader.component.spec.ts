@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { LoaderComponent } from "./loader.component";
 import { By } from "@angular/platform-browser";
 import { LoaderService } from "services/loader/loader.service";
@@ -28,10 +28,10 @@ describe("LoaderComponent", () => {
     expect(element.classes["show"]).toBeTruthy();
   });
 
-  it("is loading hide correctly", fakeAsync(() => {
+  it("is loading hide correctly", () => {
     const element = fixture.debugElement.query(By.css(".loader"));
     component.ls.changeLoadingStatus = false;
     fixture.detectChanges();
     expect(element.classes["show"]).toBeFalsy();
-  }));
+  });
 });

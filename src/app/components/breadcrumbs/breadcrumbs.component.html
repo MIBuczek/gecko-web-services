@@ -1,4 +1,4 @@
-<ng-container *ngIf="breadcrumbs$ | async as breadcrumbs">
+<ng-container *ngIf="breadcrumbs() as breadcrumbs">
   <div class="container" *ngIf="breadcrumbs.length > 1">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb py-3">
