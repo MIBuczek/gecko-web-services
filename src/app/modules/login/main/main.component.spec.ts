@@ -1,7 +1,6 @@
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
-import { Router } from "@angular/router";
+import { provideRouter, Router } from "@angular/router";
 import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
 import { of, ReplaySubject } from "rxjs";
 import { AuthService } from "services/auth/auth.service";
@@ -13,7 +12,7 @@ const buildComponent = async (
   fixture: ComponentFixture<MainComponent>;
   component: MainComponent;
   auth: { currentUser: unknown; authError$: ReplaySubject<unknown>; login: jest.Mock };
-  router: { navigate: jest.Mock };
+  router: { navigate: jest.SpyInstance };
   recaptcha: { getToken: jest.Mock };
 }> => {
   const auth = {
@@ -21,19 +20,22 @@ const buildComponent = async (
     authError$: new ReplaySubject<unknown>(),
     login: jest.fn(),
   };
-  const router = { navigate: jest.fn() };
   const recaptcha = { getToken: jest.fn().mockReturnValue(of("token")) };
 
   await TestBed.configureTestingModule({
-    declarations: [MainComponent],
     providers: [
       { provide: AuthService, useValue: auth },
-      { provide: Router, useValue: router },
       { provide: RecaptchaService, useValue: recaptcha },
+      provideRouter([]),
     ],
-    imports: [ReactiveFormsModule],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [MainComponent, ReactiveFormsModule],
   }).compileComponents();
+
+  /* The template renders RouterLink, so the real router must back ActivatedRoute.
+     Only `navigate` is stubbed, which also keeps unmatched routes out of play. */
+  const router = {
+    navigate: jest.spyOn(TestBed.inject(Router), "navigate").mockResolvedValue(true),
+  };
 
   const fixture = TestBed.createComponent(MainComponent);
   fixture.detectChanges();
@@ -44,7 +46,7 @@ describe("LoginMainComponent", () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
   let auth: { currentUser: unknown; authError$: ReplaySubject<unknown>; login: jest.Mock };
-  let router: { navigate: jest.Mock };
+  let router: { navigate: jest.SpyInstance };
   let recaptcha: { getToken: jest.Mock };
 
   beforeEach(async () => {
@@ -124,7 +126,7 @@ describe("LoginMainComponent", () => {
 });
 
 describe("LoginMainComponent - already authenticated", () => {
-  let router: { navigate: jest.Mock };
+  let router: { navigate: jest.SpyInstance };
 
   beforeEach(async () => {
     ({ router } = await buildComponent({ email: "admin@example.com" }));

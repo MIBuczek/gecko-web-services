@@ -1,3 +1,4 @@
+import { AsyncPipe, DatePipe, NgClass, NgFor, NgIf } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
 import {
   ChangeDetectionStrategy,
@@ -21,6 +22,7 @@ import { EMPTY, map, Observable, switchMap, take } from "rxjs";
 import packageInfo from "../../../../../package.json";
 import { MatDialog } from "@angular/material/dialog";
 import { ModalEmailDetailsComponent } from "app/components/modals/modal-email-details/modal-email-details.component";
+import { NotificationComponent } from "components/notification/notification.component";
 import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
 
 @Component({
@@ -28,7 +30,8 @@ import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
   templateUrl: "./main.component.html",
   styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  standalone: true,
+  imports: [AsyncPipe, DatePipe, NgClass, NgFor, NgIf, NotificationComponent],
 })
 export class MainComponent implements OnInit {
   private readonly _postPerPage = 10;

@@ -1,7 +1,17 @@
+import { NgClass, NgFor } from "@angular/common";
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
+import { TranslateModule } from "@ngx-translate/core";
+import { BreadcrumbsComponent } from "components/breadcrumbs/breadcrumbs.component";
+import { CookieComponent } from "components/cookie/cookie.component";
+import { CopyRightsComponent } from "components/copy-rights/copy-rights.component";
+import { FooterComponent } from "components/footer/footer.component";
+import { LoaderComponent } from "components/loader/loader.component";
 import { ModalCardDetailsComponent } from "components/modals/modal-card-details/modal-card-details.component";
+import { NavigationComponent } from "components/navigation/navigation.component";
+import { ScrollTopComponent } from "components/scroll-top/scroll-top.component";
+import { ServiceCardComponent } from "components/service-card/service-card.component";
 import { IAppRouts } from "models/general";
 import { ISingleCard } from "models/text-content";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
@@ -12,7 +22,20 @@ import { tech_icons } from "utilities/variables/tech-icon.const";
   templateUrl: "./main.component.html",
   styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  standalone: true,
+  imports: [
+    NgClass,
+    NgFor,
+    TranslateModule,
+    BreadcrumbsComponent,
+    CookieComponent,
+    CopyRightsComponent,
+    FooterComponent,
+    LoaderComponent,
+    NavigationComponent,
+    ScrollTopComponent,
+    ServiceCardComponent,
+  ],
 })
 export class MainComponent implements OnInit {
   readonly tech_icons = tech_icons;

@@ -1,3 +1,4 @@
+import { DatePipe, NgIf } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { EmailActionAdmin, IAdminEmail } from "app/models/email-message";
@@ -7,7 +8,8 @@ import { EmailActionAdmin, IAdminEmail } from "app/models/email-message";
   templateUrl: "./modal-email-details.component.html",
   styleUrl: "./modal-email-details.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  standalone: true,
+  imports: [DatePipe, NgIf],
 })
 export class ModalEmailDetailsComponent {
   constructor(

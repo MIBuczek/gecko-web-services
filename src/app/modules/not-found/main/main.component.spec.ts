@@ -7,7 +7,7 @@ import { Location } from "@angular/common";
 import { By } from "@angular/platform-browser";
 import { TranslateService } from "@ngx-translate/core";
 import { MainComponent } from "modules/not-found/main/main.component";
-import { routes } from "app/app.module";
+import { routes } from "app/app.routes";
 
 const TRANSLATION: any = {
   pl: polishTranslation,
@@ -26,7 +26,6 @@ describe("MainComponent - Not Found Module", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainComponent],
       providers: [
         {
           provide: ActivatedRoute,
@@ -34,6 +33,7 @@ describe("MainComponent - Not Found Module", () => {
         },
       ],
       imports: [
+        MainComponent,
         TranslateTestingModule.withTranslations(
           TRANSLATION
         ).withDefaultLanguage("pl"),
@@ -94,7 +94,7 @@ describe("MainComponent - Not Found Module", () => {
 
   it("is redirect link work correctly", () => {
     fixture.detectChanges();
-    const redirect_btn = fixture.debugElement.query(By.css("a"));
+    const redirect_btn = fixture.debugElement.query(By.css("main a"));
     expect(convertString(redirect_btn.nativeElement["textContent"])).toEqual(
       convertString(polishTranslation["not-found-page"].redirect)
     );

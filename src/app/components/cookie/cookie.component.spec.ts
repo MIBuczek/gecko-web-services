@@ -1,4 +1,5 @@
 import { ComponentFixture, inject, TestBed } from "@angular/core/testing";
+import { provideRouter } from "@angular/router";
 import { CookieComponent } from "./cookie.component";
 import { By } from "@angular/platform-browser";
 import { TranslateService } from "@ngx-translate/core";
@@ -17,12 +18,13 @@ describe("CookieComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CookieComponent],
       imports: [
+        CookieComponent,
         TranslateTestingModule.withTranslations(
           TRANSLATION
         ).withDefaultLanguage("pl"),
       ],
+      providers: [provideRouter([])],
     }).compileComponents();
     /* Initialization */
     fixture = TestBed.createComponent(CookieComponent);

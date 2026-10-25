@@ -1,5 +1,7 @@
+import { NgClass, NgIf } from "@angular/common";
 import { Component, HostListener } from "@angular/core";
-import { TranslateService } from "@ngx-translate/core";
+import { RouterLink } from "@angular/router";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { ViewportScroller } from "@angular/common";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
 import { LoaderService } from "services/loader/loader.service";
@@ -11,7 +13,8 @@ type TypeLang = "pl" | "en";
   selector: "app-navigation",
   templateUrl: "./navigation.component.html",
   styleUrls: ["./navigation.component.scss"],
-  standalone: false
+  standalone: true,
+  imports: [NgClass, NgIf, RouterLink, TranslateModule],
 })
 export class NavigationComponent {
   public selectedLang: TypeLang = "pl";

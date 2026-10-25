@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute, Router, RouterLink } from "@angular/router";
+import { TranslateModule } from "@ngx-translate/core";
+import { BreadcrumbsComponent } from "components/breadcrumbs/breadcrumbs.component";
+import { CopyRightsComponent } from "components/copy-rights/copy-rights.component";
+import { NavigationComponent } from "components/navigation/navigation.component";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
 
 @Component({
@@ -7,7 +11,14 @@ import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
   templateUrl: `./main.component.html`,
   styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  standalone: true,
+  imports: [
+    RouterLink,
+    TranslateModule,
+    BreadcrumbsComponent,
+    CopyRightsComponent,
+    NavigationComponent,
+  ],
 })
 export class MainComponent implements OnInit {
   private readonly wrongPath: string;

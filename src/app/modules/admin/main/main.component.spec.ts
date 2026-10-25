@@ -1,5 +1,4 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
@@ -79,7 +78,7 @@ const buildComponent = async (
   };
 
   await TestBed.configureTestingModule({
-    declarations: [MainComponent],
+    imports: [MainComponent],
     providers: [
       { provide: AuthService, useValue: auth },
       { provide: Router, useValue: router },
@@ -87,7 +86,6 @@ const buildComponent = async (
       { provide: MatDialog, useValue: dialog },
       { provide: RecaptchaService, useValue: recaptcha },
     ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   }).compileComponents();
 
   const fixture = TestBed.createComponent(MainComponent);

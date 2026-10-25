@@ -1,3 +1,4 @@
+import { AsyncPipe } from "@angular/common";
 import { Component } from "@angular/core";
 import { LoaderService } from "services/loader/loader.service";
 
@@ -5,7 +6,8 @@ import { LoaderService } from "services/loader/loader.service";
   selector: "app-loader",
   templateUrl: "./loader.component.html",
   styleUrls: ["./loader.component.scss"],
-  standalone: false
+  standalone: true,
+  imports: [AsyncPipe],
 })
 export class LoaderComponent {
   constructor(public ls: LoaderService) {}

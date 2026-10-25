@@ -9,7 +9,7 @@ them.
 `gecko-web-services` is an Angular single-page application: the public marketing site plus a
 small admin area and a login panel. Stack:
 
-- Angular 20.3 with NgModules (not standalone components)
+- Angular 20.3 with standalone components and `bootstrapApplication`
 - TypeScript 5.8, Firebase (`@angular/fire`), a self-hosted reCAPTCHA loader
 - Jest 30 with `jest-preset-angular` 17 for tests
 - SCSS for styles
@@ -35,7 +35,7 @@ The `pre-commit` hook runs `npm run lint`, so lint must pass before a commit lan
 ```
 src/app/
   components/    Shared presentational components (footer, loader, modals, ...)
-  modules/       Feature areas, each a lazy-loaded NgModule
+  modules/       Feature areas, each a lazy-loaded standalone component
   services/      Injectable services, provided in root
   models/        Interfaces and enums
   guards/        Route guards
@@ -46,8 +46,14 @@ src/app/
 ```
 
 Feature areas live under `modules/` and are loaded lazily from the route table in
-`src/app/app.module.ts`. Routing uses hash URLs (`useHash: true`). Admin routes are protected
-by `guards/admin/admin.guard.ts`.
+`src/app/app.routes.ts`. Routing uses hash URLs (`withHashLocation()`). Admin routes are
+protected by `guards/admin/admin.guard.ts`.
+
+There is no `app.module.ts`. `src/main.ts` calls `bootstrapApplication(AppComponent, appConfig)`;
+`src/app/app.config.ts` holds every root provider. `modules/translate-lang/` is the one
+remaining NgModule: it wraps `TranslateModule.forRoot()` with the HTTP loader and is pulled in
+through `importProvidersFrom`. It disappears when `@ngx-translate/core` moves to v18, which
+ships a standalone `TranslatePipe` and `provideTranslateService`.
 
 ## Imports
 
@@ -81,8 +87,17 @@ Compilation is strict, and a few flags change what code is allowed:
 
 ## Angular conventions
 
-- **Modules over standalone.** Components are declared in an `NgModule`. The one standalone
-  artifact is `pipes/form-error-message.pipe.ts`.
+- **Standalone everywhere.** Every component, directive and pipe is standalone, and
+  `@angular-eslint/prefer-standalone` is enforced at error level. A component lists what its
+  template uses in `imports` rather than relying on a shared `NgModule`. Import the specific
+  symbol (`NgIf`, `NgFor`, `DatePipe`, ...) rather than `CommonModule`, unless most of the
+  template needs it.
+- **`TranslateModule` is imported directly** by any standalone component whose template uses
+  the `translate` pipe. `@ngx-translate/core` v15's `TranslatePipe` is not standalone, so the
+  NgModule is the only way to get it until v18.
+- **Tests import the component, they do not declare it.** A spec for a standalone component
+  puts it in `imports: [XComponent]`. Listing it under `declarations` fails with
+  "is marked as standalone and can't be declared in any NgModule".
 - **OnPush on presentational components.** Set
   `changeDetection: ChangeDetectionStrategy.OnPush` and drive updates from signals.
 - **Signals for local state.** Use `signal`, `computed`, and `WritableSignal` rather than
@@ -232,11 +247,9 @@ it does not cover.
   whitespace-only diff. Re-apply the `standalone: false` line by hand at the existing
   indentation instead of accepting the schematic's formatting.
 - `@angular-eslint` 19 enables `@angular-eslint/prefer-standalone` at error level in
-  `plugin:@angular-eslint/recommended`. Every NgModule-declared component now fails lint with
-  "Components, Directives and Pipes should not opt out of standalone". The rule is turned off in
-  `.eslintrc.json`; the app is still NgModule-based and the standalone migration is a separate
-  change (see the issue's "Code migrations" section). Re-enable it in the same PR that performs
-  that migration.
+  `plugin:@angular-eslint/recommended`. It was turned off while the app was NgModule-based and
+  is now re-enabled, because every component is standalone. Lint is the machine check that no
+  component was missed.
 - Angular 19 declares a `zone.js ~0.15.0` peer (Angular 18 declared `~0.14.10`) and
   `build-angular@19` requires TypeScript `>=5.5 <5.9`. The issue's table places both in Step 4,
   but they move here: `ng update` bumped zone.js to 0.15.1 and TypeScript to 5.8.3.
@@ -294,9 +307,9 @@ it does not cover.
   file now imports `setupZoneTestEnv` from `jest-preset-angular/setup-env/zone` and calls it.
 - `@angular-eslint` 20 enables `@angular-eslint/prefer-inject` at error level in
   `plugin:@angular-eslint/recommended`, so all 31 constructor-injected dependencies fail lint.
-  It is turned off in `.eslintrc.json` alongside `prefer-standalone`; the `inject()` migration
-  is a separate change (see the issue's "Code migrations" section). Re-enable both in the PR
-  that performs those migrations.
+  It is still turned off in `.eslintrc.json` (the standalone migration is done, so
+  `prefer-standalone` no longer sits beside it). The `inject()` migration is a separate,
+  behaviour-neutral change; re-enable `prefer-inject` in the PR that performs it.
 - **PostCSS runs over the global stylesheet only.** Angular reads `postcss.config.json` /
   `.postcssrc.json` in `global-styles.js`; component styles go through
   `component-stylesheets.js` and are never passed to PostCSS. PurgeCSS therefore cannot touch
