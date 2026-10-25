@@ -98,6 +98,17 @@ Compilation is strict, and a few flags change what code is allowed:
 - **Tests import the component, they do not declare it.** A spec for a standalone component
   puts it in `imports: [XComponent]`. Listing it under `declarations` fails with
   "is marked as standalone and can't be declared in any NgModule".
+- **`inject()` over constructor parameter injection.** Declare dependencies as field
+  initialisers, `private readonly auth = inject(AuthService)`, and keep the constructor for
+  logic only. `@angular-eslint/prefer-inject` is enforced at error level. Constructor
+  parameters cannot be used at all: they would re-introduce the lint error.
+- **Read injection tokens with the generic form.** `inject<IModalData>(MAT_DIALOG_DATA)` is
+  how a component pulls `MAT_DIALOG_DATA`; the `@Inject(...)` decorator is gone. The generic
+  argument is required, not optional: `MAT_DIALOG_DATA` is declared as `any`, so without it
+  the data field loses its type. The schematic emits exactly this form.
+- **Field initialisers run before the constructor body**, and in declaration order. Logic that
+  used to run in the constructor still works, because every `inject()` field above it has
+  already been assigned by the time the body runs.
 - **OnPush on presentational components.** Set
   `changeDetection: ChangeDetectionStrategy.OnPush` and drive updates from signals.
 - **Signals for local state.** Use `signal`, `computed`, and `WritableSignal` rather than
@@ -306,10 +317,12 @@ it does not cover.
 - `jest-preset-angular` 17 removed the `jest-preset-angular/setup-jest` entry point. The setup
   file now imports `setupZoneTestEnv` from `jest-preset-angular/setup-env/zone` and calls it.
 - `@angular-eslint` 20 enables `@angular-eslint/prefer-inject` at error level in
-  `plugin:@angular-eslint/recommended`, so all 31 constructor-injected dependencies fail lint.
-  It is still turned off in `.eslintrc.json` (the standalone migration is done, so
-  `prefer-standalone` no longer sits beside it). The `inject()` migration is a separate,
-  behaviour-neutral change; re-enable `prefer-inject` in the PR that performs it.
+  `plugin:@angular-eslint/recommended`. It was turned off while the app used constructor
+  injection and is now re-enabled; the 31 sites were converted with
+  `ng generate @angular/core:inject-migration`. The schematic emits its own formatting — it
+  collapses a long `@angular/core` import onto one 131-character line and appends a blank line
+  where the constructor used to be. Tidy both by hand, and put `inject` in the import in
+  case-insensitive alphabetical order to match the rest of the repo.
 - **PostCSS runs over the global stylesheet only.** Angular reads `postcss.config.json` /
   `.postcssrc.json` in `global-styles.js`; component styles go through
   `component-stylesheets.js` and are never passed to PostCSS. PurgeCSS therefore cannot touch

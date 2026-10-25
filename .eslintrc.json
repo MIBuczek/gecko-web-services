@@ -21,7 +21,7 @@
       ],
       "rules": {
         "@angular-eslint/prefer-standalone": "error",
-        "@angular-eslint/prefer-inject": "off",
+        "@angular-eslint/prefer-inject": "error",
         "@angular-eslint/directive-selector": [
           "error",
           {

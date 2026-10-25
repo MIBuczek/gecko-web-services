@@ -1,5 +1,5 @@
 import { AsyncPipe, JsonPipe, NgIf } from "@angular/common";
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Router, RouterLink } from "@angular/router";
 import { ErrorMessageComponent } from "components/error-message/error-message.component";
@@ -26,6 +26,10 @@ import { AuthService } from "services/auth/auth.service";
   ],
 })
 export class MainComponent {
+  private auth = inject(AuthService);
+  private router = inject(Router);
+  private recaptchaService = inject(RecaptchaService);
+
   /**
    * @readonly Login Form
    */
@@ -46,11 +50,7 @@ export class MainComponent {
     ]),
   });
 
-  constructor(
-    private auth: AuthService,
-    private router: Router,
-    private recaptchaService: RecaptchaService
-  ) {
+  constructor() {
     this.auth.currentUser.pipe(take(1)).subscribe((user) => {
       if (user) this.router.navigate(["admin"]);
     });

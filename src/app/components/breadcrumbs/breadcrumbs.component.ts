@@ -1,5 +1,5 @@
 import { AsyncPipe, NgClass, NgFor, NgIf } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
@@ -15,13 +15,15 @@ import { Observable } from "rxjs";
   imports: [AsyncPipe, NgClass, NgFor, NgIf, RouterLink, TranslateModule],
 })
 export class BreadcrumbsComponent {
+  private bc = inject(BreadcrumbsService);
+
   readonly availableRouts: Array<keyof IAppRouts> = [
     "main-page",
     "privacy-policy",
   ];
   public breadcrumbs$: Observable<BreadCrumbItem[]>;
 
-  constructor(private bc: BreadcrumbsService) {
+  constructor() {
     this.breadcrumbs$ = this.bc.getBreadcrumbsItems;
   }
 

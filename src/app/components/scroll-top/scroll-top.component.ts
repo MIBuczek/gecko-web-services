@@ -1,4 +1,4 @@
-import { Component, HostListener } from "@angular/core";
+import { Component, HostListener, inject } from "@angular/core";
 import { ViewportScroller } from "@angular/common";
 
 @Component({
@@ -8,7 +8,7 @@ import { ViewportScroller } from "@angular/common";
   standalone: true,
 })
 export class ScrollTopComponent {
-  constructor(private viewportScroller: ViewportScroller) {}
+  private viewportScroller = inject(ViewportScroller);
 
   /**
    * Checks the position of the window and returns a boolean indicating whether the scroll position is greater than 200.

@@ -1,5 +1,5 @@
 import { NgClass, NgFor } from "@angular/common";
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
@@ -38,13 +38,11 @@ import { tech_icons } from "utilities/variables/tech-icon.const";
   ],
 })
 export class MainComponent implements OnInit {
-  readonly tech_icons = tech_icons;
+  private modalRef = inject(MatDialog);
+  private bc = inject(BreadcrumbsService);
+  private route = inject(ActivatedRoute);
 
-  constructor(
-    private modalRef: MatDialog,
-    private bc: BreadcrumbsService,
-    private route: ActivatedRoute
-  ) {}
+  readonly tech_icons = tech_icons;
 
   /**
    * Sets the status of the card.
