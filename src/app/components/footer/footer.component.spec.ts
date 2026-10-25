@@ -35,16 +35,14 @@ describe("FooterComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        FooterComponent,
+        NotificationComponent,
+        ErrorMessageComponent,
         HttpClientTestingModule,
         ReactiveFormsModule,
         TranslateTestingModule.withTranslations(
           TRANSLATION
         ).withDefaultLanguage("pl"),
-      ],
-      declarations: [
-        FooterComponent,
-        NotificationComponent,
-        ErrorMessageComponent,
       ],
       providers: [
         provideFirebaseApp(() => initializeApp(environment.firebase)),

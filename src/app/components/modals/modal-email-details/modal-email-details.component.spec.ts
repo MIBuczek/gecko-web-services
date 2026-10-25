@@ -26,12 +26,11 @@ const buildComponent = async (
   const modalRef = { close: jest.fn() };
 
   await TestBed.configureTestingModule({
-    declarations: [ModalEmailDetailsComponent],
     providers: [
       { provide: MatDialogRef, useValue: modalRef },
       { provide: MAT_DIALOG_DATA, useValue: data },
     ],
-    imports: [MatDialogModule],
+    imports: [ModalEmailDetailsComponent, MatDialogModule],
   }).compileComponents();
 
   const fixture = TestBed.createComponent(ModalEmailDetailsComponent);

@@ -1,10 +1,13 @@
+import { AsyncPipe, NgIf } from "@angular/common";
 import { Component, OnDestroy } from "@angular/core";
 import {
   AbstractControl,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
+import { TranslateModule } from "@ngx-translate/core";
 import {
   DB_MESSAGE_ACTIONS,
   MailingService,
@@ -20,12 +23,22 @@ import {
   takeUntil,
 } from "rxjs";
 import { RecaptchaService } from "services/recaptcha/recaptcha.service";
+import { ErrorMessageComponent } from "components/error-message/error-message.component";
+import { NotificationComponent } from "components/notification/notification.component";
 
 @Component({
   selector: "app-footer",
   templateUrl: "./footer.component.html",
   styleUrls: ["./footer.component.scss"],
-  standalone: false
+  standalone: true,
+  imports: [
+    AsyncPipe,
+    NgIf,
+    ReactiveFormsModule,
+    TranslateModule,
+    ErrorMessageComponent,
+    NotificationComponent,
+  ],
 })
 export class FooterComponent implements OnDestroy {
   public dbMessageActions = DB_MESSAGE_ACTIONS;

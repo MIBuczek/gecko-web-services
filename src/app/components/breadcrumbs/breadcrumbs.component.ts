@@ -1,4 +1,7 @@
+import { AsyncPipe, NgClass, NgFor, NgIf } from "@angular/common";
 import { Component } from "@angular/core";
+import { RouterLink } from "@angular/router";
+import { TranslateModule } from "@ngx-translate/core";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
 import { BreadCrumbItem } from "classes/breadcrumbs-item.class";
 import { IAppRouts } from "models/general";
@@ -8,7 +11,8 @@ import { Observable } from "rxjs";
   selector: "app-breadcrumbs",
   templateUrl: "./breadcrumbs.component.html",
   styleUrls: ["./breadcrumbs.component.scss"],
-  standalone: false
+  standalone: true,
+  imports: [AsyncPipe, NgClass, NgFor, NgIf, RouterLink, TranslateModule],
 })
 export class BreadcrumbsComponent {
   readonly availableRouts: Array<keyof IAppRouts> = [

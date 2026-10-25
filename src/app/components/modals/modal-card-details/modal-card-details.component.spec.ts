@@ -27,7 +27,6 @@ describe("ModalCardDetailsComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ModalCardDetailsComponent],
       providers: [
         {
           provide: MatDialogRef,
@@ -39,6 +38,7 @@ describe("ModalCardDetailsComponent", () => {
         },
       ],
       imports: [
+        ModalCardDetailsComponent,
         MatDialogModule,
         TranslateTestingModule.withTranslations(
           TRANSLATION

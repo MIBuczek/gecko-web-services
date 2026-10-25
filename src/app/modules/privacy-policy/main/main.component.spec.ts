@@ -8,7 +8,7 @@ import englishTranslation from "assets/i18n/en.json";
 import { By } from "@angular/platform-browser";
 import { Location } from "@angular/common";
 import { TranslateService } from "@ngx-translate/core";
-import { routes } from "app/app.module";
+import { routes } from "app/app.routes";
 
 const TRANSLATION: any = {
   pl: polishTranslation,
@@ -27,7 +27,6 @@ describe("Main Component - Privacy Policy Rout", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainComponent],
       providers: [
         {
           provide: ActivatedRoute,
@@ -39,6 +38,7 @@ describe("Main Component - Privacy Policy Rout", () => {
         },
       ],
       imports: [
+        MainComponent,
         TranslateTestingModule.withTranslations(
           TRANSLATION
         ).withDefaultLanguage("pl"),
@@ -101,7 +101,7 @@ describe("Main Component - Privacy Policy Rout", () => {
   ));
 
   it("is display correct number of part policy content", () => {
-    const part_container = fixture.debugElement.query(By.css(".row"));
+    const part_container = fixture.debugElement.query(By.css("main .row"));
     expect(part_container.children.length).toEqual(
       polishTranslation["privacy-policy-page"].parts.length
     );
@@ -109,7 +109,7 @@ describe("Main Component - Privacy Policy Rout", () => {
 
   it("is redirect link work correctly", () => {
     fixture.detectChanges();
-    const redirect_btn = fixture.debugElement.query(By.css("a"));
+    const redirect_btn = fixture.debugElement.query(By.css("main a"));
     expect(convertString(redirect_btn.nativeElement["textContent"])).toEqual(
       convertString(polishTranslation["privacy-policy-page"].redirect)
     );

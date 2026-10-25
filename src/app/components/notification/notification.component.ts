@@ -1,3 +1,4 @@
+import { NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault } from "@angular/common";
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { NotificationType } from "models/general";
 
@@ -6,7 +7,8 @@ import { NotificationType } from "models/general";
   templateUrl: "./notification.component.html",
   styleUrl: "./notification.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  standalone: true,
+  imports: [NgClass, NgSwitch, NgSwitchCase, NgSwitchDefault],
 })
 export class NotificationComponent {
   @Input({ required: true }) variant: NotificationType = "info";

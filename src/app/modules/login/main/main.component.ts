@@ -1,6 +1,9 @@
+import { AsyncPipe, JsonPipe, NgIf } from "@angular/common";
 import { ChangeDetectionStrategy, Component } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { Route, Router } from "@angular/router";
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { Router, RouterLink } from "@angular/router";
+import { ErrorMessageComponent } from "components/error-message/error-message.component";
+import { NotificationComponent } from "components/notification/notification.component";
 import { AppCheckService } from "app/services/app-check/app-check.service";
 import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
 import { take } from "rxjs";
@@ -11,7 +14,16 @@ import { AuthService } from "services/auth/auth.service";
   templateUrl: "./main.component.html",
   styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false
+  standalone: true,
+  imports: [
+    AsyncPipe,
+    JsonPipe,
+    NgIf,
+    ReactiveFormsModule,
+    RouterLink,
+    ErrorMessageComponent,
+    NotificationComponent,
+  ],
 })
 export class MainComponent {
   /**

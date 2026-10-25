@@ -9,7 +9,7 @@ describe("LoaderComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LoaderComponent],
+      imports: [LoaderComponent],
       providers: [LoaderService],
     }).compileComponents();
     fixture = TestBed.createComponent(LoaderComponent);

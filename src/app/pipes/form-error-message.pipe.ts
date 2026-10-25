@@ -28,7 +28,7 @@ export class FormErrorMessagePipe implements PipeTransform {
           return `${formErrorMessageConst[currentLang][key]} ${errors[key]["requiredLength"]}`;
         }
         case "maxlength": {
-          return `${formErrorMessageConst[currentLang]}[key]} ${errors[key]["requiredLength"]}`;
+          return `${formErrorMessageConst[currentLang][key]} ${errors[key]["requiredLength"]}`;
         }
         default: {
           return `${formErrorMessageConst[currentLang][key]}`;

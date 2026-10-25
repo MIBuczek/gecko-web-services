@@ -14,7 +14,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
 import { LoaderService } from "services/loader/loader.service";
 import { Location, ViewportScroller } from "@angular/common";
-import { routes } from "app/app.module";
+import { routes } from "app/app.routes";
 import { RouterModule } from "@angular/router";
 
 const TRANSLATION: any = {
@@ -39,9 +39,9 @@ describe("NavigationComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NavigationComponent],
       providers: [BreadcrumbsService, LoaderService, ViewportScroller],
       imports: [
+        NavigationComponent,
         TranslateTestingModule.withTranslations(
           TRANSLATION
         ).withDefaultLanguage("pl"),
@@ -165,7 +165,7 @@ describe("NavigationComponent", () => {
       component.isMainPage = false;
       fixture.detectChanges();
       fixture.debugElement.query(By.css(".nav-link")).nativeElement.click();
-      expect(location.path()).toEqual("");
+      expect(location.path()).toEqual("/main-page");
     })
   ));
 });

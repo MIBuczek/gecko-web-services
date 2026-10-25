@@ -1,10 +1,14 @@
+import { NgIf } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
+import { RouterLink } from "@angular/router";
+import { TranslateModule } from "@ngx-translate/core";
 
 @Component({
   selector: "app-cookie",
   templateUrl: "./cookie.component.html",
   styleUrls: ["./cookie.component.scss"],
-  standalone: false
+  standalone: true,
+  imports: [NgIf, RouterLink, TranslateModule],
 })
 export class CookieComponent implements OnInit {
   public isCookiesAccepted: boolean = false;

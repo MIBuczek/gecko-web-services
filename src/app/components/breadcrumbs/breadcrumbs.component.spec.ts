@@ -7,7 +7,7 @@ import {
 import { BreadcrumbsComponent } from "./breadcrumbs.component";
 import { By } from "@angular/platform-browser";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
-import { routes } from "app/app.module";
+import { routes } from "app/app.routes";
 import { Router, RouterModule } from "@angular/router";
 import { Location } from "@angular/common";
 import polishTranslation from "assets/i18n/pl.json";
@@ -32,8 +32,8 @@ describe("BreadcrumbsComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BreadcrumbsComponent],
       imports: [
+        BreadcrumbsComponent,
         TranslateTestingModule.withTranslations(
           TRANSLATION
         ).withDefaultLanguage("pl"),
