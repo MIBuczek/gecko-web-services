@@ -1,18 +1,18 @@
 <main
   class="container-fluid d-flex p-0 flex-column justify-content-center align-items-center"
->
+  >
   <header class="container text-center">
     <span class="header-shadow">Panel Logowania</span>
     <h1>Panel Logowania</h1>
   </header>
   <div
     class="container flex-column justify-content-center align-items-center p-0"
-  >
+    >
     <form
       [formGroup]="logInForm"
       class="row d-flex justify-content-center align-items-center pb-5"
       (ngSubmit)="onSubmit()"
-    >
+      >
       <div class="mt-3 col-8 col-lg-4">
         <input
           class="form-control mb-3"
@@ -22,7 +22,7 @@
           id="email"
           [formControl]="logInForm.controls.email"
           ngDefaultControl
-        />
+          />
         <app-error-message [form]="logInForm" [fieldName]="'email'" />
         <input
           class="form-control mb-4"
@@ -32,34 +32,36 @@
           id="password"
           [formControl]="logInForm.controls.password"
           ngDefaultControl
-        />
+          />
         <app-error-message [form]="logInForm" [fieldName]="'password'" />
         <button
           color="primary"
           type="submit"
           [disabled]="logInForm.invalid"
           class="w-50"
-        >
+          >
           Zaloguj
         </button>
       </div>
     </form>
     <div class="row d-flex justify-content-center align-items-center">
-      <div class="col-10 col-md-8" *ngIf="loginError()">
-        <app-notification
-          [title]="'Nieudana próba logowania.'"
-          [variant]="'error'"
-        >
-          <p class="login-redirect">
-            {{ loginError() | json }}
-          </p>
-        </app-notification>
-      </div>
+      @if (loginError()) {
+        <div class="col-10 col-md-8">
+          <app-notification
+            [title]="'Nieudana próba logowania.'"
+            [variant]="'error'"
+            >
+            <p class="login-redirect">
+              {{ loginError() | json }}
+            </p>
+          </app-notification>
+        </div>
+      }
       <div class="col-10 col-md-8">
         <app-notification
           [title]="'Panel dostępny tylko dla administratorow.'"
           [variant]="'warning'"
-        >
+          >
           <p class="login-redirect mt-1 mb-0">
             Jeżeli trafiłeś tu przypadkiem, mozesz powrócić na
             <a routerLink="/main-page">strone glowna.</a>

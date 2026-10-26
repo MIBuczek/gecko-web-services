@@ -1,4 +1,4 @@
-import { NgIf } from "@angular/common";
+
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ISingleCard } from "models/text-content";
 
@@ -7,7 +7,6 @@ import { ISingleCard } from "models/text-content";
   templateUrl: "./service-card.component.html",
   styleUrls: ["./service-card.component.scss"],
   standalone: true,
-  imports: [NgIf],
 })
 export class ServiceCardComponent {
   @Input() cardContent: ISingleCard | undefined;

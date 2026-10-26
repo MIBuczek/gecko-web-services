@@ -1,9 +1,10 @@
-<ng-container *ngIf="form && form.controls[fieldName].dirty">
-  <div
-    class="d-flex justify-content-center align-items-center invalid-feedback py-2"
-    *ngFor="let msg of form | formErrorMessage : fieldName : currentLang"
-  >
-    {{ msg }}
-    <i class="fa-solid fa-circle-exclamation p-1"></i>
-  </div>
-</ng-container>
+@if (form && form.controls[fieldName].dirty) {
+  @for (msg of form | formErrorMessage : fieldName : currentLang; track msg) {
+    <div
+      class="d-flex justify-content-center align-items-center invalid-feedback py-2"
+      >
+      {{ msg }}
+      <i class="fa-solid fa-circle-exclamation p-1"></i>
+    </div>
+  }
+}

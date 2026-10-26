@@ -1,4 +1,4 @@
-import { NgFor } from "@angular/common";
+
 import { Component, inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { TranslateModule } from "@ngx-translate/core";
@@ -13,7 +13,7 @@ interface IModalData {
   templateUrl: "./modal-card-details.component.html",
   styleUrls: ["./modal-card-details.component.scss"],
   standalone: true,
-  imports: [NgFor, TranslateModule],
+  imports: [TranslateModule],
 })
 export class ModalCardDetailsComponent {
   private modalRef = inject<MatDialogRef<ModalCardDetailsComponent>>(MatDialogRef);
