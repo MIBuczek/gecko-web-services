@@ -1,6 +1,6 @@
 import { ApplicationConfig, importProvidersFrom } from "@angular/core";
 import { provideRouter, withHashLocation } from "@angular/router";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from "@angular/common/http";
 import { provideAnimations } from "@angular/platform-browser/animations";
 import { getAuth } from "firebase/auth";
 import { getDatabase } from "firebase/database";
@@ -17,7 +17,7 @@ import {
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withHashLocation()),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
     provideAnimations(),
     {
       provide: FIREBASE_APP,

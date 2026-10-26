@@ -1,5 +1,5 @@
 
-import { Component, inject, OnDestroy, signal } from "@angular/core";
+import { Component, inject, OnDestroy, signal, ChangeDetectionStrategy } from "@angular/core";
 import {
   AbstractControl,
   FormControl,
@@ -22,6 +22,7 @@ import { NotificationComponent } from "components/notification/notification.comp
   templateUrl: "./footer.component.html",
   styleUrls: ["./footer.component.scss"],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     ReactiveFormsModule,
     TranslateModule,

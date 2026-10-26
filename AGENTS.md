@@ -435,6 +435,37 @@ it does not cover.
     `currentUser` signal, so it does not deny access while the persisted session is still being
     restored. Do not read the signal without that await.
 
+## Angular 22
+
+- **`OnPush` is the default; `Default` was renamed to `Eager`.** In v22
+  `ChangeDetectionStrategy.OnPush` is `0` and applied when a component sets no strategy, while
+  `Eager` (`1`) is the old `Default`/CheckAlways. `ng update` runs `change-detection-eager`,
+  which adds `changeDetection: ChangeDetectionStrategy.Eager` to every component that had no
+  explicit strategy, preserving pre-v22 behaviour. It only adds the property; it never rewrites
+  an existing `OnPush`.
+- **The new `@angular-eslint/prefer-on-push-component-change-detection` rule fights that
+  migration.** It is new in the v22 `recommended` set and errors on exactly the components the
+  migration just set to `Eager`. `eslint.config.js` turns it off with a comment; moving those
+  eleven event- and async-driven components to `OnPush` is a behaviour change that belongs in
+  its own PR, not in a version climb. Re-enable the rule when you do it.
+- **TypeScript 6 deprecates `baseUrl`.** `tsconfig.json` no longer sets it; every `paths` target
+  is written relative to the config file (`"./src/app/*"`). `paths` works without `baseUrl` since
+  TS 4.1. Leaving `baseUrl` in makes the build fail with `TS5101`.
+- **Angular 22 defaults `HttpClient` to the fetch backend.** `withXhr()` was added at both
+  `provideHttpClient()` call sites (`app.config.ts`, `translate-lang.module.ts`) to keep the
+  previous XHR backend and its progress/interceptor behaviour.
+- **The v22 compiler flags dead imports that older versions ignored.** `NgClass` was imported and
+  listed in `NavigationComponent.imports` but never used in its template; v22 emits `NG8113`.
+  Remove the import rather than suppressing the warning.
+- **`$safeNavigationMigration()` is a compiler magic function.** The v22 migration wraps
+  null-sensitive optional chaining in templates with it to keep the legacy "returns `null`"
+  behaviour. It does not exist at runtime and is compiled away — do not try to import or stub it.
+- **ESLint moved to flat config (`eslint.config.js`), replacing `.eslintrc.json`.** It uses
+  `typescript-eslint`'s `config` helper (needed for `extends`), `angular-eslint` 22's
+  `tsRecommended` / `templateRecommended`, and `angular.processInlineTemplates`. `@eslint/js` is
+  not referenced and was not added as a dependency; `@typescript-eslint/eslint-plugin` and
+  `.../parser` are no longer direct dependencies (they arrive through `typescript-eslint`).
+
 ## Scope of this document
 
 It covers the build, test, and style conventions above. It does not document every service or

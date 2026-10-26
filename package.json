@@ -1,6 +1,6 @@
 {
   "name": "gecko-web-services",
-  "version": "2.6.0",
+  "version": "2.7.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0 --poll 500",
@@ -18,19 +18,19 @@
   },
   "private": true,
   "engines": {
-    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
   },
   "dependencies": {
-    "@angular/animations": "^21.2.25",
-    "@angular/cdk": "^21.2.14",
-    "@angular/common": "^21.2.25",
-    "@angular/compiler": "^21.2.25",
-    "@angular/core": "^21.2.25",
-    "@angular/forms": "^21.2.25",
-    "@angular/material": "^21.2.14",
-    "@angular/platform-browser": "^21.2.25",
-    "@angular/platform-browser-dynamic": "^21.2.25",
-    "@angular/router": "^21.2.25",
+    "@angular/animations": "^22.2.3",
+    "@angular/cdk": "^22.2.3",
+    "@angular/common": "^22.2.3",
+    "@angular/compiler": "^22.2.3",
+    "@angular/core": "^22.2.3",
+    "@angular/forms": "^22.2.3",
+    "@angular/material": "^22.2.3",
+    "@angular/platform-browser": "^22.2.3",
+    "@angular/platform-browser-dynamic": "^22.2.3",
+    "@angular/router": "^22.2.3",
     "@fortawesome/fontawesome-free": "^6.5.2",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
@@ -42,21 +42,19 @@
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular-eslint/builder": "^21.4.0",
-    "@angular-eslint/eslint-plugin": "^21.4.0",
-    "@angular-eslint/eslint-plugin-template": "^21.4.0",
-    "@angular-eslint/schematics": "^21.4.0",
-    "@angular-eslint/template-parser": "^21.4.0",
-    "@angular/build": "^21.2.28",
-    "@angular/cli": "^21.2.28",
-    "@angular/compiler-cli": "^21.2.25",
+    "@angular-eslint/builder": "^22.6.0",
+    "@angular-eslint/eslint-plugin": "^22.6.0",
+    "@angular-eslint/eslint-plugin-template": "^22.6.0",
+    "@angular-eslint/schematics": "^22.6.0",
+    "@angular-eslint/template-parser": "^22.6.0",
+    "@angular/build": "^22.2.4",
+    "@angular/cli": "^22.2.4",
+    "@angular/compiler-cli": "^22.2.3",
     "@fullhuman/postcss-purgecss": "^8.0.0",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.12.11",
     "@types/uuid": "^9.0.8",
-    "@typescript-eslint/eslint-plugin": "^8.72.0",
-    "@typescript-eslint/parser": "^8.72.0",
-    "eslint": "^8.57.0",
+    "eslint": "^9.39.5",
     "husky": "^9.0.11",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
@@ -66,6 +64,8 @@
     "postcss": "^8.5.31",
     "postcss-woff2-only": "file:tools/postcss-woff2-only",
     "ts-node": "^10.9.2",
-    "typescript": "~5.9.3"
+    "typescript": "~6.0.3",
+    "angular-eslint": "^22.6.0",
+    "typescript-eslint": "^8.72.1"
   }
 }

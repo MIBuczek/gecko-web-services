@@ -1,10 +1,10 @@
-import { NgClass } from "@angular/common";
 import {
   Component,
   computed,
   HostListener,
   inject,
   linkedSignal,
+  ChangeDetectionStrategy
 } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
@@ -20,7 +20,8 @@ type TypeLang = "pl" | "en";
   templateUrl: "./navigation.component.html",
   styleUrls: ["./navigation.component.scss"],
   standalone: true,
-  imports: [NgClass, RouterLink, TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [RouterLink, TranslateModule],
 })
 export class NavigationComponent {
   private translate = inject(TranslateService);
