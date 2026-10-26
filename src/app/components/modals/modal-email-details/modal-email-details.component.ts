@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Inject } from "@angular/core";
+import { DatePipe, NgIf } from "@angular/common";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { EmailActionAdmin, IAdminEmail } from "app/models/email-message";
 
@@ -7,12 +8,12 @@ import { EmailActionAdmin, IAdminEmail } from "app/models/email-message";
   templateUrl: "./modal-email-details.component.html",
   styleUrl: "./modal-email-details.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [DatePipe, NgIf],
 })
 export class ModalEmailDetailsComponent {
-  constructor(
-    private modalRef: MatDialogRef<ModalEmailDetailsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: IAdminEmail
-  ) {}
+  private modalRef = inject<MatDialogRef<ModalEmailDetailsComponent>>(MatDialogRef);
+  data = inject<IAdminEmail>(MAT_DIALOG_DATA);
 
   /**
    * Updates the email by closing the modal and returning an object with the email ID and the action performed.

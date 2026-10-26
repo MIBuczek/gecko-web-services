@@ -1,5 +1,4 @@
-import { Injectable, OnDestroy } from "@angular/core";
-import { BehaviorSubject, fromEvent, Observable, Subscription } from "rxjs";
+import { Injectable, OnDestroy, signal } from "@angular/core";
 
 export type TypeContentId = "header" | "about" | "service" | "contact";
 
@@ -7,28 +6,27 @@ export type TypeContentId = "header" | "about" | "service" | "contact";
   providedIn: "root",
 })
 export class ScrollService implements OnDestroy {
-  private currentSection = new BehaviorSubject<TypeContentId>("header");
+  private readonly _currentActiveSection = signal<TypeContentId>("header");
+
+  /**
+   * The section currently in view.
+   *
+   * @return {Signal<TypeContentId>} The section currently in view.
+   */
+  readonly currentActiveSection = this._currentActiveSection.asReadonly();
+
   readonly sections: TypeContentId[] = [
     "header",
     "about",
     "service",
     "contact",
   ];
-  private subscription = new Subscription();
+
+  /* Bound once so the same reference can be removed again. */
+  private readonly onScroll = (): void => this.keepTrack();
 
   constructor() {
-    this.subscription.add(
-      fromEvent(window, "scroll").subscribe(() => this.keepTrack())
-    );
-  }
-
-  /**
-   * Returns an observable of the current active section.
-   *
-   * @return {Observable<TypeContentId>} The observable of the current active section.
-   */
-  get getCurrentActiveSection(): Observable<TypeContentId> {
-    return this.currentSection.asObservable();
+    window.addEventListener("scroll", this.onScroll);
   }
 
   /**
@@ -40,7 +38,7 @@ export class ScrollService implements OnDestroy {
       if (!element) return;
       const { top } = element.getBoundingClientRect();
       if (top >= 0 && top <= window.innerHeight / 2) {
-        this.currentSection.next(section);
+        this._currentActiveSection.set(section);
       }
     });
   }
@@ -48,7 +46,7 @@ export class ScrollService implements OnDestroy {
   /**
    * end component life cycle.
    */
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
+  ngOnDestroy(): void {
+    window.removeEventListener("scroll", this.onScroll);
   }
 }

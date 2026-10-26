@@ -8,7 +8,6 @@ import { provideFirebaseApp } from "@angular/fire/app";
 import { provideDatabase } from "@angular/fire/database";
 import { initializeApp } from "firebase/app";
 import { environment } from "environments/environment";
-import { of } from "rxjs";
 
 /* Mock function to overwrite possibility of emission value*/
 const mockSendEmail = (em: EmailMessage): Promise<DB_MESSAGE_ACTIONS> => {
@@ -23,12 +22,12 @@ describe("MailingService", () => {
   let service: MailingService;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
+      imports: [HttpClientTestingModule],
+      providers: [
+        { provide: Database, useValue: {} },
         provideFirebaseApp(() => initializeApp(environment.firebase)),
         provideDatabase(() => getDatabase()),
       ],
-      providers: [{ provide: Database, useValue: {} }],
     });
     service = TestBed.inject(MailingService);
     service.sendEmailMessage = mockSendEmail;

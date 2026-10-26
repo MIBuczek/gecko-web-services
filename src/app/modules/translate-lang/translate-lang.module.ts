@@ -1,11 +1,14 @@
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import {
+  HttpClient,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
 @NgModule({
   imports: [
-    HttpClientModule,
     TranslateModule.forRoot({
       defaultLanguage: "pl",
       useDefaultLang: true,
@@ -16,6 +19,7 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
       },
     }),
   ],
+  providers: [provideHttpClient(withInterceptorsFromDi())],
 })
 export class TranslateLangModule {}
 

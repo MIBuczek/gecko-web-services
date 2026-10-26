@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed, inject } from "@angular/core/testing";
+import { provideRouter } from "@angular/router";
 import { CopyRightsComponent } from "./copy-rights.component";
 import { By } from "@angular/platform-browser";
 import polishTranslation from "assets/i18n/pl.json";
@@ -17,12 +18,13 @@ describe("CopyRightsComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CopyRightsComponent],
       imports: [
+        CopyRightsComponent,
         TranslateTestingModule.withTranslations(
           TRANSLATION
         ).withDefaultLanguage("pl"),
       ],
+      providers: [provideRouter([])],
     }).compileComponents();
     fixture = TestBed.createComponent(CopyRightsComponent);
     component = fixture.componentInstance;

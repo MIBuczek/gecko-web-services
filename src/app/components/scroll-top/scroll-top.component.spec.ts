@@ -9,7 +9,7 @@ describe("ScrollTopComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ScrollTopComponent],
+      imports: [ScrollTopComponent],
       providers: [SpyLocation],
     }).compileComponents();
     fixture = TestBed.createComponent(ScrollTopComponent);

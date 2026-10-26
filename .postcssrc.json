@@ -1,0 +1,8 @@
+{
+  "plugins": {
+    "postcss-woff2-only": {},
+    "@fullhuman/postcss-purgecss": {
+      "content": ["src/**/*.html", "src/**/*.ts"]
+    }
+  }
+}

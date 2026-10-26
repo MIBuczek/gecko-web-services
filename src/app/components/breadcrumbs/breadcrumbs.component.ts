@@ -1,24 +1,25 @@
-import { Component } from "@angular/core";
+import { NgClass, NgFor, NgIf } from "@angular/common";
+import { Component, inject } from "@angular/core";
+import { RouterLink } from "@angular/router";
+import { TranslateModule } from "@ngx-translate/core";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
-import { BreadCrumbItem } from "classes/breadcrumbs-item.class";
 import { IAppRouts } from "models/general";
-import { Observable } from "rxjs";
 
 @Component({
   selector: "app-breadcrumbs",
   templateUrl: "./breadcrumbs.component.html",
   styleUrls: ["./breadcrumbs.component.scss"],
+  standalone: true,
+  imports: [NgClass, NgFor, NgIf, RouterLink, TranslateModule],
 })
 export class BreadcrumbsComponent {
+  private bc = inject(BreadcrumbsService);
+
   readonly availableRouts: Array<keyof IAppRouts> = [
     "main-page",
     "privacy-policy",
   ];
-  public breadcrumbs$: Observable<BreadCrumbItem[]>;
-
-  constructor(private bc: BreadcrumbsService) {
-    this.breadcrumbs$ = this.bc.getBreadcrumbsItems;
-  }
+  readonly breadcrumbs = this.bc.breadcrumbsItems;
 
   /* Method to convert any value to string to be accepted by routerLink*/
   public convertToString(path: keyof IAppRouts | string | number): string {

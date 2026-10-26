@@ -21,8 +21,6 @@ import { environment } from "environments/environment";
 import { RecaptchaService } from "services/recaptcha/recaptcha.service";
 import { NotificationComponent } from "../notification/notification.component";
 import { ErrorMessageComponent } from "../error-message/error-message.component";
-import { RecaptchaLoaderService, ReCaptchaV3Service } from "ng-recaptcha";
-import { of } from "rxjs";
 
 const TRANSLATION: any = {
   pl: polishTranslation,
@@ -36,27 +34,23 @@ describe("FooterComponent", () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
+        FooterComponent,
+        NotificationComponent,
+        ErrorMessageComponent,
         HttpClientTestingModule,
-        provideFirebaseApp(() => initializeApp(environment.firebase)),
-        provideDatabase(() => getDatabase()),
         ReactiveFormsModule,
         TranslateTestingModule.withTranslations(
           TRANSLATION
         ).withDefaultLanguage("pl"),
       ],
-      declarations: [
-        FooterComponent,
-        NotificationComponent,
-        ErrorMessageComponent,
-      ],
       providers: [
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideDatabase(() => getDatabase()),
         MailingService,
         {
           provide: RecaptchaService,
           useValue: {
-            getToken: () => {
-              return of("Test_Token");
-            },
+            getToken: () => Promise.resolve("Test_Token"),
           },
         },
       ],

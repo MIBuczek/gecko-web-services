@@ -1,5 +1,9 @@
 import { ComponentFixture, inject, TestBed } from "@angular/core/testing";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
+import { provideFirebaseApp, initializeApp } from "@angular/fire/app";
+import { provideDatabase, getDatabase } from "@angular/fire/database";
+import { MailingService } from "services/mailing/mailing.service";
+import { RecaptchaService } from "services/recaptcha/recaptcha.service";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 import polishTranslation from "assets/i18n/pl.json";
 import englishTranslation from "assets/i18n/en.json";
@@ -7,10 +11,9 @@ import { TranslateTestingModule } from "ngx-translate-testing";
 import { By } from "@angular/platform-browser";
 import { TranslateService } from "@ngx-translate/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { ModalCardDetailsComponent } from "components/modals/modal-card-details/modal-card-details.component";
+import { environment } from "environments/environment";
 import { MainComponent } from "modules/main/main/main.component";
-import { routes } from "app/app.module";
+import { routes } from "app/app.routes";
 
 const TRANSLATION: any = {
   pl: polishTranslation,
@@ -28,14 +31,21 @@ describe("MainComponent - Main Rout", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainComponent, ModalCardDetailsComponent],
       providers: [
         {
           provide: ActivatedRoute,
           useValue: { snapshot: { data: { breadcrumbs: ["main-page"] } } },
         },
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideDatabase(() => getDatabase()),
+        MailingService,
+        {
+          provide: RecaptchaService,
+          useValue: { getToken: () => Promise.resolve("Test_Token") },
+        },
       ],
       imports: [
+        MainComponent,
         MatDialogModule,
         BrowserAnimationsModule,
         TranslateTestingModule.withTranslations(
@@ -43,7 +53,6 @@ describe("MainComponent - Main Rout", () => {
         ).withDefaultLanguage("pl"),
         RouterModule.forRoot(routes),
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     fixture = TestBed.createComponent(MainComponent);
     modalRef = TestBed.inject(MatDialog);
@@ -163,7 +172,7 @@ describe("MainComponent - Main Rout", () => {
   it("is single card container correct content", () => {
     const single_card = fixture.debugElement.query(
       By.css("app-service-card")
-    ).nativeElement;
+    ).componentInstance;
     expect(single_card["cardBtn"]).toEqual(
       polishTranslation["main-page"].btn.more
     );

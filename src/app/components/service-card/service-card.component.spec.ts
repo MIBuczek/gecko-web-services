@@ -21,8 +21,8 @@ describe('ServiceCardComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [ServiceCardComponent],
-            imports: [TranslateTestingModule
+            imports: [ServiceCardComponent,
+                TranslateTestingModule
                 .withTranslations(TRANSLATION)
                 .withDefaultLanguage('pl')]
         }).compileComponents();

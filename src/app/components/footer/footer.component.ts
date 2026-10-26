@@ -1,38 +1,53 @@
-import { Component, OnDestroy } from "@angular/core";
+import { NgIf } from "@angular/common";
+import { Component, inject, OnDestroy, signal } from "@angular/core";
 import {
   AbstractControl,
   FormControl,
   FormGroup,
+  ReactiveFormsModule,
   Validators,
 } from "@angular/forms";
+import { TranslateModule } from "@ngx-translate/core";
 import {
   DB_MESSAGE_ACTIONS,
   MailingService,
 } from "services/mailing/mailing.service";
 import { EmailMessage } from "classes/email-message.class";
-import {
-  BehaviorSubject,
-  bufferTime,
-  filter,
-  from,
-  Observable,
-  ReplaySubject,
-  takeUntil,
-} from "rxjs";
 import { RecaptchaService } from "services/recaptcha/recaptcha.service";
-import { environment } from "environments/environment";
+import { ErrorMessageComponent } from "components/error-message/error-message.component";
+import { NotificationComponent } from "components/notification/notification.component";
 
 @Component({
   selector: "app-footer",
   templateUrl: "./footer.component.html",
   styleUrls: ["./footer.component.scss"],
+  standalone: true,
+  imports: [
+    NgIf,
+    ReactiveFormsModule,
+    TranslateModule,
+    ErrorMessageComponent,
+    NotificationComponent,
+  ],
 })
 export class FooterComponent implements OnDestroy {
+  private mailingService = inject(MailingService);
+  private recaptchaService = inject(RecaptchaService);
+
   public dbMessageActions = DB_MESSAGE_ACTIONS;
-  public submitStatus$?: Observable<DB_MESSAGE_ACTIONS>;
-  private submitStateClear$ = new BehaviorSubject(true);
-  private subscription$ = new ReplaySubject(0);
-  readonly SITE_KEY = environment.recaptcha.siteKey;
+  public readonly submitStatus = signal<DB_MESSAGE_ACTIONS | null>(null);
+
+  private readonly _submitClearStatus = signal(true);
+
+  /**
+   * Whether the submit result banner should still be displayed.
+   *
+   * @return {Signal<boolean>} The clear status after submission.
+   */
+  public readonly submitClearStatus = this._submitClearStatus.asReadonly();
+
+  private submitClearTimer?: ReturnType<typeof setTimeout>;
+  private destroyed = false;
 
   public formUserMessage = new FormGroup<{
     email: FormControl<string | null>;
@@ -49,23 +64,9 @@ export class FooterComponent implements OnDestroy {
     ]),
   });
 
-  constructor(
-    private mailingService: MailingService,
-    private recaptchaService: RecaptchaService
-  ) {
-    /* Observable to clear state after submit the message */
-    this.submitStateClear$
-      .pipe(filter(Boolean), bufferTime(10000), takeUntil(this.subscription$))
-      .subscribe(() => this.submitStateClear$.next(false));
-  }
-
-  /**
-   * Returns an observable of the current clear status after submission.
-   *
-   * @return {Observable<boolean>} An observable of the current clear status after submission.
-   */
-  get submitClearStatus(): Observable<boolean> {
-    return this.submitStateClear$.asObservable();
+  constructor() {
+    /* Clears the submit banner a fixed time after it is shown. */
+    this.scheduleSubmitStateClear();
   }
 
   /**
@@ -81,29 +82,34 @@ export class FooterComponent implements OnDestroy {
    * Submits the form data if valid and sets the email message status based on the response.
    */
   public submit(): void {
-    this.recaptchaService
-      .getToken("sendEmailMessage")
-      .pipe(takeUntil(this.subscription$))
-      .subscribe((token) => {
-        if (this.formUserMessage.invalid || !token) return;
-        const { email, message } = this.formUserMessage.value;
-        if (!email || !message) return;
-        this.submitStatus$ = from(
-          this.mailingService.sendEmailMessage(new EmailMessage(email, message))
-        );
-        this.submitStateClear$.next(true);
-        this.formUserMessage.reset({ email: "", message: "" });
-      });
+    void this.recaptchaService.getToken("sendEmailMessage").then((token) => {
+      if (this.destroyed) return;
+      if (this.formUserMessage.invalid || !token) return;
+      const { email, message } = this.formUserMessage.value;
+      if (!email || !message) return;
+
+      this._submitClearStatus.set(true);
+      this.scheduleSubmitStateClear();
+      this.formUserMessage.reset({ email: "", message: "" });
+
+      void this.mailingService
+        .sendEmailMessage(new EmailMessage(email, message))
+        .then((status) => {
+          if (!this.destroyed) this.submitStatus.set(status);
+        });
+    });
   }
 
-  /**
-   * A description of the entire function.
-   *
-   * @param {void} - No parameters
-   * @return {void} - No return value
-   */
   ngOnDestroy(): void {
-    this.subscription$.next(1);
-    this.subscription$.complete();
+    this.destroyed = true;
+    clearTimeout(this.submitClearTimer);
+  }
+
+  private scheduleSubmitStateClear(): void {
+    clearTimeout(this.submitClearTimer);
+    this.submitClearTimer = setTimeout(
+      () => this._submitClearStatus.set(false),
+      10000
+    );
   }
 }

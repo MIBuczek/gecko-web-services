@@ -14,3 +14,8 @@ export interface IEmailMessage {
 export interface IAdminEmail extends IEmailMessage {
   id: string;
 }
+
+export interface IAdminEmailActionResult {
+  id: string;
+  action: EmailActionAdmin;
+}

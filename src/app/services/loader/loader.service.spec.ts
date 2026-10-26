@@ -14,18 +14,12 @@ describe("LoaderService", () => {
     expect(service).toBeTruthy();
   });
 
-  it("it should initial return false ", (done) => {
-    service.loaderStatus.subscribe((status) => {
-      expect(status).toBeFalsy();
-      done();
-    });
+  it("it should initial return false ", () => {
+    expect(service.loaderStatus()).toBeFalsy();
   });
 
-  it("is return truthy status when changeLoadingStatus is called", (done) => {
+  it("is return truthy status when changeLoadingStatus is called", () => {
     service.changeLoadingStatus = true;
-    service.loaderStatus.subscribe((status) => {
-      expect(status).toBeTruthy();
-      done();
-    });
+    expect(service.loaderStatus()).toBeTruthy();
   });
 });

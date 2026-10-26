@@ -14,7 +14,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
 import { LoaderService } from "services/loader/loader.service";
 import { Location, ViewportScroller } from "@angular/common";
-import { routes } from "app/app.module";
+import { routes } from "app/app.routes";
 import { RouterModule } from "@angular/router";
 
 const TRANSLATION: any = {
@@ -39,9 +39,9 @@ describe("NavigationComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [NavigationComponent],
       providers: [BreadcrumbsService, LoaderService, ViewportScroller],
       imports: [
+        NavigationComponent,
         TranslateTestingModule.withTranslations(
           TRANSLATION
         ).withDefaultLanguage("pl"),
@@ -97,7 +97,8 @@ describe("NavigationComponent", () => {
     inject([Location], (location: Location) => {
       const navbar = fixture.debugElement.query(By.css(".navbar-nav"));
       location.go("main-page");
-      component.isMainPage = location.path().includes("main-page");
+      breadcrumbsService.updateBreadcrumbsPath =
+        breadcrumbsService.generateBreadcrumbs(["main-page"]);
       fixture.detectChanges();
       expect(navbar.children.length).toEqual(5);
     })
@@ -107,7 +108,8 @@ describe("NavigationComponent", () => {
     inject([Location], (location: Location) => {
       const navbar = fixture.debugElement.query(By.css(".navbar-nav"));
       location.go("private-policy");
-      component.isMainPage = location.path().includes("main-page");
+      breadcrumbsService.updateBreadcrumbsPath =
+        breadcrumbsService.generateBreadcrumbs(["main-page", "privacy-policy"]);
       fixture.detectChanges();
       expect(navbar.children.length).toEqual(2);
     })
@@ -117,7 +119,8 @@ describe("NavigationComponent", () => {
     inject([Location], (location: Location) => {
       const navbar = fixture.debugElement.query(By.css(".navbar-nav"));
       location.go("main-page");
-      component.isMainPage = location.path().includes("main-page");
+      breadcrumbsService.updateBreadcrumbsPath =
+        breadcrumbsService.generateBreadcrumbs(["main-page"]);
       fixture.detectChanges();
 
       expect(navbar.children[0].classes["active"]).toBeTruthy();
@@ -162,10 +165,11 @@ describe("NavigationComponent", () => {
   it("is correct redirect to main page if are on sub page", fakeAsync(
     inject([Location], (location: Location) => {
       location.go("private-policy");
-      component.isMainPage = false;
+      breadcrumbsService.updateBreadcrumbsPath =
+        breadcrumbsService.generateBreadcrumbs(["main-page", "privacy-policy"]);
       fixture.detectChanges();
       fixture.debugElement.query(By.css(".nav-link")).nativeElement.click();
-      expect(location.path()).toEqual("");
+      expect(location.path()).toEqual("/main-page");
     })
   ));
 });

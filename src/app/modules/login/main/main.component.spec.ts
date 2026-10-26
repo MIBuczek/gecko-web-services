@@ -1,0 +1,150 @@
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
+import { provideRouter, Router } from "@angular/router";
+import { signal } from "@angular/core";
+import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
+import { AuthService } from "services/auth/auth.service";
+import { MainComponent } from "./main.component";
+
+const flushPromises = (): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, 0));
+
+const buildComponent = async (
+  currentUser: unknown
+): Promise<{
+  fixture: ComponentFixture<MainComponent>;
+  component: MainComponent;
+  auth: {
+    currentUser: ReturnType<typeof signal>;
+    authError: ReturnType<typeof signal>;
+    login: jest.Mock;
+  };
+  router: { navigate: jest.SpyInstance };
+  recaptcha: { getToken: jest.Mock };
+}> => {
+  const auth = {
+    currentUser: signal(currentUser),
+    authError: signal(null),
+    login: jest.fn(),
+  };
+  const recaptcha = { getToken: jest.fn().mockResolvedValue("token") };
+
+  await TestBed.configureTestingModule({
+    providers: [
+      { provide: AuthService, useValue: auth },
+      { provide: RecaptchaService, useValue: recaptcha },
+      provideRouter([]),
+    ],
+    imports: [MainComponent, ReactiveFormsModule],
+  }).compileComponents();
+
+  /* The template renders RouterLink, so the real router must back ActivatedRoute.
+     Only `navigate` is stubbed, which also keeps unmatched routes out of play. */
+  const router = {
+    navigate: jest.spyOn(TestBed.inject(Router), "navigate").mockResolvedValue(true),
+  };
+
+  const fixture = TestBed.createComponent(MainComponent);
+  fixture.detectChanges();
+  await flushPromises();
+  return { fixture, component: fixture.componentInstance, auth, router, recaptcha };
+};
+
+describe("LoginMainComponent", () => {
+  let component: MainComponent;
+  let fixture: ComponentFixture<MainComponent>;
+  let auth: {
+    currentUser: ReturnType<typeof signal>;
+    authError: ReturnType<typeof signal>;
+    login: jest.Mock;
+  };
+  let router: { navigate: jest.SpyInstance };
+  let recaptcha: { getToken: jest.Mock };
+
+  beforeEach(async () => {
+    ({ fixture, component, auth, router, recaptcha } = await buildComponent(null));
+  });
+
+  it("should create", () => {
+    expect(component).toBeTruthy();
+  });
+
+  it("is the form invalid when empty", () => {
+    expect(component.logInForm.invalid).toBeTruthy();
+  });
+
+  it("is the email control rejecting a malformed address", () => {
+    component.logInForm.controls.email.setValue("not-an-email");
+    expect(component.logInForm.controls.email.hasError("email")).toBeTruthy();
+  });
+
+  it("is the email control enforcing a maximum length of 125", () => {
+    component.logInForm.controls.email.setValue(`${"a".repeat(120)}@example.com`);
+    expect(component.logInForm.controls.email.hasError("maxlength")).toBeTruthy();
+  });
+
+  it("is the password control enforcing a minimum length of 6", () => {
+    component.logInForm.controls.password.setValue("12345");
+    expect(component.logInForm.controls.password.hasError("minlength")).toBeTruthy();
+  });
+
+  it("is the form valid for correct credentials", () => {
+    component.logInForm.setValue({
+      email: "admin@example.com",
+      password: "secret123",
+    });
+    expect(component.logInForm.valid).toBeTruthy();
+  });
+
+  it("is the submit button disabled while the form is invalid", () => {
+    const submit = fixture.debugElement.nativeElement.querySelector(
+      "button[type=submit]"
+    ) as HTMLButtonElement;
+    expect(submit.disabled).toBeTruthy();
+  });
+
+  it("is login called with the entered credentials", async () => {
+    component.logInForm.setValue({
+      email: "admin@example.com",
+      password: "secret123",
+    });
+    await component.onSubmit();
+    expect(auth.login).toHaveBeenCalledWith("admin@example.com", "secret123");
+  });
+
+  it("is login not called when the form is invalid", async () => {
+    await component.onSubmit();
+    expect(auth.login).not.toHaveBeenCalled();
+  });
+
+  it("is login not called when no recaptcha token is returned", async () => {
+    recaptcha.getToken.mockResolvedValue(null);
+    component.logInForm.setValue({
+      email: "admin@example.com",
+      password: "secret123",
+    });
+    await component.onSubmit();
+    expect(auth.login).not.toHaveBeenCalled();
+  });
+
+  it("is the requested recaptcha action passed through", async () => {
+    await component.onSubmit();
+    expect(recaptcha.getToken).toHaveBeenCalledWith("loginAction");
+  });
+
+  it("is loginError exposed from the auth service", () => {
+    expect(component.loginError).toBe(auth.authError);
+  });
+});
+
+describe("LoginMainComponent - already authenticated", () => {
+  let router: { navigate: jest.SpyInstance };
+
+  beforeEach(async () => {
+    ({ router } = await buildComponent({ email: "admin@example.com" }));
+  });
+
+  it("is the user redirected to the admin panel", () => {
+    expect(router.navigate).toHaveBeenCalledWith(["admin"]);
+  });
+});
