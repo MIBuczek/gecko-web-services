@@ -9,8 +9,8 @@ them.
 `gecko-web-services` is an Angular single-page application: the public marketing site plus a
 small admin area and a login panel. Stack:
 
-- Angular 20.3 with standalone components and `bootstrapApplication`
-- TypeScript 5.8, Firebase (the plain `firebase` SDK, no `@angular/fire`), a self-hosted reCAPTCHA loader
+- Angular 21.2 with standalone components and `bootstrapApplication`
+- TypeScript 5.9, Firebase (the plain `firebase` SDK, no `@angular/fire`), a self-hosted reCAPTCHA loader
 - Jest 30 with `jest-preset-angular` 17 for tests
 - SCSS for styles
 
@@ -234,7 +234,7 @@ it does not cover.
   symptom of your change.
 - `Dockerfile` builds on `node:22-alpine`, exposes 4200 to match the dev server, and installs
   with `npm ci` against the committed lockfile. `.nvmrc` and an `engines` field pin Node to
-  `^20.19.0 || ^22.12.0 || >=24.0.0` (the range Angular 20 supports).
+  `^20.19.0 || ^22.12.0 || >=24.0.0` (the range Angular 21 supports; unchanged from 20).
 - **`@angular/fire` was removed in 2.5.0; use the plain `firebase` SDK.** It had no stable
   release past Angular 20 (`next` was an rc, `canary` a nightly), which blocked the Angular
   21/22 climb. The app only ever used four things from it — `provideFirebaseApp`,
@@ -308,6 +308,33 @@ it does not cover.
   schematic rewrites both call sites (`app.module.ts`, `translate-lang.module.ts`) and emits
   poorly formatted output; reformat by hand. The app has no `HTTP_INTERCEPTORS`, so
   `withInterceptorsFromDi()` is a no-op today but preserves behaviour if one is added.
+- Angular 21 type-checks `@HostListener` event arguments. `@HostListener("window:scroll", ["$event"])`
+  on a handler that takes no parameters (`checkPosition()`) now fails the build with
+  `TS2554: Expected 0 arguments, but got 1`, and passing `$event` into a `boolean` parameter
+  fails with `TS2345: Argument of type 'Event' is not assignable to parameter of type 'boolean'`.
+  Both listeners in this repo read `window` directly and ignore the event, so the `["$event"]`
+  argument was removed. In `navigation.component.ts` the parameter is now `vertical = true`,
+  preserving the previous behaviour: the old code passed `$event` (always truthy) on scroll, so
+  the scroll path took the vertical branch while the template's explicit
+  `checkPosition(false)` kept the horizontal one. Dropping the argument without a default would
+  have silently flipped that branch.
+- Angular 21's `ng update` migrates every `*ngIf` / `*ngFor` / `*ngSwitch` to the built-in
+  control flow (`@if` / `@for` / `@switch`), which removes `NgIf`, `NgFor`, `NgSwitch`,
+  `NgSwitchCase` and `NgSwitchDefault` from the `imports` arrays. Two formatting artifacts need
+  a hand pass: the closing `]` of a multi-line `imports` array is emitted at column 0, and a
+  component whose only import was removed is left with an empty `imports: []` (drop the property
+  instead). `@for` also requires a `track` expression, which the migration supplies.
+- Angular 21's CLI migration removes the `lib` entry from `tsconfig.json` when it is the
+  default, and `main.ts` gains an explicit `provideZoneChangeDetection()`. Both are expected;
+  do not re-add `lib: ["es2020", "dom"]`.
+- `@angular-eslint` must track the Angular major: 21.4.0 declares
+  `@angular/cli >= 21.0.0 < 22.0.0`, so staying on 20.x fails `npm install` peer resolution.
+  The Angular 20 note above about `prefer-inject` and `prefer-standalone` still applies.
+- Angular 21 still accepts `zone.js ~0.15.1`; the 0.16 line exists but is not required by the
+  peer range, so it was left alone.
+- `@ngx-translate/core` stays on **15.x** at Angular 21 as well. Its peer range is `>=16.0.0`,
+  which Angular 21 satisfies, so the translate stack needs no change at this step. The
+  `ngx-translate-testing` 7.0.0 constraint documented above is unchanged.
 - Angular 20 uses the `@angular/build:application` builder. The `use-application-builder`
   migration changes the emitted layout to `<base>/browser/`, but `firebase.json` publishes
   `dist/gecko-web-services` directly. `outputPath` is therefore pinned to

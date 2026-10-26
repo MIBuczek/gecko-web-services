@@ -15,7 +15,7 @@ export class ScrollTopComponent {
    *
    * @return {boolean} A boolean indicating whether the scroll position is greater than 200.
    */
-  @HostListener("window:scroll", ["$event"])
+  @HostListener("window:scroll")
   checkPosition(): boolean {
     return window.scrollY > 200;
   }

@@ -1,4 +1,4 @@
-import { DatePipe, NgClass, NgFor, NgIf } from "@angular/common";
+import { DatePipe, NgClass } from "@angular/common";
 import { HttpErrorResponse } from "@angular/common/http";
 import {
   ChangeDetectionStrategy,
@@ -31,7 +31,7 @@ import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
   styleUrl: "./main.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [DatePipe, NgClass, NgFor, NgIf, NotificationComponent],
+  imports: [DatePipe, NgClass, NotificationComponent],
 })
 export class MainComponent implements OnInit {
   private auth = inject(AuthService);
@@ -56,7 +56,7 @@ export class MainComponent implements OnInit {
   });
 
   /* Listener to tract vertical and horizontal pixels */
-  @HostListener("window:scroll", ["$event"])
+  @HostListener("window:scroll")
   checkPosition(): boolean {
     return window.scrollY > 60;
   }

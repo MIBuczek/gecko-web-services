@@ -1,4 +1,4 @@
-import { NgIf } from "@angular/common";
+
 import { Component, inject, OnDestroy, signal } from "@angular/core";
 import {
   AbstractControl,
@@ -23,7 +23,6 @@ import { NotificationComponent } from "components/notification/notification.comp
   styleUrls: ["./footer.component.scss"],
   standalone: true,
   imports: [
-    NgIf,
     ReactiveFormsModule,
     TranslateModule,
     ErrorMessageComponent,

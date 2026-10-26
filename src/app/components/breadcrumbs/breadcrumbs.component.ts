@@ -1,4 +1,4 @@
-import { NgClass, NgFor, NgIf } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { Component, inject } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
@@ -10,7 +10,7 @@ import { IAppRouts } from "models/general";
   templateUrl: "./breadcrumbs.component.html",
   styleUrls: ["./breadcrumbs.component.scss"],
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, RouterLink, TranslateModule],
+  imports: [NgClass, RouterLink, TranslateModule],
 })
 export class BreadcrumbsComponent {
   private bc = inject(BreadcrumbsService);

@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from "@angular/common";
+
 import { Component, Input } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormErrorMessagePipe } from "app/pipes/form-error-message.pipe";
@@ -7,7 +7,7 @@ import { FormErrorMessagePipe } from "app/pipes/form-error-message.pipe";
   selector: "app-error-message",
   templateUrl: "./error-message.component.html",
   standalone: true,
-  imports: [NgFor, NgIf, FormErrorMessagePipe],
+  imports: [FormErrorMessagePipe],
 })
 export class ErrorMessageComponent {
   @Input({ required: true }) form: FormGroup | undefined;

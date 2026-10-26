@@ -1,12 +1,21 @@
 <div class="bd-callout row" [ngClass]="variant">
   <div
     class="col-2 d-flex justify-content-center align-items-center p-0"
-    [ngSwitch]="variant"
-  >
-    <i *ngSwitchCase="'warning'" class="fa-solid fa-triangle-exclamation"></i>
-    <i *ngSwitchCase="'error'" class="fa-solid fa-circle-exclamation"></i>
-    <i *ngSwitchCase="'success'" class="fa-regular fa-square-check"></i>
-    <i *ngSwitchDefault class="fa-solid fa-circle-info"></i>
+    >
+    @switch (variant) {
+      @case ('warning') {
+        <i class="fa-solid fa-triangle-exclamation"></i>
+      }
+      @case ('error') {
+        <i class="fa-solid fa-circle-exclamation"></i>
+      }
+      @case ('success') {
+        <i class="fa-regular fa-square-check"></i>
+      }
+      @default {
+        <i class="fa-solid fa-circle-info"></i>
+      }
+    }
   </div>
   <div class="col-10 p-0 d-flex flex-column justify-content-center">
     <p class="m-0">

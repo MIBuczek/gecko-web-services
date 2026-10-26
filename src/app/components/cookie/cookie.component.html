@@ -1,20 +1,21 @@
-<div class="container-fluid cookies-wrapper" *ngIf="!isCookiesAccepted">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-7 offset-md-2 offset-sm-0 p-3">
-        <h1 class="cookie-title">
-          {{ "cookies.title" | translate }}<i class="fa-solid fa-cookie"></i>
-        </h1>
-        <p>
-          {{ "cookies.description" | translate
-          }}<a routerLink="/privacy-policy">{{
+@if (!isCookiesAccepted) {
+  <div class="container-fluid cookies-wrapper">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7 offset-md-2 offset-sm-0 p-3">
+          <h1 class="cookie-title">
+            {{ "cookies.title" | translate }}<i class="fa-solid fa-cookie"></i>
+          </h1>
+          <p>
+            {{ "cookies.description" | translate
+            }}<a routerLink="/privacy-policy">{{
             "cookies.redirect" | translate
           }}</a>
         </p>
       </div>
       <div
         class="col-lg-1 col-md-2 col-sm-12 p-3 d-flex justify-content-center align-items-center"
-      >
+        >
         <button type="button" class="cookie-btn" (click)="acceptCookies()">
           {{ "cookies.btn" | translate }}
         </button>
@@ -22,3 +23,4 @@
     </div>
   </div>
 </div>
+}

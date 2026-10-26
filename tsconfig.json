@@ -23,10 +23,6 @@
       "jest",
       "node"
     ],
-    "lib": [
-      "es2020",
-      "dom"
-    ],
     "paths": {
       "app/*": [
         "app/*"

@@ -2,9 +2,9 @@
   <div class="email-details my-3 d-flex flex-column align-items-start">
     <h3 class="email-title">
       e-mail : {{ data.email }}
-      <ng-container *ngIf="data.replay">
+      @if (data.replay) {
         <i class="fa-solid fa-check ms-2"></i>
-      </ng-container>
+      }
     </h3>
     <p class="p-0 created-at">sent at : {{ data.createdAt | date }}</p>
     <div class="row d-flex w-100 justify-content-center text-start">
@@ -19,21 +19,21 @@
         type="button"
         [disabled]="data.replay"
         (click)="updateEmail()"
-      >
+        >
         <i class="fa-solid fa-check"></i>
       </button>
       <button
         class="modal_btn-secondary text-center"
         type="button"
         (click)="deleteEmail()"
-      >
+        >
         <i class="fa-solid fa-trash"></i>
       </button>
       <button
         class="modal_btn text-center"
         type="button"
         (click)="closeModal()"
-      >
+        >
         <i class="fa-solid fa-xmark"></i>
       </button>
     </div>
