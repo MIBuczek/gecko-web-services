@@ -1,5 +1,5 @@
 
-import { Component, Input } from "@angular/core";
+import { Component, Input, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { FormErrorMessagePipe } from "app/pipes/form-error-message.pipe";
 
@@ -7,6 +7,7 @@ import { FormErrorMessagePipe } from "app/pipes/form-error-message.pipe";
   selector: "app-error-message",
   templateUrl: "./error-message.component.html",
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [FormErrorMessagePipe],
 })
 export class ErrorMessageComponent {

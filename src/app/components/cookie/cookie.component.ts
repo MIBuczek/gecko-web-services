@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -8,6 +8,7 @@ import { TranslateModule } from "@ngx-translate/core";
   templateUrl: "./cookie.component.html",
   styleUrls: ["./cookie.component.scss"],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RouterLink, TranslateModule],
 })
 export class CookieComponent implements OnInit {

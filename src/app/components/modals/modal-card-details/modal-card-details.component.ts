@@ -1,5 +1,5 @@
 
-import { Component, inject } from "@angular/core";
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { TranslateModule } from "@ngx-translate/core";
 import { ISingleCard } from "models/text-content";
@@ -13,6 +13,7 @@ interface IModalData {
   templateUrl: "./modal-card-details.component.html",
   styleUrls: ["./modal-card-details.component.scss"],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [TranslateModule],
 })
 export class ModalCardDetailsComponent {

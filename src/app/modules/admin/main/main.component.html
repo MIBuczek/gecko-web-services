@@ -5,7 +5,7 @@
       >
       <span
         >Last login :
-        {{ currentUser()?.metadata?.lastSignInTime | date }}</span
+        {{ $safeNavigationMigration(currentUser()?.metadata?.lastSignInTime) | date }}</span
         >
         <span>{{ currentUser()?.email }}</span>
       </div>
