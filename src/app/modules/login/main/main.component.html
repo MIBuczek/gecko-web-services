@@ -45,13 +45,13 @@
       </div>
     </form>
     <div class="row d-flex justify-content-center align-items-center">
-      <div class="col-10 col-md-8" *ngIf="loginError | async">
+      <div class="col-10 col-md-8" *ngIf="loginError()">
         <app-notification
           [title]="'Nieudana próba logowania.'"
           [variant]="'error'"
         >
           <p class="login-redirect">
-            {{ loginError | async | json }}
+            {{ loginError() | json }}
           </p>
         </app-notification>
       </div>

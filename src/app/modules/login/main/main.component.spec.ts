@@ -1,26 +1,33 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ReactiveFormsModule } from "@angular/forms";
 import { provideRouter, Router } from "@angular/router";
+import { signal } from "@angular/core";
 import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
-import { of, ReplaySubject } from "rxjs";
 import { AuthService } from "services/auth/auth.service";
 import { MainComponent } from "./main.component";
+
+const flushPromises = (): Promise<void> =>
+  new Promise((resolve) => setTimeout(resolve, 0));
 
 const buildComponent = async (
   currentUser: unknown
 ): Promise<{
   fixture: ComponentFixture<MainComponent>;
   component: MainComponent;
-  auth: { currentUser: unknown; authError$: ReplaySubject<unknown>; login: jest.Mock };
+  auth: {
+    currentUser: ReturnType<typeof signal>;
+    authError: ReturnType<typeof signal>;
+    login: jest.Mock;
+  };
   router: { navigate: jest.SpyInstance };
   recaptcha: { getToken: jest.Mock };
 }> => {
   const auth = {
-    currentUser: of(currentUser),
-    authError$: new ReplaySubject<unknown>(),
+    currentUser: signal(currentUser),
+    authError: signal(null),
     login: jest.fn(),
   };
-  const recaptcha = { getToken: jest.fn().mockReturnValue(of("token")) };
+  const recaptcha = { getToken: jest.fn().mockResolvedValue("token") };
 
   await TestBed.configureTestingModule({
     providers: [
@@ -39,13 +46,18 @@ const buildComponent = async (
 
   const fixture = TestBed.createComponent(MainComponent);
   fixture.detectChanges();
+  await flushPromises();
   return { fixture, component: fixture.componentInstance, auth, router, recaptcha };
 };
 
 describe("LoginMainComponent", () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
-  let auth: { currentUser: unknown; authError$: ReplaySubject<unknown>; login: jest.Mock };
+  let auth: {
+    currentUser: ReturnType<typeof signal>;
+    authError: ReturnType<typeof signal>;
+    login: jest.Mock;
+  };
   let router: { navigate: jest.SpyInstance };
   let recaptcha: { getToken: jest.Mock };
 
@@ -91,37 +103,37 @@ describe("LoginMainComponent", () => {
     expect(submit.disabled).toBeTruthy();
   });
 
-  it("is login called with the entered credentials", () => {
+  it("is login called with the entered credentials", async () => {
     component.logInForm.setValue({
       email: "admin@example.com",
       password: "secret123",
     });
-    component.onSubmit();
+    await component.onSubmit();
     expect(auth.login).toHaveBeenCalledWith("admin@example.com", "secret123");
   });
 
-  it("is login not called when the form is invalid", () => {
-    component.onSubmit();
+  it("is login not called when the form is invalid", async () => {
+    await component.onSubmit();
     expect(auth.login).not.toHaveBeenCalled();
   });
 
-  it("is login not called when no recaptcha token is returned", () => {
-    recaptcha.getToken.mockReturnValue(of(null));
+  it("is login not called when no recaptcha token is returned", async () => {
+    recaptcha.getToken.mockResolvedValue(null);
     component.logInForm.setValue({
       email: "admin@example.com",
       password: "secret123",
     });
-    component.onSubmit();
+    await component.onSubmit();
     expect(auth.login).not.toHaveBeenCalled();
   });
 
-  it("is the requested recaptcha action passed through", () => {
-    component.onSubmit();
+  it("is the requested recaptcha action passed through", async () => {
+    await component.onSubmit();
     expect(recaptcha.getToken).toHaveBeenCalledWith("loginAction");
   });
 
   it("is loginError exposed from the auth service", () => {
-    expect(component.loginError).toBe(auth.authError$);
+    expect(component.loginError).toBe(auth.authError);
   });
 });
 

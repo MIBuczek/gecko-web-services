@@ -6,6 +6,7 @@ import { EmailActionAdmin, IAdminEmail } from "app/models/email-message";
 import { ModalEmailDetailsComponent } from "app/components/modals/modal-email-details/modal-email-details.component";
 import { RecaptchaService } from "app/services/recaptcha/recaptcha.service";
 import { of } from "rxjs";
+import { signal } from "@angular/core";
 import { AuthService } from "app/services/auth/auth.service";
 import { MailingService } from "app/services/mailing/mailing.service";
 import packageInfo from "../../../../../package.json";
@@ -48,7 +49,7 @@ const buildComponent = async (
   recaptcha: { getToken: jest.Mock };
 }> => {
   const auth = {
-    currentUser: of({ email: "admin@example.com", metadata: {} }),
+    currentUser: signal({ email: "admin@example.com", metadata: {} }),
     logout: jest.fn().mockResolvedValue(undefined),
   };
   const router = { navigate: jest.fn() };
@@ -74,7 +75,7 @@ const buildComponent = async (
   const recaptcha = {
     getToken: jest
       .fn()
-      .mockReturnValue(of(options.token === undefined ? "token" : options.token)),
+      .mockResolvedValue(options.token === undefined ? "token" : options.token),
   };
 
   await TestBed.configureTestingModule({
@@ -179,14 +180,14 @@ describe("AdminMainComponent", () => {
   });
 
   it("is the email modal opened with the selected email", () => {
-    component.openEmailModal(buildEmail(2));
+    void component.openEmailModal(buildEmail(2));
     expect(dialog.open).toHaveBeenCalledWith(ModalEmailDetailsComponent, {
       data: buildEmail(2),
     });
   });
 
   it("is the logout action requested before signing out", async () => {
-    component.logOut();
+    await component.logOut();
     await flushPromises();
     expect(recaptcha.getToken).toHaveBeenCalledWith("logOut");
     expect(auth.logout).toHaveBeenCalled();
@@ -194,8 +195,8 @@ describe("AdminMainComponent", () => {
   });
 
   it("is sign out skipped when no logout token is returned", async () => {
-    recaptcha.getToken.mockReturnValue(of(null));
-    component.logOut();
+    recaptcha.getToken.mockResolvedValue(null);
+    await component.logOut();
     await flushPromises();
     expect(auth.logout).not.toHaveBeenCalled();
   });
@@ -217,7 +218,7 @@ describe("AdminMainComponent - email actions", () => {
       [buildEmail(1), buildEmail(2)],
       { action: EmailActionAdmin.ANSWERED }
     );
-    component.openEmailModal(buildEmail(1));
+    await component.openEmailModal(buildEmail(1));
     await flushPromises();
     fixture.detectChanges();
     expect(mailing.updateEmail).toHaveBeenCalledWith("mail-1");
@@ -231,7 +232,7 @@ describe("AdminMainComponent - email actions", () => {
       [buildEmail(1), buildEmail(2)],
       { action: EmailActionAdmin.DELETE }
     );
-    component.openEmailModal(buildEmail(1));
+    await component.openEmailModal(buildEmail(1));
     await flushPromises();
     fixture.detectChanges();
     expect(mailing.deleteEmail).toHaveBeenCalledWith("mail-1");
@@ -245,7 +246,7 @@ describe("AdminMainComponent - email actions", () => {
       [buildEmail(1)],
       { action: null }
     );
-    component.openEmailModal(buildEmail(1));
+    await component.openEmailModal(buildEmail(1));
     await flushPromises();
     expect(recaptcha.getToken).not.toHaveBeenCalledWith(EmailActionAdmin.DELETE);
     expect(mailing.updateEmail).not.toHaveBeenCalled();
@@ -257,7 +258,7 @@ describe("AdminMainComponent - email actions", () => {
       action: EmailActionAdmin.DELETE,
       token: null,
     });
-    component.openEmailModal(buildEmail(1));
+    await component.openEmailModal(buildEmail(1));
     await flushPromises();
     expect(mailing.deleteEmail).not.toHaveBeenCalled();
   });

@@ -4,7 +4,6 @@ import { provideFirebaseApp, initializeApp } from "@angular/fire/app";
 import { provideDatabase, getDatabase } from "@angular/fire/database";
 import { MailingService } from "services/mailing/mailing.service";
 import { RecaptchaService } from "services/recaptcha/recaptcha.service";
-import { of } from "rxjs";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 import polishTranslation from "assets/i18n/pl.json";
 import englishTranslation from "assets/i18n/en.json";
@@ -42,7 +41,7 @@ describe("MainComponent - Main Rout", () => {
         MailingService,
         {
           provide: RecaptchaService,
-          useValue: { getToken: () => of("Test_Token") },
+          useValue: { getToken: () => Promise.resolve("Test_Token") },
         },
       ],
       imports: [

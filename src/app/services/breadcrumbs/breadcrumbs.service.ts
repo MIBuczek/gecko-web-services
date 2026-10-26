@@ -1,5 +1,4 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { Injectable, signal } from "@angular/core";
 import { BreadCrumbItem } from "classes/breadcrumbs-item.class";
 import { IAppRouts } from "models/general";
 
@@ -7,16 +6,14 @@ import { IAppRouts } from "models/general";
   providedIn: "root",
 })
 export class BreadcrumbsService {
-  private currentPaths$ = new BehaviorSubject<Array<BreadCrumbItem>>([]);
+  private readonly _breadcrumbsItems = signal<Array<BreadCrumbItem>>([]);
 
   /**
-   * Returns an observable of an array of BreadCrumbItem objects.
+   * The current breadcrumb items.
    *
-   * @return {Observable<Array<BreadCrumbItem>>} The observable of the array of BreadCrumbItem objects.
+   * @return {Signal<Array<BreadCrumbItem>>} The current breadcrumb items.
    */
-  get getBreadcrumbsItems(): Observable<Array<BreadCrumbItem>> {
-    return this.currentPaths$.asObservable();
-  }
+  readonly breadcrumbsItems = this._breadcrumbsItems.asReadonly();
 
   /**
    * Sets the current breadcrumbs path to the provided array of BreadCrumbItem objects.
@@ -24,7 +21,7 @@ export class BreadcrumbsService {
    * @param {Array<BreadCrumbItem>} newBreadcrumbs - The new array of breadcrumb items.
    */
   set updateBreadcrumbsPath(newBreadcrumbs: Array<BreadCrumbItem>) {
-    this.currentPaths$.next(newBreadcrumbs);
+    this._breadcrumbsItems.set(newBreadcrumbs);
   }
 
   /**

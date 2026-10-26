@@ -74,9 +74,9 @@
             />
           </div>
         </form>
-        <div *ngIf="!!submitStatus$ && (submitClearStatus | async)">
+        <div *ngIf="submitStatus() !== null && submitClearStatus()">
           <ng-container
-            *ngIf="(submitStatus$ | async) === dbMessageActions.SUCCESS"
+            *ngIf="submitStatus() === dbMessageActions.SUCCESS"
           >
             <app-notification
               [title]="'footer.submit-success' | translate"
@@ -84,7 +84,7 @@
             />
           </ng-container>
           <ng-container
-            *ngIf="(submitStatus$ | async) === dbMessageActions.ERROR"
+            *ngIf="submitStatus() === dbMessageActions.ERROR"
           >
             <app-notification
               [title]="'footer.submit-error' | translate"

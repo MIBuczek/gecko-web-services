@@ -1,8 +1,8 @@
-import { inject, Injectable } from "@angular/core";
+import { inject, Injectable, signal } from "@angular/core";
+import { toSignal } from "@angular/core/rxjs-interop";
 import { Auth, signInWithEmailAndPassword, user } from "@angular/fire/auth";
 import { Router } from "@angular/router";
 import { signOut, User } from "firebase/auth";
-import { Observable, of, ReplaySubject } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
@@ -11,22 +11,39 @@ export class AuthService {
 
   private auth: Auth = inject(Auth);
   private readonly user$ = user(this.auth);
-  readonly authError$ = new ReplaySubject();
 
   /**
-   * Get the current user.
+   * The currently signed in user, or null.
    *
-   * @return {Observable<User>} The current user.
+   * @return {Signal<User | null>} The currently signed in user, or null.
    */
-  get currentUser(): Observable<User | null> {
-    return this.user$;
+  readonly currentUser = toSignal(this.user$, { initialValue: null });
+
+  private readonly _authError = signal<unknown>(null);
+
+  /**
+   * The last authentication error, cleared automatically after 10 seconds.
+   *
+   * @return {Signal<unknown>} The last authentication error.
+   */
+  readonly authError = this._authError.asReadonly();
+
+  /**
+   * Resolves once Firebase has restored the persisted session. Awaited by the
+   * admin guard, which needs a settled answer rather than a stream.
+   *
+   * @return {Promise<void>} A promise that resolves when the state is ready.
+   */
+  async whenReady(): Promise<void> {
+    await this.auth.authStateReady();
   }
+
   /**
    * A function to login with the provided email and password.
    *
    * @param {string} email - The email of the user.
    * @param {string} password - The password of the user.
-   * @return {Promise<any>} Redirect user do admin panel.
+   * @return {Promise<void>} Redirect user do admin panel.
    */
   async login(email: string, password: string): Promise<void> {
     try {
@@ -36,9 +53,7 @@ export class AuthService {
         await this.router.navigate(["/admin"]);
       }
     } catch (err) {
-      this.authError$.next(err);
-      setTimeout(() => this.authError$.next(null), 10000);
-      console.error(err);
+      this.reportError(err);
     }
   }
 
@@ -52,9 +67,13 @@ export class AuthService {
       await signOut(this.auth).then(() => localStorage.clear());
       console.log("logged out");
     } catch (err) {
-      this.authError$.next(err);
-      setTimeout(() => this.authError$.next(null), 10000);
-      console.error(err);
+      this.reportError(err);
     }
+  }
+
+  private reportError(err: unknown): void {
+    this._authError.set(err);
+    setTimeout(() => this._authError.set(null), 10000);
+    console.error(err);
   }
 }

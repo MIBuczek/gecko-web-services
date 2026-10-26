@@ -92,9 +92,22 @@ Compilation is strict, and a few flags change what code is allowed:
   template uses in `imports` rather than relying on a shared `NgModule`. Import the specific
   symbol (`NgIf`, `NgFor`, `DatePipe`, ...) rather than `CommonModule`, unless most of the
   template needs it.
-- **`TranslateModule` is imported directly** by any standalone component whose template uses
-  the `translate` pipe. `@ngx-translate/core` v15's `TranslatePipe` is not standalone, so the
-  NgModule is the only way to get it until v18.
+  - **Signals are the default reactivity primitive.** State is a `signal`, derived state is
+    `computed`, and a component that must accept a value while still tracking an upstream source
+    uses `linkedSignal`. Services expose state as a `readonly` signal created with
+    `.asReadonly()`, not as a `BehaviorSubject`/`Observable` pair.
+  - **Avoid RxJS except at a library boundary.** Nothing in `src/` imports an operator from
+    `rxjs`; async work is `async`/`await` over promises. The only two places `rxjs` is still
+    referenced are bridges to APIs that only expose an Observable:
+    `toSignal(user(this.auth))` in `auth.service.ts` (AngularFire's `user()`), and
+    `firstValueFrom(dialogRef.afterClosed())` in `admin/main.component.ts` (Angular Material).
+    Keep each conversion local to the call site and leave a comment naming the library, so the
+    next reader does not try to remove it.
+  - **Do not reach for `AsyncPipe`.** A template reads a signal by calling it (`loaderStatus()`,
+    `submitStatus()`); the pipe is gone from every template and from every `imports` array.
+  - **`TranslateModule` is imported directly** by any standalone component whose template uses
+    the `translate` pipe. `@ngx-translate/core` v15's `TranslatePipe` is not standalone, so the
+    NgModule is the only way to get it until v18.
 - **Tests import the component, they do not declare it.** A spec for a standalone component
   puts it in `imports: [XComponent]`. Listing it under `declarations` fails with
   "is marked as standalone and can't be declared in any NgModule".
@@ -376,7 +389,24 @@ it does not cover.
   `fa-bootstrap`, `fa-google`, `fa-github`, `fa-microsoft`) render through
   `tech_icon.const.ts`, and none has a solid equivalent. Only `fa-regular` (one icon,
   `fa-square-check`) is reducible, and doing so visibly changes the success notification.
-  Check the icon maps (`$fa-icons` vs `$fa-brand-icons`) before assuming a family is unused.
+    Check the icon maps (`$fa-icons` vs `$fa-brand-icons`) before assuming a family is unused.
+  - **RxJS is gone from application code; do not reintroduce it as a stream.** The service and
+    component layer was migrated to signals, `async`/`await` and direct DOM listeners
+    (`window.addEventListener("scroll", ...)` replacing `fromEvent`). The `| async` pipe was
+    removed from every template. Two bridges remain and are deliberate:
+    `toSignal(user(this.auth))` in `auth.service.ts` and
+    `firstValueFrom(dialogRef.afterClosed())` in `admin/main.component.ts`, because
+    `@angular/fire`'s `user()` and Angular Material's `afterClosed()` expose only Observables.
+    Converting either to a promise/stream of your own would lose the source's cancellation and
+    change behaviour; keep the bridge at the call site.
+  - **`ScrollService` owns a real `scroll` listener.** It adds one bound handler in the
+    constructor and removes the same reference in `ngOnDestroy`, so a second subscription cannot
+    leak. If you add another window listener, bind it once the same way rather than creating an
+    inline arrow per call.
+  - **`adminGuard` is `async`, not Observable-returning.** It awaits
+    `AuthService.whenReady()` (Firebase `authStateReady()`) before reading the
+    `currentUser` signal, so it does not deny access while the persisted session is still being
+    restored. Do not read the signal without that await.
 
 ## Scope of this document
 

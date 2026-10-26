@@ -1,5 +1,11 @@
 import { NgClass, NgIf } from "@angular/common";
-import { Component, HostListener, inject } from "@angular/core";
+import {
+  Component,
+  computed,
+  HostListener,
+  inject,
+  linkedSignal,
+} from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { ViewportScroller } from "@angular/common";
@@ -25,19 +31,17 @@ export class NavigationComponent {
 
   public selectedLang: TypeLang = "pl";
   public isNavbarOpen: boolean = false;
-  public selectedContentId: TypeContentId = "header";
-  public isMainPage = true;
 
-  constructor() {
-    /* Logic to check are we on main page to display full or replacement navigation */
-    this.bc.getBreadcrumbsItems.subscribe(
-      (bci) =>
-        (this.isMainPage = bci.length === 1 && bci[0].rout === "main-page")
-    );
-    this.ss.getCurrentActiveSection.subscribe(
-      (section) => (this.selectedContentId = section)
-    );
-  }
+  /* Tracks the section in view, but a click overrides it until the next scroll. */
+  public selectedContentId = linkedSignal<TypeContentId>(
+    () => this.ss.currentActiveSection()
+  );
+
+  /* Logic to check are we on main page to display full or replacement navigation */
+  public isMainPage = computed(() => {
+    const bci = this.bc.breadcrumbsItems();
+    return bci.length === 1 && bci[0].rout === "main-page";
+  });
 
   /* Listener to tract vertical and horizontal pixels */
   @HostListener("window:scroll", ["$event"])
@@ -63,7 +67,7 @@ export class NavigationComponent {
 
   /* Method to smooth scroll to the selected element on page */
   public scrollToElement(contentId: TypeContentId): void {
-    this.selectedContentId = contentId;
+    this.selectedContentId.set(contentId);
     this.viewportScroller.scrollToAnchor(contentId);
   }
 }

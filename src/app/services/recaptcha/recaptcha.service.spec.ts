@@ -33,28 +33,23 @@ describe("RecaptchaService", () => {
       .forEach((el) => el.remove());
   });
 
-  it("emits the token returned by grecaptcha.execute", (done) => {
+  it("emits the token returned by grecaptcha.execute", async () => {
     stubGrecaptcha(readyApi(jest.fn().mockResolvedValue("a-token")));
 
-    service.getToken("loginAction").subscribe((token) => {
-      expect(token).toBe("a-token");
-      done();
-    });
+    await expect(service.getToken("loginAction")).resolves.toBe("a-token");
   });
 
-  it("passes the environment site key and the requested action through", (done) => {
+  it("passes the environment site key and the requested action through", async () => {
     const execute = jest.fn().mockResolvedValue("a-token");
     stubGrecaptcha(readyApi(execute));
 
-    service.getToken("sendEmailMessage").subscribe(() => {
-      expect(execute).toHaveBeenCalledWith(SITE_KEY, {
-        action: "sendEmailMessage",
-      });
-      done();
+    await service.getToken("sendEmailMessage");
+    expect(execute).toHaveBeenCalledWith(SITE_KEY, {
+      action: "sendEmailMessage",
     });
   });
 
-  it("uses the enterprise namespace when that is where execute lives", (done) => {
+  it("uses the enterprise namespace when that is where execute lives", async () => {
     // `index.html` loads enterprise.js, which exposes execute under
     // `grecaptcha.enterprise` rather than on the root object.
     const execute = jest.fn().mockResolvedValue("enterprise-token");
@@ -63,45 +58,35 @@ describe("RecaptchaService", () => {
       enterprise: { execute },
     });
 
-    service.getToken("loginAction").subscribe((token) => {
-      expect(token).toBe("enterprise-token");
-      expect(execute).toHaveBeenCalledWith(SITE_KEY, { action: "loginAction" });
-      done();
-    });
+    await expect(service.getToken("loginAction")).resolves.toBe(
+      "enterprise-token"
+    );
+    expect(execute).toHaveBeenCalledWith(SITE_KEY, { action: "loginAction" });
   });
 
-  it("emits null and completes when execute rejects", (done) => {
+  it("emits null and completes when execute rejects", async () => {
     stubGrecaptcha(readyApi(jest.fn().mockRejectedValue(new Error("blocked"))));
 
-    service.getToken("loginAction").subscribe((token) => {
-      expect(token).toBeNull();
-      done();
-    });
+    await expect(service.getToken("loginAction")).resolves.toBeNull();
   });
 
-  it("emits null when the grecaptcha global is missing entirely", (done) => {
+  it("emits null when the grecaptcha global is missing entirely", async () => {
     // No API present, so the loader injects a script. Make it fail to load.
     jest.spyOn(document.head, "appendChild").mockImplementation((node) => {
       (node as HTMLScriptElement).onerror?.(new Event("error"));
       return node;
     });
 
-    service.getToken("loginAction").subscribe((token) => {
-      expect(token).toBeNull();
-      done();
-    });
+    await expect(service.getToken("loginAction")).resolves.toBeNull();
   });
 
-  it("emits null when neither namespace exposes execute", (done) => {
+  it("emits null when neither namespace exposes execute", async () => {
     stubGrecaptcha({ ready: (cb: () => void) => cb() });
 
-    service.getToken("loginAction").subscribe((token) => {
-      expect(token).toBeNull();
-      done();
-    });
+    await expect(service.getToken("loginAction")).resolves.toBeNull();
   });
 
-  it("emits null rather than throwing when the script fails to load", (done) => {
+  it("emits null rather than throwing when the script fails to load", async () => {
     const appendChild = jest
       .spyOn(document.head, "appendChild")
       .mockImplementation((node) => {
@@ -109,26 +94,20 @@ describe("RecaptchaService", () => {
         return node;
       });
 
-    service.getToken("loginAction").subscribe((token) => {
-      expect(token).toBeNull();
-      expect(appendChild).toHaveBeenCalled();
-      done();
-    });
+    await expect(service.getToken("loginAction")).resolves.toBeNull();
+    expect(appendChild).toHaveBeenCalled();
   });
 
-  it("injects the script only once across repeated calls", (done) => {
+  it("injects the script only once across repeated calls", async () => {
     stubGrecaptcha(readyApi(jest.fn().mockResolvedValue("a-token")));
     const appendChild = jest.spyOn(document.head, "appendChild");
 
-    service.getToken("first").subscribe(() => {
-      service.getToken("second").subscribe(() => {
-        expect(appendChild).not.toHaveBeenCalled();
-        done();
-      });
-    });
+    await service.getToken("first");
+    await service.getToken("second");
+    expect(appendChild).not.toHaveBeenCalled();
   });
 
-  it("loads the enterprise build, matching what App Check uses", (done) => {
+  it("loads the enterprise build, matching what App Check uses", async () => {
     const appendChild = jest
       .spyOn(document.head, "appendChild")
       .mockImplementation((node) => {
@@ -141,14 +120,11 @@ describe("RecaptchaService", () => {
         return node;
       });
 
-    service.getToken("loginAction").subscribe((token) => {
-      expect(token).toBeNull();
-      expect(appendChild).toHaveBeenCalled();
-      done();
-    });
+    await expect(service.getToken("loginAction")).resolves.toBeNull();
+    expect(appendChild).toHaveBeenCalled();
   });
 
-  it("waits for an in-flight recaptcha script instead of duplicating it", (done) => {
+  it("waits for an in-flight recaptcha script instead of duplicating it", async () => {
     // Simulate App Check having already injected the script.
     const existing = document.createElement("script");
     existing.src = "https://www.google.com/recaptcha/enterprise.js";
@@ -159,10 +135,7 @@ describe("RecaptchaService", () => {
       stubGrecaptcha(readyApi(jest.fn().mockResolvedValue("late-token")));
     }, 150);
 
-    service.getToken("loginAction").subscribe((token) => {
-      expect(token).toBe("late-token");
-      expect(appendChild).not.toHaveBeenCalled();
-      done();
-    });
+    await expect(service.getToken("loginAction")).resolves.toBe("late-token");
+    expect(appendChild).not.toHaveBeenCalled();
   });
 });
