@@ -1,23 +1,28 @@
-import { inject, Injectable, signal } from "@angular/core";
-import { toSignal } from "@angular/core/rxjs-interop";
-import { Auth, signInWithEmailAndPassword, user } from "@angular/fire/auth";
+import { DestroyRef, inject, Injectable, signal } from "@angular/core";
 import { Router } from "@angular/router";
-import { signOut, User } from "firebase/auth";
+import {
+  onIdTokenChanged,
+  signInWithEmailAndPassword,
+  signOut,
+  User,
+} from "firebase/auth";
+import { FIREBASE_AUTH } from "utilities/firebase.tokens";
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
   private router = inject(Router);
 
-  private auth: Auth = inject(Auth);
-  private readonly user$ = user(this.auth);
+  private auth = inject(FIREBASE_AUTH);
+
+  private readonly _currentUser = signal<User | null>(null);
 
   /**
    * The currently signed in user, or null.
    *
    * @return {Signal<User | null>} The currently signed in user, or null.
    */
-  readonly currentUser = toSignal(this.user$, { initialValue: null });
+  readonly currentUser = this._currentUser.asReadonly();
 
   private readonly _authError = signal<unknown>(null);
 
@@ -27,6 +32,16 @@ export class AuthService {
    * @return {Signal<unknown>} The last authentication error.
    */
   readonly authError = this._authError.asReadonly();
+
+  constructor() {
+    /* Tracks the user the way @angular/fire's user() did, but into a signal.
+       onIdTokenChanged fires once on subscribe, so the signal settles without
+       needing an initial value. */
+    const unsubscribe = onIdTokenChanged(this.auth, (user) =>
+      this._currentUser.set(user)
+    );
+    inject(DestroyRef).onDestroy(unsubscribe);
+  }
 
   /**
    * Resolves once Firebase has restored the persisted session. Awaited by the
