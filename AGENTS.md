@@ -10,7 +10,7 @@ them.
 small admin area and a login panel. Stack:
 
 - Angular 20.3 with standalone components and `bootstrapApplication`
-- TypeScript 5.8, Firebase (`@angular/fire`), a self-hosted reCAPTCHA loader
+- TypeScript 5.8, Firebase (the plain `firebase` SDK, no `@angular/fire`), a self-hosted reCAPTCHA loader
 - Jest 30 with `jest-preset-angular` 17 for tests
 - SCSS for styles
 
@@ -97,11 +97,10 @@ Compilation is strict, and a few flags change what code is allowed:
     uses `linkedSignal`. Services expose state as a `readonly` signal created with
     `.asReadonly()`, not as a `BehaviorSubject`/`Observable` pair.
   - **Avoid RxJS except at a library boundary.** Nothing in `src/` imports an operator from
-    `rxjs`; async work is `async`/`await` over promises. The only two places `rxjs` is still
-    referenced are bridges to APIs that only expose an Observable:
-    `toSignal(user(this.auth))` in `auth.service.ts` (AngularFire's `user()`), and
+    `rxjs`; async work is `async`/`await` over promises. The only place `rxjs` is still
+    referenced is a bridge to an API that only exposes an Observable:
     `firstValueFrom(dialogRef.afterClosed())` in `admin/main.component.ts` (Angular Material).
-    Keep each conversion local to the call site and leave a comment naming the library, so the
+    Keep the conversion local to the call site and leave a comment naming the library, so the
     next reader does not try to remove it.
   - **Do not reach for `AsyncPipe`.** A template reads a signal by calling it (`loaderStatus()`,
     `submitStatus()`); the pipe is gone from every template and from every `imports` array.
@@ -236,11 +235,14 @@ it does not cover.
 - `Dockerfile` builds on `node:22-alpine`, exposes 4200 to match the dev server, and installs
   with `npm ci` against the committed lockfile. `.nvmrc` and an `engines` field pin Node to
   `^20.19.0 || ^22.12.0 || >=24.0.0` (the range Angular 20 supports).
-- `@angular/fire` 17.1.0 changed `provideFirebaseApp` / `provideDatabase` / `provideAuth` from
-  returning `ModuleWithProviders` to `EnvironmentProviders`. They must therefore sit in
-  `providers:`, not `imports:`; Angular throws `TypeError: ... is not assignable to type
-  'any[] | Type<any> | ModuleWithProviders<{}>'` at compile time otherwise. The `^17.0.1` range
-  in `package.json` permits the bump, so this surfaces on any `npm update`.
+- **`@angular/fire` was removed in 2.5.0; use the plain `firebase` SDK.** It had no stable
+  release past Angular 20 (`next` was an rc, `canary` a nightly), which blocked the Angular
+  21/22 climb. The app only ever used four things from it — `provideFirebaseApp`,
+  `provideDatabase`, `provideAuth` and the `user()` Observable — and the first three are
+  re-exports of `firebase/*`. The app now provides `FIREBASE_APP` / `FIREBASE_AUTH` /
+  `FIREBASE_DATABASE` from `utilities/firebase.tokens.ts` in `app.config.ts`, and
+  `auth.service.ts` tracks `onIdTokenChanged` into a signal directly. Do not add it back: it
+  reintroduces the version ceiling and the `rxfire` Observable layer.
 - `npm run docker:serve` invokes `docker-compose`, the Compose v1 binary, which is no longer
   present on current Docker installs (they ship `docker compose`). Use `docker compose up`
   directly, or update the script.
@@ -317,9 +319,9 @@ it does not cover.
   export map, so it resolves to `dist/node/index.js`, which calls the global `fetch` that jsdom
   does not provide: 9 suites fail with `ReferenceError: fetch is not defined`.
   `testEnvironmentOptions.customExportConditions` cannot override the hardcoded `node`, so
-  `resolver.js` re-resolves only `firebase`, `@firebase/*` and `rxfire/*` with
+  `resolver.js` re-resolves only `firebase` and `@firebase/*` with
   `conditions: ['browser', 'require', 'default']` and defers everything else to Jest's default
-  resolver. Keep `require` before any `import` condition: `rxfire/*` ships ESM under `import`
+  resolver. Keep `require` before any `import` condition: `@firebase/*` ships ESM under `import`
   and CJS under `require`, and picking the ESM entry fails with "Must use import to load ES
   Module".
 - Angular 20 stopped emitting the deprecated `ng-reflect-*` debug attributes unless
@@ -393,12 +395,10 @@ it does not cover.
   - **RxJS is gone from application code; do not reintroduce it as a stream.** The service and
     component layer was migrated to signals, `async`/`await` and direct DOM listeners
     (`window.addEventListener("scroll", ...)` replacing `fromEvent`). The `| async` pipe was
-    removed from every template. Two bridges remain and are deliberate:
-    `toSignal(user(this.auth))` in `auth.service.ts` and
-    `firstValueFrom(dialogRef.afterClosed())` in `admin/main.component.ts`, because
-    `@angular/fire`'s `user()` and Angular Material's `afterClosed()` expose only Observables.
-    Converting either to a promise/stream of your own would lose the source's cancellation and
-    change behaviour; keep the bridge at the call site.
+    removed from every template. One bridge remains and is deliberate:
+    `firstValueFrom(dialogRef.afterClosed())` in `admin/main.component.ts`, because Angular
+    Material's `afterClosed()` exposes only an Observable. Converting it to a promise of your own
+    would lose the source's cancellation and change behaviour; keep the bridge at the call site.
   - **`ScrollService` owns a real `scroll` listener.** It adds one bound handler in the
     constructor and removes the same reference in `ngOnDestroy`, so a second subscription cannot
     leak. If you add another window listener, bind it once the same way rather than creating an

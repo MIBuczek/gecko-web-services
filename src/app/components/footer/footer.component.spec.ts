@@ -13,11 +13,7 @@ import { TranslateTestingModule } from "ngx-translate-testing";
 import { TranslateService } from "@ngx-translate/core";
 import polishTranslation from "assets/i18n/pl.json";
 import englishTranslation from "assets/i18n/en.json";
-import { provideFirebaseApp } from "@angular/fire/app";
-import { provideDatabase } from "@angular/fire/database";
-import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
-import { environment } from "environments/environment";
+import { FIREBASE_DATABASE } from "utilities/firebase.tokens";
 import { RecaptchaService } from "services/recaptcha/recaptcha.service";
 import { NotificationComponent } from "../notification/notification.component";
 import { ErrorMessageComponent } from "../error-message/error-message.component";
@@ -44,8 +40,7 @@ describe("FooterComponent", () => {
         ).withDefaultLanguage("pl"),
       ],
       providers: [
-        provideFirebaseApp(() => initializeApp(environment.firebase)),
-        provideDatabase(() => getDatabase()),
+        { provide: FIREBASE_DATABASE, useValue: {} },
         MailingService,
         {
           provide: RecaptchaService,
