@@ -1,11 +1,13 @@
 import {
   ComponentFixture,
   fakeAsync,
+  flush,
   inject,
   TestBed,
+  tick,
 } from "@angular/core/testing";
 import { FooterComponent } from "./footer.component";
-import { MailingService } from "services/mailing/mailing.service";
+import { DB_MESSAGE_ACTIONS, MailingService } from "services/mailing/mailing.service";
 import { By } from "@angular/platform-browser";
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientTestingModule } from "@angular/common/http/testing";
@@ -45,7 +47,7 @@ describe("FooterComponent", () => {
         {
           provide: RecaptchaService,
           useValue: {
-            getToken: () => Promise.resolve("Test_Token"),
+            getToken: jest.fn().mockResolvedValue("Test_Token"),
           },
         },
       ],
@@ -163,5 +165,111 @@ describe("FooterComponent", () => {
     const formControls = component.formControls;
     expect(formControls["email"]).toBeInstanceOf(FormControl);
     expect(formControls["message"]).toBeInstanceOf(FormControl);
+  });
+
+  describe("submit", () => {
+    let mailingService: MailingService;
+    let recaptchaService: RecaptchaService;
+
+    beforeEach(() => {
+      mailingService = TestBed.inject(MailingService);
+      recaptchaService = TestBed.inject(RecaptchaService);
+    });
+
+    const flushPromises = (): Promise<void> =>
+      new Promise((resolve) => setTimeout(resolve, 0));
+
+    const fillValidForm = (): void => {
+      component.formUserMessage.controls["email"].setValue("michal@test.pl");
+      component.formUserMessage.controls["message"].setValue("Test message");
+    };
+
+    it("is the message sent when the form is valid and a token is issued", async () => {
+      const sendEmailMessage = jest
+        .spyOn(mailingService, "sendEmailMessage")
+        .mockResolvedValue(DB_MESSAGE_ACTIONS.SUCCESS);
+      fillValidForm();
+
+      component.submit();
+      await flushPromises();
+
+      expect(recaptchaService.getToken).toHaveBeenCalledWith("sendEmailMessage");
+      expect(sendEmailMessage).toHaveBeenCalledTimes(1);
+      expect(component.submitStatus()).toEqual(DB_MESSAGE_ACTIONS.SUCCESS);
+    });
+
+    it("is the form reset after a successful send", async () => {
+      jest
+        .spyOn(mailingService, "sendEmailMessage")
+        .mockResolvedValue(DB_MESSAGE_ACTIONS.SUCCESS);
+      fillValidForm();
+
+      component.submit();
+      await flushPromises();
+
+      expect(component.formUserMessage.value).toEqual({
+        email: "",
+        message: "",
+      });
+    });
+
+    it("is the error status surfaced when the send fails", async () => {
+      jest
+        .spyOn(mailingService, "sendEmailMessage")
+        .mockResolvedValue(DB_MESSAGE_ACTIONS.ERROR);
+      fillValidForm();
+
+      component.submit();
+      await flushPromises();
+
+      expect(component.submitStatus()).toEqual(DB_MESSAGE_ACTIONS.ERROR);
+    });
+
+    it("is nothing sent when the form is invalid", async () => {
+      const sendEmailMessage = jest.spyOn(mailingService, "sendEmailMessage");
+      /* Left empty, so every validator fails. */
+
+      component.submit();
+      await flushPromises();
+
+      expect(sendEmailMessage).not.toHaveBeenCalled();
+    });
+
+    it("is nothing sent when reCAPTCHA issues no token", async () => {
+      (recaptchaService.getToken as jest.Mock).mockResolvedValue(null);
+      const sendEmailMessage = jest.spyOn(mailingService, "sendEmailMessage");
+      fillValidForm();
+
+      component.submit();
+      await flushPromises();
+
+      expect(sendEmailMessage).not.toHaveBeenCalled();
+    });
+
+    it("is nothing sent when the component was destroyed first", async () => {
+      const sendEmailMessage = jest.spyOn(mailingService, "sendEmailMessage");
+      fillValidForm();
+
+      component.submit();
+      component.ngOnDestroy();
+      await flushPromises();
+
+      expect(sendEmailMessage).not.toHaveBeenCalled();
+    });
+
+    it("is the submit status cleared ten seconds after a submission", fakeAsync(() => {
+      jest
+        .spyOn(mailingService, "sendEmailMessage")
+        .mockResolvedValue(DB_MESSAGE_ACTIONS.SUCCESS);
+      fillValidForm();
+
+      component.submit();
+      tick();
+      expect(component.submitClearStatus()).toBe(true);
+
+      tick(10000);
+
+      expect(component.submitClearStatus()).toBe(false);
+    }));
   });
 });
