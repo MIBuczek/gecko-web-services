@@ -200,6 +200,25 @@ describe("MainComponent - Main Rout", () => {
     }
   ));
 
+  it("is the card modal opened with the selected card", () => {
+    const open = jest.spyOn(modalRef, "open");
+    const card = polishTranslation["main-page"]["cards"][0];
+
+    component.setCardStatus(card);
+
+    expect(open).toHaveBeenCalledWith(expect.anything(), {
+      data: { card },
+    });
+  });
+
+  it("is every modal closed when the card is null", () => {
+    const closeAll = jest.spyOn(modalRef, "closeAll");
+
+    component.setCardStatus(null);
+
+    expect(closeAll).toHaveBeenCalled();
+  });
+
   it("is correct number of technologies icons", () => {
     const tech_container = fixture.debugElement.query(
       By.css(".technologies-icons")

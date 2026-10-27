@@ -262,6 +262,42 @@ describe("AdminMainComponent - email actions", () => {
     await flushPromises();
     expect(mailing.deleteEmail).not.toHaveBeenCalled();
   });
+
+  it("is the http error surfaced when the update fails", async () => {
+    const { component, mailing } = await buildComponent([buildEmail(1)], {
+      action: EmailActionAdmin.ANSWERED,
+    });
+    mailing.updateEmail.mockResolvedValue(
+      new HttpErrorResponse({ status: 500 })
+    );
+
+    await component.openEmailModal(buildEmail(1));
+    await flushPromises();
+
+    expect(component.httpError).toBeInstanceOf(HttpErrorResponse);
+    /* The list must be left untouched when the update failed. */
+    expect(
+      component.displayedEmails().find((email) => email.id === "mail-1")?.replay
+    ).toBeFalsy();
+  });
+
+  it("is the http error surfaced when the delete fails", async () => {
+    const { component, mailing } = await buildComponent([buildEmail(1)], {
+      action: EmailActionAdmin.DELETE,
+    });
+    mailing.deleteEmail.mockResolvedValue(
+      new HttpErrorResponse({ status: 500 })
+    );
+
+    await component.openEmailModal(buildEmail(1));
+    await flushPromises();
+
+    expect(component.httpError).toBeInstanceOf(HttpErrorResponse);
+    /* The email must remain listed when the delete failed. */
+    expect(
+      component.displayedEmails().some((email) => email.id === "mail-1")
+    ).toBeTruthy();
+  });
 });
 
 describe("AdminMainComponent - pagination", () => {

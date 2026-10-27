@@ -33,7 +33,7 @@ describe("NavigationComponent", () => {
     Object.defineProperty(window, "innerWidth", {
       writable: true,
       configurable: true,
-      value: 1200,
+      value: width,
     });
   };
 
@@ -75,6 +75,19 @@ describe("NavigationComponent", () => {
       toggle_btn.nativeElement.click();
       fixture.detectChanges();
       expect(translateService.currentLang).toEqual("en");
+    }
+  ));
+
+  it("is the language toggled back to PL on a second click", inject(
+    [TranslateService],
+    (translateService: TranslateService) => {
+      const toggle_btn = fixture.debugElement.query(By.css(".lang-switcher"));
+      toggle_btn.nativeElement.click();
+      fixture.detectChanges();
+      toggle_btn.nativeElement.click();
+      fixture.detectChanges();
+      expect(translateService.currentLang).toEqual("pl");
+      expect(component.selectedLang).toEqual("pl");
     }
   ));
 
@@ -172,4 +185,53 @@ describe("NavigationComponent", () => {
       expect(location.path()).toEqual("/main-page");
     })
   ));
+
+  it("is the navbar closed initially", () => {
+    expect(component.isNavbarOpen).toBe(false);
+  });
+
+  it("is navbarToggle flipping the open state", () => {
+    component.navbarToggle();
+    expect(component.isNavbarOpen).toBe(true);
+
+    component.navbarToggle();
+    expect(component.isNavbarOpen).toBe(false);
+  });
+
+  it("is scrollToElement selecting the section and scrolling to it", () => {
+    const scrollToAnchor = jest.spyOn(viewportScroller, "scrollToAnchor");
+
+    component.scrollToElement("about");
+
+    expect(component.selectedContentId()).toEqual("about");
+    expect(scrollToAnchor).toHaveBeenCalledWith("about");
+  });
+
+  it("is checkPosition reporting the vertical scroll threshold", () => {
+    Object.defineProperty(window, "scrollY", {
+      writable: true,
+      configurable: true,
+      value: 100,
+    });
+
+    expect(component.checkPosition()).toBe(true);
+
+    Object.defineProperty(window, "scrollY", {
+      writable: true,
+      configurable: true,
+      value: 10,
+    });
+
+    expect(component.checkPosition()).toBe(false);
+  });
+
+  it("is checkPosition reporting the narrow viewport when asked horizontally", () => {
+    changeWindowWidth(500);
+
+    expect(component.checkPosition(false)).toBe(true);
+
+    changeWindowWidth(1200);
+
+    expect(component.checkPosition(false)).toBe(false);
+  });
 });
