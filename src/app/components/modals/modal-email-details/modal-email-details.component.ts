@@ -1,4 +1,4 @@
-import { DatePipe, NgIf } from "@angular/common";
+import { DatePipe } from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { EmailActionAdmin, IAdminEmail } from "app/models/email-message";
@@ -9,7 +9,7 @@ import { EmailActionAdmin, IAdminEmail } from "app/models/email-message";
   styleUrl: "./modal-email-details.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [DatePipe, NgIf],
+  imports: [DatePipe],
 })
 export class ModalEmailDetailsComponent {
   private modalRef = inject<MatDialogRef<ModalEmailDetailsComponent>>(MatDialogRef);

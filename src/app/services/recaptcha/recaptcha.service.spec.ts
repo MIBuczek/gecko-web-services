@@ -138,4 +138,29 @@ describe("RecaptchaService", () => {
     await expect(service.getToken("loginAction")).resolves.toBe("late-token");
     expect(appendChild).not.toHaveBeenCalled();
   });
+
+  it("emits null when the grecaptcha global has no ready function", async () => {
+    // Present but the wrong shape, so execute rejects and getToken swallows it.
+    stubGrecaptcha({ execute: jest.fn().mockResolvedValue("a-token") });
+
+    await expect(service.getToken("loginAction")).resolves.toBeNull();
+  });
+
+  it("emits null when an in-flight script never initialises grecaptcha", async () => {
+    // App Check injected the script, but the global never appears, so the
+    // waitForGrecaptcha poll must time out rather than hang. Fake timers keep
+    // the 10s poll interval from stalling the suite.
+    jest.useFakeTimers();
+    const existing = document.createElement("script");
+    existing.src = "https://www.google.com/recaptcha/enterprise.js";
+    document.head.appendChild(existing);
+    const appendChild = jest.spyOn(document.head, "appendChild");
+
+    const token = service.getToken("loginAction");
+    await jest.advanceTimersByTimeAsync(10100);
+
+    await expect(token).resolves.toBeNull();
+    expect(appendChild).not.toHaveBeenCalled();
+    jest.useRealTimers();
+  });
 });

@@ -2,7 +2,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -23,46 +22,42 @@
       "jest",
       "node"
     ],
-    "lib": [
-      "es2020",
-      "dom"
-    ],
     "paths": {
       "app/*": [
-        "app/*"
+        "./src/app/*"
       ],
       "components/*": [
-        "app/components/*"
+        "./src/app/components/*"
       ],
       "guards/*": [
-        "app/guards/*"
+        "./src/app/guards/*"
       ],
       "services/*": [
-        "app/services/*"
+        "./src/app/services/*"
       ],
       "models/*": [
-        "app/models/*"
+        "./src/app/models/*"
       ],
       "modules/*": [
-        "app/modules/*"
+        "./src/app/modules/*"
       ],
       "utilities/*": [
-        "app/utilities/*"
+        "./src/app/utilities/*"
       ],
       "classes/*": [
-        "app/classes/*"
+        "./src/app/classes/*"
       ],
       "pipes/*": [
-        "app/pipes/*"
+        "./src/app/pipes/*"
       ],
       "text-content/*": [
-        "app/text-content/*"
+        "./src/app/text-content/*"
       ],
       "assets/*": [
-        "assets/*"
+        "./src/assets/*"
       ],
       "environments/*": [
-        "environments/*"
+        "./src/environments/*"
       ]
     }
   },

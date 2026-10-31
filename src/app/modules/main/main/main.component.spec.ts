@@ -1,7 +1,6 @@
 import { ComponentFixture, inject, TestBed } from "@angular/core/testing";
 import { MatDialog, MatDialogModule } from "@angular/material/dialog";
-import { provideFirebaseApp, initializeApp } from "@angular/fire/app";
-import { provideDatabase, getDatabase } from "@angular/fire/database";
+import { FIREBASE_DATABASE } from "utilities/firebase.tokens";
 import { MailingService } from "services/mailing/mailing.service";
 import { RecaptchaService } from "services/recaptcha/recaptcha.service";
 import { ActivatedRoute, RouterModule } from "@angular/router";
@@ -11,7 +10,6 @@ import { TranslateTestingModule } from "ngx-translate-testing";
 import { By } from "@angular/platform-browser";
 import { TranslateService } from "@ngx-translate/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { environment } from "environments/environment";
 import { MainComponent } from "modules/main/main/main.component";
 import { routes } from "app/app.routes";
 
@@ -36,8 +34,7 @@ describe("MainComponent - Main Rout", () => {
           provide: ActivatedRoute,
           useValue: { snapshot: { data: { breadcrumbs: ["main-page"] } } },
         },
-        provideFirebaseApp(() => initializeApp(environment.firebase)),
-        provideDatabase(() => getDatabase()),
+        { provide: FIREBASE_DATABASE, useValue: {} },
         MailingService,
         {
           provide: RecaptchaService,
@@ -202,6 +199,25 @@ describe("MainComponent - Main Rout", () => {
       });
     }
   ));
+
+  it("is the card modal opened with the selected card", () => {
+    const open = jest.spyOn(modalRef, "open");
+    const card = polishTranslation["main-page"]["cards"][0];
+
+    component.setCardStatus(card);
+
+    expect(open).toHaveBeenCalledWith(expect.anything(), {
+      data: { card },
+    });
+  });
+
+  it("is every modal closed when the card is null", () => {
+    const closeAll = jest.spyOn(modalRef, "closeAll");
+
+    component.setCardStatus(null);
+
+    expect(closeAll).toHaveBeenCalled();
+  });
 
   it("is correct number of technologies icons", () => {
     const tech_container = fixture.debugElement.query(

@@ -1,9 +1,9 @@
 import { HttpErrorResponse } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Database } from "@angular/fire/database";
+import { Database, ref, set, get, update } from "firebase/database";
 import { IEmailMessage } from "app/models/email-message";
 import { EmailMessage } from "classes/email-message.class";
-import { ref, set, get, update } from "firebase/database";
+import { FIREBASE_DATABASE } from "utilities/firebase.tokens";
 import { v4 as uuid } from "uuid";
 
 export enum DB_MESSAGE_ACTIONS {
@@ -15,7 +15,7 @@ export enum DB_MESSAGE_ACTIONS {
   providedIn: "root",
 })
 export class MailingService {
-  database: Database = inject(Database);
+  database: Database = inject(FIREBASE_DATABASE);
 
   /**
    * Retrieves all emails from the database.

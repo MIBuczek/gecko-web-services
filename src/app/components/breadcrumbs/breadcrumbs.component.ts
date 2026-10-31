@@ -1,5 +1,5 @@
-import { NgClass, NgFor, NgIf } from "@angular/common";
-import { Component, inject } from "@angular/core";
+import { NgClass } from "@angular/common";
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
 import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
@@ -10,7 +10,8 @@ import { IAppRouts } from "models/general";
   templateUrl: "./breadcrumbs.component.html",
   styleUrls: ["./breadcrumbs.component.scss"],
   standalone: true,
-  imports: [NgClass, NgFor, NgIf, RouterLink, TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [NgClass, RouterLink, TranslateModule],
 })
 export class BreadcrumbsComponent {
   private bc = inject(BreadcrumbsService);

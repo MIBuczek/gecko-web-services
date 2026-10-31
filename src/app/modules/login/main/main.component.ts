@@ -1,4 +1,4 @@
-import { JsonPipe, NgIf } from "@angular/common";
+import { JsonPipe } from "@angular/common";
 import {
   ChangeDetectionStrategy,
   Component,
@@ -20,7 +20,6 @@ import { AuthService } from "services/auth/auth.service";
   standalone: true,
   imports: [
     JsonPipe,
-    NgIf,
     ReactiveFormsModule,
     RouterLink,
     ErrorMessageComponent,

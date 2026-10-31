@@ -1,22 +1,30 @@
 import { ApplicationConfig, importProvidersFrom } from "@angular/core";
 import { provideRouter, withHashLocation } from "@angular/router";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from "@angular/common/http";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { provideFirebaseApp, initializeApp } from "@angular/fire/app";
-import { getDatabase, provideDatabase } from "@angular/fire/database";
-import { provideAuth, getAuth } from "@angular/fire/auth";
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
+import { initializeApp } from "firebase/app";
 import { environment } from "environments/environment";
 import { TranslateLangModule } from "app/modules/translate-lang/translate-lang.module";
 import { routes } from "app/app.routes";
+import {
+  FIREBASE_APP,
+  FIREBASE_AUTH,
+  FIREBASE_DATABASE,
+} from "utilities/firebase.tokens";
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes, withHashLocation()),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(withXhr(), withInterceptorsFromDi()),
     provideAnimations(),
-    provideAuth(() => getAuth()),
-    provideFirebaseApp(() => initializeApp(environment.firebase)),
-    provideDatabase(() => getDatabase()),
+    {
+      provide: FIREBASE_APP,
+      useFactory: () => initializeApp(environment.firebase),
+    },
+    { provide: FIREBASE_AUTH, useFactory: getAuth, deps: [FIREBASE_APP] },
+    { provide: FIREBASE_DATABASE, useFactory: getDatabase, deps: [FIREBASE_APP] },
     importProvidersFrom(TranslateLangModule),
   ],
 };

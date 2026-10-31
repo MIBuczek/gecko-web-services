@@ -17,11 +17,11 @@
         </p>
         <div
           class="contact-links d-flex flex-column flex-md-row align-items-center"
-        >
+          >
           <p class="d-inline">
             <span
               class="d-inline-flex justify-content-center align-items-center"
-            >
+              >
               <i class="fa-solid fa-mobile"></i>
             </span>
             509-312-832
@@ -29,7 +29,7 @@
           <p class="d-inline">
             <span
               class="d-inline-flex justify-content-center align-items-center"
-            >
+              >
               <i class="fa-solid fa-envelope"></i>
             </span>
             gecko.web.services&#64;gmail.com
@@ -41,16 +41,16 @@
           class="row flex-md-row flex-column"
           [formGroup]="formUserMessage"
           (submit)="submit()"
-        >
+          >
           <div
             class="col-12 col-md-10 d-flex flex-column align-items-md-stretch align-items-center"
-          >
+            >
             <input
               type="email"
               name="email"
               formControlName="email"
               [placeholder]="'footer.input-email' | translate"
-            />
+              />
             <app-error-message
               [form]="formUserMessage"
               [fieldName]="'email'"
@@ -59,7 +59,7 @@
               name="message"
               formControlName="message"
               [placeholder]="'footer.input-message' | translate"
-            >
+              >
             </textarea>
             <app-error-message
               [form]="formUserMessage"
@@ -71,27 +71,25 @@
               type="submit"
               [value]="'footer.submit-btn' | translate"
               [disabled]="formUserMessage.invalid"
-            />
+              />
           </div>
         </form>
-        <div *ngIf="submitStatus() !== null && submitClearStatus()">
-          <ng-container
-            *ngIf="submitStatus() === dbMessageActions.SUCCESS"
-          >
-            <app-notification
-              [title]="'footer.submit-success' | translate"
-              [variant]="'success'"
-            />
-          </ng-container>
-          <ng-container
-            *ngIf="submitStatus() === dbMessageActions.ERROR"
-          >
-            <app-notification
-              [title]="'footer.submit-error' | translate"
-              [variant]="'error'"
-            />
-          </ng-container>
-        </div>
+        @if (submitStatus() !== null && submitClearStatus()) {
+          <div>
+            @if (submitStatus() === dbMessageActions.SUCCESS) {
+              <app-notification
+                [title]="'footer.submit-success' | translate"
+                [variant]="'success'"
+                />
+            }
+            @if (submitStatus() === dbMessageActions.ERROR) {
+              <app-notification
+                [title]="'footer.submit-error' | translate"
+                [variant]="'error'"
+                />
+            }
+          </div>
+        }
       </div>
     </div>
   </div>

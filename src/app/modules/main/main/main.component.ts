@@ -1,4 +1,4 @@
-import { NgClass, NgFor } from "@angular/common";
+import { NgClass } from "@angular/common";
 import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { ActivatedRoute } from "@angular/router";
@@ -25,7 +25,6 @@ import { tech_icons } from "utilities/variables/tech-icon.const";
   standalone: true,
   imports: [
     NgClass,
-    NgFor,
     TranslateModule,
     BreadcrumbsComponent,
     CookieComponent,

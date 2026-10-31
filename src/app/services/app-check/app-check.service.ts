@@ -1,24 +1,24 @@
-import { Injectable } from "@angular/core";
-import { FirebaseApp } from "@angular/fire/app";
-import { AppCheck } from "@angular/fire/app-check";
-import { environment } from "environments/environment";
-import { initializeApp } from "firebase/app";
+import { inject, Injectable } from "@angular/core";
+import type { FirebaseApp } from "firebase/app";
 import {
+  AppCheck,
   AppCheckTokenResult,
   getToken,
   initializeAppCheck,
   ReCaptchaEnterpriseProvider,
 } from "firebase/app-check";
+import { environment } from "environments/environment";
+import { FIREBASE_APP } from "utilities/firebase.tokens";
 
 @Injectable({
   providedIn: "root",
 })
 export class AppCheckService {
-  app: FirebaseApp;
+  app: FirebaseApp = inject(FIREBASE_APP);
+
   appCheck: AppCheck;
 
   constructor() {
-    this.app = initializeApp(environment.firebase);
     this.appCheck = initializeAppCheck(this.app, {
       provider: new ReCaptchaEnterpriseProvider(environment.recaptcha.siteKey),
       isTokenAutoRefreshEnabled: true, // Set to true to allow auto-refresh.
