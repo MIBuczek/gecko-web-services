@@ -1,10 +1,10 @@
-import { NgClass, NgIf } from "@angular/common";
 import {
   Component,
   computed,
   HostListener,
   inject,
   linkedSignal,
+  ChangeDetectionStrategy
 } from "@angular/core";
 import { RouterLink } from "@angular/router";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
@@ -20,7 +20,8 @@ type TypeLang = "pl" | "en";
   templateUrl: "./navigation.component.html",
   styleUrls: ["./navigation.component.scss"],
   standalone: true,
-  imports: [NgClass, NgIf, RouterLink, TranslateModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  imports: [RouterLink, TranslateModule],
 })
 export class NavigationComponent {
   private translate = inject(TranslateService);
@@ -43,9 +44,11 @@ export class NavigationComponent {
     return bci.length === 1 && bci[0].rout === "main-page";
   });
 
-  /* Listener to tract vertical and horizontal pixels */
-  @HostListener("window:scroll", ["$event"])
-  checkPosition(vertical: boolean): boolean {
+  /* Listener to tract vertical and horizontal pixels. The template calls this with
+     an explicit argument; the listener call only needs to trigger change detection,
+     and defaults to the vertical check as the previous "$event" argument did. */
+  @HostListener("window:scroll")
+  checkPosition(vertical = true): boolean {
     if (vertical) return window.scrollY > 60;
     else return window.innerWidth < 650;
   }

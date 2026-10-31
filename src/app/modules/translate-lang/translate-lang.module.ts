@@ -2,6 +2,7 @@ import {
   HttpClient,
   provideHttpClient,
   withInterceptorsFromDi,
+  withXhr
 } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
@@ -19,7 +20,7 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
       },
     }),
   ],
-  providers: [provideHttpClient(withInterceptorsFromDi())],
+  providers: [provideHttpClient(withXhr(), withInterceptorsFromDi())],
 })
 export class TranslateLangModule {}
 

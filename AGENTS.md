@@ -9,8 +9,8 @@ them.
 `gecko-web-services` is an Angular single-page application: the public marketing site plus a
 small admin area and a login panel. Stack:
 
-- Angular 20.3 with standalone components and `bootstrapApplication`
-- TypeScript 5.8, Firebase (`@angular/fire`), a self-hosted reCAPTCHA loader
+- Angular 21.2 with standalone components and `bootstrapApplication`
+- TypeScript 5.9, Firebase (the plain `firebase` SDK, no `@angular/fire`), a self-hosted reCAPTCHA loader
 - Jest 30 with `jest-preset-angular` 17 for tests
 - SCSS for styles
 
@@ -97,11 +97,10 @@ Compilation is strict, and a few flags change what code is allowed:
     uses `linkedSignal`. Services expose state as a `readonly` signal created with
     `.asReadonly()`, not as a `BehaviorSubject`/`Observable` pair.
   - **Avoid RxJS except at a library boundary.** Nothing in `src/` imports an operator from
-    `rxjs`; async work is `async`/`await` over promises. The only two places `rxjs` is still
-    referenced are bridges to APIs that only expose an Observable:
-    `toSignal(user(this.auth))` in `auth.service.ts` (AngularFire's `user()`), and
+    `rxjs`; async work is `async`/`await` over promises. The only place `rxjs` is still
+    referenced is a bridge to an API that only exposes an Observable:
     `firstValueFrom(dialogRef.afterClosed())` in `admin/main.component.ts` (Angular Material).
-    Keep each conversion local to the call site and leave a comment naming the library, so the
+    Keep the conversion local to the call site and leave a comment naming the library, so the
     next reader does not try to remove it.
   - **Do not reach for `AsyncPipe`.** A template reads a signal by calling it (`loaderStatus()`,
     `submitStatus()`); the pipe is gone from every template and from every `imports` array.
@@ -235,12 +234,15 @@ it does not cover.
   symptom of your change.
 - `Dockerfile` builds on `node:22-alpine`, exposes 4200 to match the dev server, and installs
   with `npm ci` against the committed lockfile. `.nvmrc` and an `engines` field pin Node to
-  `^20.19.0 || ^22.12.0 || >=24.0.0` (the range Angular 20 supports).
-- `@angular/fire` 17.1.0 changed `provideFirebaseApp` / `provideDatabase` / `provideAuth` from
-  returning `ModuleWithProviders` to `EnvironmentProviders`. They must therefore sit in
-  `providers:`, not `imports:`; Angular throws `TypeError: ... is not assignable to type
-  'any[] | Type<any> | ModuleWithProviders<{}>'` at compile time otherwise. The `^17.0.1` range
-  in `package.json` permits the bump, so this surfaces on any `npm update`.
+  `^20.19.0 || ^22.12.0 || >=24.0.0` (the range Angular 21 supports; unchanged from 20).
+- **`@angular/fire` was removed in 2.5.0; use the plain `firebase` SDK.** It had no stable
+  release past Angular 20 (`next` was an rc, `canary` a nightly), which blocked the Angular
+  21/22 climb. The app only ever used four things from it — `provideFirebaseApp`,
+  `provideDatabase`, `provideAuth` and the `user()` Observable — and the first three are
+  re-exports of `firebase/*`. The app now provides `FIREBASE_APP` / `FIREBASE_AUTH` /
+  `FIREBASE_DATABASE` from `utilities/firebase.tokens.ts` in `app.config.ts`, and
+  `auth.service.ts` tracks `onIdTokenChanged` into a signal directly. Do not add it back: it
+  reintroduces the version ceiling and the `rxfire` Observable layer.
 - `npm run docker:serve` invokes `docker-compose`, the Compose v1 binary, which is no longer
   present on current Docker installs (they ship `docker compose`). Use `docker compose up`
   directly, or update the script.
@@ -306,6 +308,33 @@ it does not cover.
   schematic rewrites both call sites (`app.module.ts`, `translate-lang.module.ts`) and emits
   poorly formatted output; reformat by hand. The app has no `HTTP_INTERCEPTORS`, so
   `withInterceptorsFromDi()` is a no-op today but preserves behaviour if one is added.
+- Angular 21 type-checks `@HostListener` event arguments. `@HostListener("window:scroll", ["$event"])`
+  on a handler that takes no parameters (`checkPosition()`) now fails the build with
+  `TS2554: Expected 0 arguments, but got 1`, and passing `$event` into a `boolean` parameter
+  fails with `TS2345: Argument of type 'Event' is not assignable to parameter of type 'boolean'`.
+  Both listeners in this repo read `window` directly and ignore the event, so the `["$event"]`
+  argument was removed. In `navigation.component.ts` the parameter is now `vertical = true`,
+  preserving the previous behaviour: the old code passed `$event` (always truthy) on scroll, so
+  the scroll path took the vertical branch while the template's explicit
+  `checkPosition(false)` kept the horizontal one. Dropping the argument without a default would
+  have silently flipped that branch.
+- Angular 21's `ng update` migrates every `*ngIf` / `*ngFor` / `*ngSwitch` to the built-in
+  control flow (`@if` / `@for` / `@switch`), which removes `NgIf`, `NgFor`, `NgSwitch`,
+  `NgSwitchCase` and `NgSwitchDefault` from the `imports` arrays. Two formatting artifacts need
+  a hand pass: the closing `]` of a multi-line `imports` array is emitted at column 0, and a
+  component whose only import was removed is left with an empty `imports: []` (drop the property
+  instead). `@for` also requires a `track` expression, which the migration supplies.
+- Angular 21's CLI migration removes the `lib` entry from `tsconfig.json` when it is the
+  default, and `main.ts` gains an explicit `provideZoneChangeDetection()`. Both are expected;
+  do not re-add `lib: ["es2020", "dom"]`.
+- `@angular-eslint` must track the Angular major: 21.4.0 declares
+  `@angular/cli >= 21.0.0 < 22.0.0`, so staying on 20.x fails `npm install` peer resolution.
+  The Angular 20 note above about `prefer-inject` and `prefer-standalone` still applies.
+- Angular 21 still accepts `zone.js ~0.15.1`; the 0.16 line exists but is not required by the
+  peer range, so it was left alone.
+- `@ngx-translate/core` stays on **15.x** at Angular 21 as well. Its peer range is `>=16.0.0`,
+  which Angular 21 satisfies, so the translate stack needs no change at this step. The
+  `ngx-translate-testing` 7.0.0 constraint documented above is unchanged.
 - Angular 20 uses the `@angular/build:application` builder. The `use-application-builder`
   migration changes the emitted layout to `<base>/browser/`, but `firebase.json` publishes
   `dist/gecko-web-services` directly. `outputPath` is therefore pinned to
@@ -317,9 +346,9 @@ it does not cover.
   export map, so it resolves to `dist/node/index.js`, which calls the global `fetch` that jsdom
   does not provide: 9 suites fail with `ReferenceError: fetch is not defined`.
   `testEnvironmentOptions.customExportConditions` cannot override the hardcoded `node`, so
-  `resolver.js` re-resolves only `firebase`, `@firebase/*` and `rxfire/*` with
+  `resolver.js` re-resolves only `firebase` and `@firebase/*` with
   `conditions: ['browser', 'require', 'default']` and defers everything else to Jest's default
-  resolver. Keep `require` before any `import` condition: `rxfire/*` ships ESM under `import`
+  resolver. Keep `require` before any `import` condition: `@firebase/*` ships ESM under `import`
   and CJS under `require`, and picking the ESM entry fails with "Must use import to load ES
   Module".
 - Angular 20 stopped emitting the deprecated `ng-reflect-*` debug attributes unless
@@ -393,12 +422,10 @@ it does not cover.
   - **RxJS is gone from application code; do not reintroduce it as a stream.** The service and
     component layer was migrated to signals, `async`/`await` and direct DOM listeners
     (`window.addEventListener("scroll", ...)` replacing `fromEvent`). The `| async` pipe was
-    removed from every template. Two bridges remain and are deliberate:
-    `toSignal(user(this.auth))` in `auth.service.ts` and
-    `firstValueFrom(dialogRef.afterClosed())` in `admin/main.component.ts`, because
-    `@angular/fire`'s `user()` and Angular Material's `afterClosed()` expose only Observables.
-    Converting either to a promise/stream of your own would lose the source's cancellation and
-    change behaviour; keep the bridge at the call site.
+    removed from every template. One bridge remains and is deliberate:
+    `firstValueFrom(dialogRef.afterClosed())` in `admin/main.component.ts`, because Angular
+    Material's `afterClosed()` exposes only an Observable. Converting it to a promise of your own
+    would lose the source's cancellation and change behaviour; keep the bridge at the call site.
   - **`ScrollService` owns a real `scroll` listener.** It adds one bound handler in the
     constructor and removes the same reference in `ngOnDestroy`, so a second subscription cannot
     leak. If you add another window listener, bind it once the same way rather than creating an
@@ -407,6 +434,37 @@ it does not cover.
     `AuthService.whenReady()` (Firebase `authStateReady()`) before reading the
     `currentUser` signal, so it does not deny access while the persisted session is still being
     restored. Do not read the signal without that await.
+
+## Angular 22
+
+- **`OnPush` is the default; `Default` was renamed to `Eager`.** In v22
+  `ChangeDetectionStrategy.OnPush` is `0` and applied when a component sets no strategy, while
+  `Eager` (`1`) is the old `Default`/CheckAlways. `ng update` runs `change-detection-eager`,
+  which adds `changeDetection: ChangeDetectionStrategy.Eager` to every component that had no
+  explicit strategy, preserving pre-v22 behaviour. It only adds the property; it never rewrites
+  an existing `OnPush`.
+- **The new `@angular-eslint/prefer-on-push-component-change-detection` rule fights that
+  migration.** It is new in the v22 `recommended` set and errors on exactly the components the
+  migration just set to `Eager`. `eslint.config.js` turns it off with a comment; moving those
+  eleven event- and async-driven components to `OnPush` is a behaviour change that belongs in
+  its own PR, not in a version climb. Re-enable the rule when you do it.
+- **TypeScript 6 deprecates `baseUrl`.** `tsconfig.json` no longer sets it; every `paths` target
+  is written relative to the config file (`"./src/app/*"`). `paths` works without `baseUrl` since
+  TS 4.1. Leaving `baseUrl` in makes the build fail with `TS5101`.
+- **Angular 22 defaults `HttpClient` to the fetch backend.** `withXhr()` was added at both
+  `provideHttpClient()` call sites (`app.config.ts`, `translate-lang.module.ts`) to keep the
+  previous XHR backend and its progress/interceptor behaviour.
+- **The v22 compiler flags dead imports that older versions ignored.** `NgClass` was imported and
+  listed in `NavigationComponent.imports` but never used in its template; v22 emits `NG8113`.
+  Remove the import rather than suppressing the warning.
+- **`$safeNavigationMigration()` is a compiler magic function.** The v22 migration wraps
+  null-sensitive optional chaining in templates with it to keep the legacy "returns `null`"
+  behaviour. It does not exist at runtime and is compiled away — do not try to import or stub it.
+- **ESLint moved to flat config (`eslint.config.js`), replacing `.eslintrc.json`.** It uses
+  `typescript-eslint`'s `config` helper (needed for `extends`), `angular-eslint` 22's
+  `tsRecommended` / `templateRecommended`, and `angular.processInlineTemplates`. `@eslint/js` is
+  not referenced and was not added as a dependency; `@typescript-eslint/eslint-plugin` and
+  `.../parser` are no longer direct dependencies (they arrive through `typescript-eslint`).
 
 ## Scope of this document
 

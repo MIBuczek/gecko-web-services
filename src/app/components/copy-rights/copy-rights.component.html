@@ -1,15 +1,16 @@
 <section class="copy-rights">
   <div
     class="container d-flex justify-content-between align-items-center flex-column flex-md-row"
-  >
+    >
     <div class="my-3 my-md-0">
-      <a
-        class="redirect-policy"
-        routerLink="/privacy-policy"
-        *ngIf="!isPrivacyPolicy"
-      >
-        {{ "copy-rights.privacy-policy" | translate }}
-      </a>
+      @if (!isPrivacyPolicy) {
+        <a
+          class="redirect-policy"
+          routerLink="/privacy-policy"
+          >
+          {{ "copy-rights.privacy-policy" | translate }}
+        </a>
+      }
     </div>
     <div class="credits text-center">
       © {{ currentYear }} {{ "copy-rights.copy-right" | translate }}

@@ -1,4 +1,4 @@
-const FIREBASE = /^(?:@firebase\/|firebase(?:\/|$)|rxfire(?:\/|$))/;
+const FIREBASE = /^(?:@firebase\/|firebase(?:\/|$))/;
 
 module.exports = (request, options) => {
   if (FIREBASE.test(request)) {

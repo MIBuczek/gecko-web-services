@@ -1,10 +1,11 @@
-import { Component, HostListener, inject } from "@angular/core";
+import { Component, HostListener, inject, ChangeDetectionStrategy } from "@angular/core";
 import { ViewportScroller } from "@angular/common";
 
 @Component({
   selector: "app-scroll-top",
   templateUrl: "./scroll-top.component.html",
   styleUrls: ["./scroll-top.component.scss"],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
 })
 export class ScrollTopComponent {
@@ -15,7 +16,7 @@ export class ScrollTopComponent {
    *
    * @return {boolean} A boolean indicating whether the scroll position is greater than 200.
    */
-  @HostListener("window:scroll", ["$event"])
+  @HostListener("window:scroll")
   checkPosition(): boolean {
     return window.scrollY > 200;
   }

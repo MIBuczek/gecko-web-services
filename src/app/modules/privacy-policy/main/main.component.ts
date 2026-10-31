@@ -1,4 +1,4 @@
-import { NgFor } from "@angular/common";
+
 import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/core";
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { TranslateModule } from "@ngx-translate/core";
@@ -17,7 +17,6 @@ import { BreadcrumbsService } from "services/breadcrumbs/breadcrumbs.service";
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgFor,
     RouterLink,
     TranslateModule,
     BreadcrumbsComponent,
